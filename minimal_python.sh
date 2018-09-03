@@ -1,5 +1,7 @@
 #! /bin/bash
 
+python3 -m pip install --upgrade pip
+
 #capture the minimal python install
 sudo apt-get install python3-venv
 python3 -m venv ./minimal 
