@@ -1,0 +1,59 @@
+# install microk8s
+sudo snap install microk8s --classic
+
+# enable addons
+microk8s.enable \
+dns \
+dashboard \
+storage \
+ingress \
+gpu \
+istio \
+registry \
+metrics-server
+
+# find dashoard token
+microk8s.kubectl -n kube-system get secret
+microk8s.kubectl -n kube-system describe secret kubernetes-dashboard-token-<blah>
+
+# Print the address of the master and cluster services
+microk8s.kubectl cluster-info
+
+# install helm
+snap install helm
+helm init
+
+# create service (expost port to localhost)
+microk8s.kubectl expose deployment jupyterlab \
+--type=NodePort \
+--port=8888 \
+--name=jupyterlab-service
+
+
+helm install --namespace airflow --name airflow-dev stable/airflow
+helm install --namespace dask --name dask-dev stable/dask  
+helm install --namespace zeppelin --name zeppelin-dev stable/zeppelin        
+helm install --namespace superset --name superset-dev stable/superset
+helm install --namespace spark --name spark-dev stable/spark   
+
+
+helm install --namespace hadoop --name hadoop-dev stable/hadoop
+helm install --namespace jenkins --name jenkins-dev stable/jenkins
+helm install --namespace kafka-manager --name kafka-manager-dev stable/kafka-manager
+
+helm install --namespace kibana --name kibana-dev stable/kibana       
+helm install --namespace magic-ip-address --name magic-ip-address-dev stable/magic-ip-address
+helm install --namespace magic-namespace --name magic-namespace-dev stable/magic-namespace 
+helm install --namespace redis --name redis-dev stable/redis-ha
+helm install --namespace sonarqube --name sonarqube-dev stable/sonarqube
+helm install --namespace rocketchat --name rocketchat-dev stable/rocketchat
+helm install --namespace redmine --name redmine    -dev stable/redmine
+helm install --namespace mongodb --name mongodb-dev stable/mongodb-replicaset
+helm install --namespace traefik --name traefik-dev stable/traefik         
+
+# figure out how to set access to managment console
+helm install --namespace rabbitmq --name rabbitmq-ha-dev stable/rabbitmq-ha
+
+#figure out how to set .Values.superuserPassword
+helm install --namespace stolon --name stolon-dev stable/stolon  
+
