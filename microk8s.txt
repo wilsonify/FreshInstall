@@ -29,13 +29,17 @@ microk8s.kubectl expose deployment jupyterlab \
 --port=8888 \
 --name=jupyterlab-service
 
+# add helm repos
+helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
+helm repo add rook-stable http://charts.rook.io/stable
+
 
 helm install --namespace airflow --name airflow-dev stable/airflow
 helm install --namespace dask --name dask-dev stable/dask  
 helm install --namespace zeppelin --name zeppelin-dev stable/zeppelin        
 helm install --namespace superset --name superset-dev stable/superset
 helm install --namespace spark --name spark-dev stable/spark   
-
+helm install --namespace rook --name rook-dev rook-stable/rook-ceph
 
 helm install --namespace hadoop --name hadoop-dev stable/hadoop
 helm install --namespace jenkins --name jenkins-dev stable/jenkins
@@ -51,9 +55,9 @@ helm install --namespace redmine --name redmine    -dev stable/redmine
 helm install --namespace mongodb --name mongodb-dev stable/mongodb-replicaset
 helm install --namespace traefik --name traefik-dev stable/traefik         
 
+
 # figure out how to set access to managment console
 helm install --namespace rabbitmq --name rabbitmq-ha-dev stable/rabbitmq-ha
 
 #figure out how to set .Values.superuserPassword
 helm install --namespace stolon --name stolon-dev stable/stolon  
-
