@@ -12,6 +12,9 @@ istio \
 registry \
 metrics-server
 
+# find the login
+microk8s.config
+
 # find dashoard token
 microk8s.kubectl -n kube-system get secret
 microk8s.kubectl -n kube-system describe secret kubernetes-dashboard-token-<blah>
@@ -34,30 +37,32 @@ helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.c
 helm repo add rook-stable http://charts.rook.io/stable
 helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/
 
-helm install --namespace airflow --name airflow-dev stable/airflow
-helm install --namespace dask --name dask-dev stable/dask  
-helm install --namespace zeppelin --name zeppelin-dev stable/zeppelin        
-helm install --namespace superset --name superset-dev stable/superset
-helm install --namespace spark --name spark-dev stable/spark   
-helm install --namespace rook --name rook-dev rook-stable/rook-ceph
 
-helm install --namespace hadoop --name hadoop-dev stable/hadoop
-helm install --namespace jenkins --name jenkins-dev stable/jenkins
-helm install --namespace kafka-manager --name kafka-manager-dev stable/kafka-manager
 
-helm install --namespace kibana --name kibana-dev stable/kibana       
-helm install --namespace magic-ip-address --name magic-ip-address-dev stable/magic-ip-address
-helm install --namespace magic-namespace --name magic-namespace-dev stable/magic-namespace 
-helm install --namespace redis --name redis-dev stable/redis-ha
-helm install --namespace sonarqube --name sonarqube-dev stable/sonarqube
-helm install --namespace rocketchat --name rocketchat-dev stable/rocketchat
+helm install --namespace data-science --name dask-dev stable/dask  
+helm install --namespace apache --name superset-dev stable/superset
+helm install --namespace apache --name airflow-dev stable/airflow
+helm install --namespace apache --name spark-dev stable/spark   
+helm install --namespace apache --name zeppelin-dev stable/zeppelin        
+helm install --namespace apache --name hadoop-dev stable/hadoop
+helm install --namespace storage --name rook-dev rook-stable/rook-ceph
+helm install --namespace storage --name redis-dev stable/redis-ha
+helm install --namespace storage --name mongodb-dev stable/mongodb-replicaset
+
+helm install --namespace integration --name jenkins-dev stable/jenkins
+helm install --namespace integration --name sonarqube-dev stable/sonarqube
+helm install --namespace interface --name kafka-manager-dev stable/kafka-manager
+helm install --namespace interface --name kibana-dev stable/kibana       
+helm install --namespace networking --name magic-ip-address-dev stable/magic-ip-address
+helm install --namespace networking --name magic-namespace-dev stable/magic-namespace 
+helm install --namespace networking --name traefik-dev stable/traefik
+helm install --namespace chat --name rocketchat-dev stable/rocketchat
 helm install --namespace redmine --name redmine    -dev stable/redmine
-helm install --namespace mongodb --name mongodb-dev stable/mongodb-replicaset
-helm install --namespace traefik --name traefik-dev stable/traefik         
-helm install jupyterhub/jupyterhub --version=v0.8 --namespace jupyterhub --name jupyterhub-dev -f config.yaml 
+
+helm install --namespace data-science --name jupyterhub-dev --version=v0.8 -f config.yaml jupyterhub/jupyterhub
 
 # figure out how to set access to managment console
-helm install --namespace rabbitmq --name rabbitmq-ha-dev stable/rabbitmq-ha
+helm install --namespace infrastructure --name rabbitmq-ha-dev stable/rabbitmq-ha
 
 #figure out how to set .Values.superuserPassword
-helm install --namespace stolon --name stolon-dev stable/stolon  
+helm install --namespace storage --name stolon-dev stable/stolon  
