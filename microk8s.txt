@@ -69,3 +69,6 @@ helm install --namespace infrastructure --name rabbitmq-ha-dev stable/rabbitmq-h
 
 #figure out how to set .Values.superuserPassword
 helm install --namespace storage --name stolon-dev stable/stolon  
+
+
+http://localhost:8080/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview?namespace=default
