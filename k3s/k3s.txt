@@ -1,0 +1,13 @@
+
+# on master then find node-token in /var/lib/rancher/k3s/server/node-token
+curl -sfL https://get.k3s.io | sh -
+
+# on workers
+curl -sfL https://get.k3s.io | K3S_URL=https://myserver:6443 K3S_TOKEN=mynodetoken sh -
+
+# deploy dashboard
+sudo kubectl apply -f dashboard-adminuser-serviceaccount.yaml
+sudo kubectl apply -f dashboard-adminuser-rbac.yaml
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+
+
