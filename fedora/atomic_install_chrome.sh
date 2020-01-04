@@ -1,7 +1,11 @@
 #! /bin/bash
 
-sudo apt-key adv --fetch-keys https://dl-ssl.google.com/linux/linux_signing_key.pub
-sudo apt-add-repository 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main'
-sudo apt-get install google-chrome-stable
+wget https://dl-ssl.google.com/linux/linux_signing_key.pub
 
+rpm --import linux_signing_key.pub
 
+sh -c 'echo "[google-chrome]
+name=Google Chrome 32-bit
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/i386" >> /etc/yum.repos.d/google-chrome.repo'
+
+yum update
