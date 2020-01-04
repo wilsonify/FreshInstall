@@ -1,4 +1,11 @@
 #! /bin/bash
 
-sudo apt-get install r-base curl libcurl4-openssl-dev libxml2-dev libssl-dev 
-
+sudo yum install -y \
+R \
+libcurl-devel \
+libxml2-devel \
+libxslt-devel \
+openssl-devel
+libtool \
+perl-core \
+zlib-devel

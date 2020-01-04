@@ -1,7 +1,13 @@
 #! /bin/bash
 
-sudo apt-key adv --fetch-keys https://www.virtualbox.org/download/oracle_vbox_2016.asc
-sudo apt-add-repository 'deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian bionic contrib'
-sudo apt-get install virtualbox-5.2
-
-
+cd /etc/yum.repos.d/
+wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
+dnf update
+rpm -qa kernel |sort -V |tail -n 1
+uname -r
+dnf install binutils gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms qt5-qtx11extras libxkbcommon
+dnf install VirtualBox-6.0
+/usr/lib/virtualbox/vboxdrv.sh setup
+usermod -a -G vboxusers user_name
+KERN_DIR=/usr/src/kernels/`uname -r`
+export KERN_DIR
