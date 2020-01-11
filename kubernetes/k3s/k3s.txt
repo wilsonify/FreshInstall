@@ -6,6 +6,7 @@ curl -sfL https://get.k3s.io | sh -
 curl -sfL https://get.k3s.io | K3S_URL=https://myserver:6443 K3S_TOKEN=mynodetoken sh -
 
 # deploy dashboard
+sudo kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
 sudo kubectl apply -f dashboard-adminuser-serviceaccount.yaml
 sudo kubectl apply -f dashboard-adminuser-rbac.yaml
 kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
