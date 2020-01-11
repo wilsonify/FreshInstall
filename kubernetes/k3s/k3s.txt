@@ -1,4 +1,10 @@
 
+#clean up old stuff
+sudo k3s-uninstall.sh
+sudo snap remove helm
+rm -rf ~/.kube
+mkdir ~/.kube
+
 # on master then find node-token in /var/lib/rancher/k3s/server/node-token
 curl -sfL https://get.k3s.io | sh -
 
@@ -14,3 +20,13 @@ kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboar
 # taint the maser node
 sudo kubectl taint nodes <node name> node-role.kubernetes.io/master=true:NoSchedule
 
+# tiller
+sudo kubectl -n kube-system create serviceaccount tiller
+
+sudo kubectl create clusterrolebinding tiller --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+#set kubeconfig
+sudo kubectl config view --raw > ~/.kube/config
+sudo snap install helm --classic
+sudo helm list
+s
