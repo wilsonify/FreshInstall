@@ -27,6 +27,9 @@ sudo kubectl create clusterrolebinding tiller --clusterrole=cluster-admin --serv
 
 #set kubeconfig
 sudo kubectl config view --raw > ~/.kube/config
+
+#helm
 sudo snap install helm --classic
 sudo helm list
-s
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo add argo https://argoproj.github.io/argo-helm
