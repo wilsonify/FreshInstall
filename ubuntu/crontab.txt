@@ -1,0 +1,1 @@
+@reboot $USER/mount-bucket.sh
