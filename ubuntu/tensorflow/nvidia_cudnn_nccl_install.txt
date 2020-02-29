@@ -1,0 +1,5 @@
+sudo dpkg -i ./libcudnn7_7.6.4.38-1+cuda10.1_amd64.deb
+sudo dpkg -i ./libcudnn7-dev_7.6.4.38-1+cuda10.1_amd64.deb
+sudo dpkg -i ./libcudnn7-doc_7.6.4.38-1+cuda10.1_amd64.deb
+sudo dpkg -i ./nccl-repo-ubuntu1804-2.4.8-ga-cuda10.1_1-1_amd64.deb
+sudo dpkg -i ./nv-tensorrt-repo-ubuntu1804-cuda10.1-trt6.0.1.5-ga-20190913_1-1_amd64.deb
