@@ -9,4 +9,7 @@ install.packages(c( "tidyverse"
                    ,"psych"
                    ,"rpart"
                    ,"rpart.plot"
-                   ,"neuralnet"))
+                   ,"neuralnet"
+                   ,'IRkernel'))
+
+IRkernel::installspec()
