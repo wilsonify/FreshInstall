@@ -1,0 +1,11 @@
+docker run \
+--name some-cassandra \
+-p 32778:7000 \
+-p 32777:7001 \
+-p 32776:7199 \
+-p 32775:9042 \
+-p 32774:9160 \
+-v /opt/cassandra/var/lib/cassandra:/var/lib/cassandra \
+-v /opt/cassandra/etc/cassandra:/etc/cassandra \
+-d cassandra:3.11.5
+

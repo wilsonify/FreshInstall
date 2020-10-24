@@ -1,0 +1,4 @@
+CREATE  KEYSPACE IF NOT EXISTS defaultkeyspace WITH REPLICATION = {'class' : 'SimpleStrategy','replication_factor' : 2 }; 
+
+CREATE ROLE thom WITH PASSWORD = 'nbhgyt65' AND SUPERUSER = true AND LOGIN = true;
+
