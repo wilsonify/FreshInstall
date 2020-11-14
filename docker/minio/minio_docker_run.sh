@@ -11,7 +11,7 @@ docker run \
 -v /home/thom/mnt/seagates/minio:/home/$USER/seagates \
 -v /home/thom/mnt/seagate2/minio:/home/$USER/seagate2 \
 -v /home/thom/mnt/ULTRA/minio:/home/$USER/ULTRA \
--v /home/thom/mnt/WD/minio:/home/$USER/WD \
+-v /home/thom/mnt/seagates3/minio:/home/$USER/WD \
 -v /home/thom/mnt/HDD0/minio:/home/$USER/HDD0 \
 -v /home/thom/mnt/HDD1/minio:/home/$USER/HDD1 \
 minio/minio:RELEASE.2020-01-25T02-50-51Z server \
