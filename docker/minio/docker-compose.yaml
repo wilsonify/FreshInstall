@@ -1,0 +1,24 @@
+version: "2"
+services:
+
+  minioblobstore:
+    image: minio/minio:RELEASE.2020-11-19T23-48-16Z
+    user: $UID:$GID
+    ports:
+      - 9000:9000
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MINIO_ACCESS_KEY: $MINIO_ACCESS_KEY
+      MINIO_SECRET_KEY: $MINIO_SECRET_KEY
+    volumes:
+      - /home/thom/.minio:/home/$USER/.minio
+      - /home/thom/mnt/SSD1/minio:/home/$USER/SSD1
+      - /home/thom/mnt/SSD2/minio:/home/$USER/SSD2
+      - /home/thom/mnt/seagates/minio:/home/$USER/seagates
+      - /home/thom/mnt/seagate2/minio:/home/$USER/seagate2
+      - /home/thom/mnt/ULTRA/minio:/home/$USER/ULTRA
+      - /home/thom/mnt/seagates3/minio:/home/$USER/WD
+      - /home/thom/mnt/HDD0/minio:/home/$USER/HDD0
+      - /home/thom/mnt/HDD1/minio:/home/$USER/HDD1
+    command: server /home/$USER/SSD1 /home/$USER/SSD2 /home/$USER/seagates /home/$USER/seagate2 /home/$USER/ULTRA /home/$USER/WD /home/$USER/HDD0 /home/$USER/HDD1
