@@ -1,3 +1,5 @@
+MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE
+MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 docker run \
 --user $(id -u):$(id -g) \
 --restart unless-stopped \
@@ -6,8 +8,8 @@ docker run \
 -e "MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY" \
 -e "MINIO_SECRET_KEY=$MINIO_SECRET_KEY" \
 -v /home/thom/.minio:/home/$USER/.minio \
--v /home/thom/mnt/SSD1/minio:/home/$USER/SSD1 \
--v /home/thom/mnt/SSD2/minio:/home/$USER/SSD2 \
+-v /home/thom/mnt/seagateA/minio:/home/$USER/SSD1 \
+-v /home/thom/mnt/seagateB/minio:/home/$USER/SSD2 \
 -v /home/thom/mnt/seagates/minio:/home/$USER/seagates \
 -v /home/thom/mnt/seagate2/minio:/home/$USER/seagate2 \
 -v /home/thom/mnt/ULTRA/minio:/home/$USER/ULTRA \

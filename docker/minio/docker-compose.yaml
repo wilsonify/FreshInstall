@@ -13,8 +13,8 @@ services:
       MINIO_SECRET_KEY: $MINIO_SECRET_KEY
     volumes:
       - /home/thom/.minio:/home/$USER/.minio
-      - /home/thom/mnt/SSD1/minio:/home/$USER/SSD1
-      - /home/thom/mnt/SSD2/minio:/home/$USER/SSD2
+      - /home/thom/mnt/seagateA/minio:/home/$USER/SSD1
+      - /home/thom/mnt/seagateB/minio:/home/$USER/SSD2
       - /home/thom/mnt/seagates/minio:/home/$USER/seagates
       - /home/thom/mnt/seagate2/minio:/home/$USER/seagate2
       - /home/thom/mnt/ULTRA/minio:/home/$USER/ULTRA
