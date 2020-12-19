@@ -1,0 +1,10 @@
+version: "3"
+services:
+  ungit:
+    image: ungit
+    ports:
+      - 127.0.0.1:8448:8448
+    restart: unless-stopped
+    volumes:
+      - /home/thom/repos:/home/thom/repos
+    user: "${UID}:${GID}"
