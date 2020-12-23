@@ -1,0 +1,6 @@
+tgzfile=nccl_2.8.3-1+cuda11.1_x86_64.txz
+basepath=/mnt/c8c20bab-7445-45b1-b260-86f1a92c7b20/nvidia/nccl_2.8.3-1+cuda11.1_x86_64
+tar -xzvf $tgzfile
+sudo cp $basepath/include/nccl*.h /usr/local/cuda/include
+sudo cp $basepath/lib/* /usr/local/cuda/lib64
+sudo chmod a+r /usr/local/cuda/include/nccl*.h /usr/local/cuda/lib64/libnccl*
