@@ -13,12 +13,12 @@ services:
       MINIO_SECRET_KEY: $MINIO_SECRET_KEY
     volumes:
       - /home/thom/.minio:/home/$USER/.minio
-      - /home/thom/mnt/seagateA/minio:/home/$USER/SSD1
-      - /home/thom/mnt/seagateB/minio:/home/$USER/SSD2
-      - /home/thom/mnt/seagates/minio:/home/$USER/seagates
-      - /home/thom/mnt/seagate2/minio:/home/$USER/seagate2
-      - /home/thom/mnt/ULTRA/minio:/home/$USER/ULTRA
-      - /home/thom/mnt/seagates3/minio:/home/$USER/WD
-      - /home/thom/mnt/HDD0/minio:/home/$USER/HDD0
-      - /home/thom/mnt/HDD1/minio:/home/$USER/HDD1
-    command: server /home/$USER/SSD1 /home/$USER/SSD2 /home/$USER/seagates /home/$USER/seagate2 /home/$USER/ULTRA /home/$USER/WD /home/$USER/HDD0 /home/$USER/HDD1
+      - /mnt/seagateA/minio:/home/$USER/seagateA
+      - /mnt/seagateB/minio:/home/$USER/seagateB
+      - /mnt/seagates/minio:/home/$USER/seagates
+      - /mnt/seagate2/minio:/home/$USER/seagate2
+      - /mnt/ULTRA/minio:/home/$USER/ULTRA
+      - /mnt/seagates3/minio:/home/$USER/seagates3
+      - /mnt/HDD0/minio:/home/$USER/HDD0
+      - /mnt/HDD1/minio:/home/$USER/HDD1
+    command: server /home/$USER/seagateA /home/$USER/seagateB /home/$USER/seagates /home/$USER/seagate2 /home/$USER/ULTRA /home/$USER/seagates3 /home/$USER/HDD0 /home/$USER/HDD1
