@@ -1,0 +1,9 @@
+version: "3"
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    ports:
+      - 127.0.0.1:5678:5678
+    restart: unless-stopped
+    volumes:
+      - /var/lib/n8n/.n8n:/home/node/.n8n
