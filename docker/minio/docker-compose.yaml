@@ -22,3 +22,17 @@ services:
       - /mnt/HDD0/minio:/home/$USER/HDD0
       - /mnt/HDD1/minio:/home/$USER/HDD1
     command: server /home/$USER/seagateA /home/$USER/seagateB /home/$USER/seagates /home/$USER/seagate2 /home/$USER/ULTRA /home/$USER/seagates3 /home/$USER/HDD0 /home/$USER/HDD1
+
+  minio-client:
+    image: minio/mc:RELEASE.2020-12-18T10-53-53Z
+    env_file: .env
+    environment:
+      MINIO_HOST: minioblobstore
+      MINIO_ACCESS_KEY: $MINIO_ACCESS_KEY
+      MINIO_SECRET_KEY: $MINIO_SECRET_KEY
+    depends_on:
+      - minioblobstore
+    entrypoint: >
+      /usr/bin/bash -c "
+      mc config host add --quiet --api s3v4 minioblobstore http://$MINIO_HOST:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
+      "
