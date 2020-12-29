@@ -1,6 +1,15 @@
 echo "Install the NVIDIA driver"
 echo "remove potential previously installed NVIDIA drivers"
+sudo apt-get remove *cuda*
+sudo apt-get purge *cuda*
+sudo apt-get autoremove
+sudo rm -rf /usr/local/cuda*
+
+sudo apt-get remove *nvidia*
 sudo apt-get purge *nvidia*
+sudo apt-get autoremove
+
+sudo dpkg -P "$(dpkg -l | grep nvidia | awk '{print $2}')"
 sudo apt autoremove
 
 echo "Next, let's install the latest driver:"
