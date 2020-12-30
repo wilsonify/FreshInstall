@@ -1,6 +1,5 @@
-tgzfile=cudnn-11.1-linux-x64-v8.0.5.39.tgz
-basepath=/mnt/c8c20bab-7445-45b1-b260-86f1a92c7b20/nvidia/cudnn-11.1-linux-x64-v8.0.5.39
+tgzfile=cudnn-10.2-linux-x64-v8.0.4.30.tgz
+basepath=/mnt/c8c20bab-7445-45b1-b260-86f1a92c7b20/nvidia/cudnn-10.2-linux-x64-v8.0.4.30
 tar -xzvf $tgzfile
-sudo cp $basepath/cuda/include/cudnn*.h /usr/local/cuda/include
-sudo cp $basepath/cuda/lib64/libcudnn* /usr/local/cuda/lib64
-sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+sudo cp -r $basepath/cuda /usr/local/
+sudo chmod -R a+r /usr/local/cuda
