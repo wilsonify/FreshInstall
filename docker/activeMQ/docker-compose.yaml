@@ -1,0 +1,8 @@
+version: '3'
+services:
+  activemq:
+    image: vromero/activemq-artemis:2.16.0-alpine
+    restart: unless-stopped
+    ports:
+      - "8161:8161"
+      - "61616:61616"
