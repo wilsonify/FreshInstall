@@ -1,0 +1,3 @@
+
+sudo apt install libopenmpi-dev openmpi-bin gfortran #Get the mpif90 compiler wrapper on Ubuntu ≥ 12.04:
+sudo apt install open-coarrays-bin # Get the caf compiler wrapper on Ubuntu ≥ 17.04:
