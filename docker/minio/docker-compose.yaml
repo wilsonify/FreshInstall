@@ -20,5 +20,5 @@ services:
       - /mnt/ULTRA/minio:/home/$USER/ULTRA
       - /mnt/seagates3/minio:/home/$USER/seagates3
       - /mnt/HDD0/minio:/home/$USER/HDD0
-      - /mnt/HDD1/minio:/home/$USER/HDD1
-    command: server /home/$USER/seagateA /home/$USER/seagateB /home/$USER/seagates /home/$USER/seagate2 /home/$USER/ULTRA /home/$USER/seagates3 /home/$USER/HDD0 /home/$USER/HDD1
+      - /mnt/seagates3B/minio:/home/$USER/seagates3B
+    command: server /home/$USER/seagateA /home/$USER/seagateB /home/$USER/seagates /home/$USER/seagate2 /home/$USER/ULTRA /home/$USER/seagates3 /home/$USER/HDD0 /home/$USER/seagates3B
