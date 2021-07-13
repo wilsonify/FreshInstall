@@ -8,3 +8,4 @@ sudo apt-add-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $RELEA
 sudo apt-get update
 sudo apt-get install r-base-dev curl libcurl4-openssl-dev libxml2-dev libssl-dev
 
+R --version
