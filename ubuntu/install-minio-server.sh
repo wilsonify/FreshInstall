@@ -21,12 +21,11 @@ $MINIO_SECRET_KEY
 
 echo "start minio server"
 minio server \
+/mnt/ULTRA/minio \
+/mnt/HDD0/minio \
+/mnt/seagateA/minio \
 /mnt/seagateB/minio \
 /mnt/seagates/minio \
 /mnt/seagate2/minio \
-/mnt/ULTRA/minio \
 /mnt/seagates3/minio \
-/mnt/HDD0/minio \
-/mnt/HDD1/minio \
-/mnt/seagateA/minio
-
+/mnt/seagates3B/minio
