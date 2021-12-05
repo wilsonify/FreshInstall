@@ -1,10 +1,8 @@
 
 # patch for glibc 2.26 to avoid errors in compiling with CUDA(NVCC)
 
-glibc 2.26 has a new feature,
-i.e. "128-bit floating point as defined by ISO/IEC/IEEE 60559:2011 (IEEE 754-2008) and ISO/IEC TS 18661-3:2015".
-
-which causes an incompatabiltiy between nvcc and glic
+glibc > 2.26 has a new feature, i.e. "128-bit floating point"
+which causes an incompatibility between nvcc and glic
 
 ```
 /usr/include/x86_64-linux-gnu/bits/floatn.h(74): error: invalid argument to attribute "__mode__"
