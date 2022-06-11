@@ -37,7 +37,7 @@ if grep -qF "$PATH_ADDITION" /etc/profile; then
   echo "$PATH_ADDITION is already in /etc/profile"
 else
   echo "adding $PATH_ADDITION to /etc/profile"
-  echo "$PATH_ADDITION" >> /etc/profile
+  sudo echo "$PATH_ADDITION" >> /etc/profile
 fi
 
 echo done
