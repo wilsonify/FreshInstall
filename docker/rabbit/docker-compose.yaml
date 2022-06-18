@@ -5,10 +5,7 @@ services:
     hostname: rabbit-host
     restart: unless-stopped
     ports:
-      - "32779:4369"
-      - "32778:5671"
-      - "32777:5672"
-      - "32776:15671"
-      - "32775:15672"
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
