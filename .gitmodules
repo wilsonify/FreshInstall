@@ -1,0 +1,6 @@
+[submodule "ubuntu/mujoco/mujoco-py"]
+	path = ubuntu/mujoco/mujoco-py
+	url = https://github.com/studywolf/mujoco-py.git
+[submodule "ubuntu/mujoco/mujoco"]
+	path = ubuntu/mujoco/mujoco
+	url = https://github.com/deepmind/mujoco.git
