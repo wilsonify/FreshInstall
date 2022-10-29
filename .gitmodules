@@ -4,3 +4,6 @@
 [submodule "ubuntu/mujoco/mujoco"]
 	path = ubuntu/mujoco/mujoco
 	url = https://github.com/deepmind/mujoco.git
+[submodule "ubuntu/alacritty"]
+	path = ubuntu/alacritty
+	url = https://github.com/alacritty/alacritty.git
