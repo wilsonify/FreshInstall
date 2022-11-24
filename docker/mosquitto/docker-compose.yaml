@@ -1,5 +1,6 @@
 services:
   mosquitto:
+    restart: unless-stopped
     image: eclipse-mosquitto:2.0.15
     volumes:
       - ./config/:/mosquitto/config/:rw
