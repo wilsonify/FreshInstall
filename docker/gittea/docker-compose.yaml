@@ -11,13 +11,13 @@ services:
     environment:
       - USER_UID=1000
       - USER_GID=1000
-    restart: always
+    restart: no
     networks:
       - gitea_default
     volumes:
-      - ./gitea:/data
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
+      - /media/thom/seagate01/gitea/data:/data
+      - /media/thom/seagate01/gitea/timezone:/etc/timezone:ro
+      - /media/thom/seagate01/gitea/localtime:/etc/localtime:ro
     ports:
       - "3000:3000"
       - "222:22"
