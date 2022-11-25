@@ -16,8 +16,8 @@ add-user: start
 remove-user:
 	docker-compose exec mosquitto mosquitto_passwd -D /mosquitto/config/password.txt thom
 
-subscribe: add-user
+subscribe:
 	docker-compose exec mosquitto mosquitto_sub -u thom -P examplepassword -t sensor/temperature
 
-publish: subscribe
+publish:
 	docker-compose exec mosquitto mosquitto_pub -u thom -P examplepassword -t sensor/temperature -m 23
