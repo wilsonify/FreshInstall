@@ -10,14 +10,14 @@ start: stop
 restart:
 	docker-compose restart
 
-add-user: start
+add-user:
 	docker-compose exec mosquitto mosquitto_passwd -b /mosquitto/config/password.txt thom examplepassword
 
 remove-user:
 	docker-compose exec mosquitto mosquitto_passwd -D /mosquitto/config/password.txt thom
 
-subscribe: add-user
+subscribe:
 	docker-compose exec mosquitto mosquitto_sub -u thom -P examplepassword -t sensor/temperature
 
-publish: subscribe
+publish:
 	docker-compose exec mosquitto mosquitto_pub -u thom -P examplepassword -t sensor/temperature -m 23
