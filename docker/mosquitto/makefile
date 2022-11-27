@@ -10,7 +10,7 @@ start: stop
 restart:
 	docker-compose restart
 
-add-user: start
+add-user:
 	docker-compose exec mosquitto mosquitto_passwd -b /mosquitto/config/password.txt thom examplepassword
 
 remove-user:
