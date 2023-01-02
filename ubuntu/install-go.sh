@@ -1,6 +1,5 @@
 #!/bin/bash
-GO_TAR_FILE=go1.18.2.linux-amd64.tar.gz
-PATH_ADDITION='export PATH=$PATH:/usr/local/go/bin'
+GO_TAR_FILE=go1.19.4.linux-amd64.tar.gz
 
 echo "start download go"
 wget "https://golang.org/dl/$GO_TAR_FILE"
@@ -27,19 +26,7 @@ echo "done extract zip"
 # To apply the changes immediately, just run the shell commands directly or
 # execute them from the profile using a command such as source $HOME/.profile.
 # Verify that you've installed Go by opening a command prompt and typing the following command:
-echo "start add to path"
-export PATH=$PATH:/usr/local/go/bin
-
-#Confirm that the command prints the installed version of Go.
-go version
-
-if grep -qF "$PATH_ADDITION" /etc/profile; then
-  echo "$PATH_ADDITION is already in /etc/profile"
-else
-  echo "adding $PATH_ADDITION to /etc/profile"
-  sudo echo "$PATH_ADDITION" >> /etc/profile
-fi
-
-echo done
-
-echo "done add to path"
+echo "install alternative go"
+sudo update-alternatives --remove-all go
+sudo update-alternatives --install /usr/bin/go go /usr/local/go/bin/go 10
+echo ""
