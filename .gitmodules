@@ -7,3 +7,6 @@
 [submodule "ubuntu/alacritty"]
 	path = ubuntu/alacritty
 	url = https://github.com/alacritty/alacritty.git
+[submodule "ubuntu/rtl8812au"]
+	path = ubuntu/rtl8812au
+	url = https://github.com/aircrack-ng/rtl8812au.git
