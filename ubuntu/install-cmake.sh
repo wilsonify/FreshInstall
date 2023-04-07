@@ -23,11 +23,19 @@ sudo bash /opt/cmake-$VERSION-linux-x86_64.sh --prefix=/opt/cmake --skip-license
 
 # erase exiting update-alternatives setup
 sudo update-alternatives --remove-all cmake
+sudo update-alternatives --remove-all ctest
+sudo update-alternatives --remove-all cpack
 
 # Install Alternatives, bigger number is a higher priority.
 sudo update-alternatives --install /usr/bin/cmake cmake /opt/cmake/cmake-3.16/bin/cmake 40
 sudo update-alternatives --install /usr/bin/cmake cmake /opt/cmake/cmake-3.24/bin/cmake 50
 sudo update-alternatives --install /usr/bin/cmake cmake /opt/cmake/cmake-3.26/bin/cmake 60
+
+sudo update-alternatives --install /usr/bin/ctest ctest /opt/cmake/cmake-3.24/bin/ctest 50
+sudo update-alternatives --install /usr/bin/ctest ctest /opt/cmake/cmake-3.26/bin/ctest 60
+
+sudo update-alternatives --install /usr/bin/cpack cpack /opt/cmake/cmake-3.24/bin/cpack 50
+sudo update-alternatives --install /usr/bin/cpack cpack /opt/cmake/cmake-3.26/bin/cpack 60
 
 # Configure Alternatives
 # configuring the default commands for gcc, g++. It's easy to switch interactively:
