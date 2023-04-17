@@ -1,0 +1,8 @@
+services:
+  silverbullet:
+    image: zefhemel/silverbullet
+    restart: unless-stopped
+    volumes:
+      - /opt/silverbullet/space:/space
+    ports:
+      - 30000:3000
