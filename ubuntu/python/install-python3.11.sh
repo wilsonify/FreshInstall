@@ -16,11 +16,11 @@ tk-dev \
 zlib1g-dev
 
 # Download the latest release’s source code from the Python download page using wget :
-sudo wget https://www.python.org/ftp/python/3.11.0/Python-3.11.0b4.tgz
-sudo tar xzf Python-3.11.0b4.tgz
-sudo mv Python-3.11.0b4 /usr/src
+sudo wget https://www.python.org/ftp/python/3.11.4/Python-3.11.4.tgz
+sudo tar xzf Python-3.11.4.tgz
+sudo mv Python-3.11.4 /usr/src
 
 # The --enable-optimizations option optimizes the Python binary by running multiple tests.
 # altinstall prevents replacing the default python binary file /usr/bin/python.
-cd /usr/src/Python-3.11.0b4 && ./configure --enable-optimizations && sudo make -j 8 altinstall
+cd /usr/src/Python-3.11.4 && ./configure --enable-optimizations && sudo make -j 8 altinstall
 python3.11 --version
