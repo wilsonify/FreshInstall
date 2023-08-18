@@ -10,3 +10,6 @@
 [submodule "ubuntu/rtl8812au"]
 	path = ubuntu/rtl8812au
 	url = https://github.com/aircrack-ng/rtl8812au.git
+[submodule "aws/external/terraform-in-action"]
+	path = aws/external/terraform-in-action
+	url = https://github.com/wilsonify/terraform-in-action.git
