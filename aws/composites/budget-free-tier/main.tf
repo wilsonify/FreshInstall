@@ -1,7 +1,7 @@
 module "aws_budget" {
   for_each = var.budgets
 
-  source  = "./modules/budget"
+  source  = "../../modules/budget"
   context = module.this.context
 
   # Compulsory values
