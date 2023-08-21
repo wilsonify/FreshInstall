@@ -1,31 +1,31 @@
 output "aws_iam_group_policy_attachment_tfer--Admin_AdministratorAccess_id" {
-  value = "${aws_iam_group_policy_attachment.tfer--Admin_AdministratorAccess.id}"
+  value = aws_iam_group_policy_attachment.tfer--Admin_AdministratorAccess.id
 }
 
 output "aws_iam_group_tfer--Admin_id" {
-  value = "${aws_iam_group.tfer--Admin.id}"
+  value = aws_iam_group.tfer--Admin.id
 }
 
 output "aws_iam_role_policy_attachment_tfer--AWSServiceRoleForSupport_AWSSupportServiceRolePolicy_id" {
-  value = "${aws_iam_role_policy_attachment.tfer--AWSServiceRoleForSupport_AWSSupportServiceRolePolicy.id}"
+  value = aws_iam_role_policy_attachment.tfer--AWSServiceRoleForSupport_AWSSupportServiceRolePolicy.id
 }
 
 output "aws_iam_role_policy_attachment_tfer--AWSServiceRoleForTrustedAdvisor_AWSTrustedAdvisorServiceRolePolicy_id" {
-  value = "${aws_iam_role_policy_attachment.tfer--AWSServiceRoleForTrustedAdvisor_AWSTrustedAdvisorServiceRolePolicy.id}"
+  value = aws_iam_role_policy_attachment.tfer--AWSServiceRoleForTrustedAdvisor_AWSTrustedAdvisorServiceRolePolicy.id
 }
 
 output "aws_iam_role_tfer--AWSServiceRoleForSupport_id" {
-  value = "${aws_iam_role.tfer--AWSServiceRoleForSupport.id}"
+  value = aws_iam_role.tfer--AWSServiceRoleForSupport.id
 }
 
 output "aws_iam_role_tfer--AWSServiceRoleForTrustedAdvisor_id" {
-  value = "${aws_iam_role.tfer--AWSServiceRoleForTrustedAdvisor.id}"
+  value = aws_iam_role.tfer--AWSServiceRoleForTrustedAdvisor.id
 }
 
 output "aws_iam_user_group_membership_tfer--thom-002F-Admin_id" {
-  value = "${aws_iam_user_group_membership.tfer--thom-002F-Admin.id}"
+  value = aws_iam_user_group_membership.tfer--thom-002F-Admin.id
 }
 
 output "aws_iam_user_tfer--AIDAIXQLU7ITRUTA44KVI_id" {
-  value = "${aws_iam_user.tfer--AIDAIXQLU7ITRUTA44KVI.id}"
+  value = aws_iam_user.tfer--AIDAIXQLU7ITRUTA44KVI.id
 }
