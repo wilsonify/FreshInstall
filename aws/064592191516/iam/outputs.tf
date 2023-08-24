@@ -14,12 +14,24 @@ output "aws_iam_role_policy_attachment_tfer--AWSServiceRoleForTrustedAdvisor_AWS
   value = aws_iam_role_policy_attachment.tfer--AWSServiceRoleForTrustedAdvisor_AWSTrustedAdvisorServiceRolePolicy.id
 }
 
+output "aws_iam_role_policy_attachment_tfer--transcode-video_AWSElementalMediaConvertFullAccess_id" {
+  value = aws_iam_role_policy_attachment.tfer--transcode-video_AWSElementalMediaConvertFullAccess.id
+}
+
+output "aws_iam_role_policy_attachment_tfer--transcode-video_AWSLambdaExecute_id" {
+  value = aws_iam_role_policy_attachment.tfer--transcode-video_AWSLambdaExecute.id
+}
+
 output "aws_iam_role_tfer--AWSServiceRoleForSupport_id" {
   value = aws_iam_role.tfer--AWSServiceRoleForSupport.id
 }
 
 output "aws_iam_role_tfer--AWSServiceRoleForTrustedAdvisor_id" {
   value = aws_iam_role.tfer--AWSServiceRoleForTrustedAdvisor.id
+}
+
+output "aws_iam_role_tfer--transcode-video_id" {
+  value = aws_iam_role.tfer--transcode-video.id
 }
 
 output "aws_iam_user_group_membership_tfer--thom-002F-Admin_id" {
