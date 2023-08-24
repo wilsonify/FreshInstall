@@ -14,6 +14,14 @@ output "aws_iam_role_policy_attachment_tfer--AWSServiceRoleForTrustedAdvisor_AWS
   value = aws_iam_role_policy_attachment.tfer--AWSServiceRoleForTrustedAdvisor_AWSTrustedAdvisorServiceRolePolicy.id
 }
 
+output "aws_iam_role_policy_attachment_tfer--media-convert-role_AmazonAPIGatewayInvokeFullAccess_id" {
+  value = aws_iam_role_policy_attachment.tfer--media-convert-role_AmazonAPIGatewayInvokeFullAccess.id
+}
+
+output "aws_iam_role_policy_attachment_tfer--media-convert-role_AmazonS3FullAccess_id" {
+  value = aws_iam_role_policy_attachment.tfer--media-convert-role_AmazonS3FullAccess.id
+}
+
 output "aws_iam_role_policy_attachment_tfer--transcode-video_AWSElementalMediaConvertFullAccess_id" {
   value = aws_iam_role_policy_attachment.tfer--transcode-video_AWSElementalMediaConvertFullAccess.id
 }
@@ -28,6 +36,10 @@ output "aws_iam_role_tfer--AWSServiceRoleForSupport_id" {
 
 output "aws_iam_role_tfer--AWSServiceRoleForTrustedAdvisor_id" {
   value = aws_iam_role.tfer--AWSServiceRoleForTrustedAdvisor.id
+}
+
+output "aws_iam_role_tfer--media-convert-role_id" {
+  value = aws_iam_role.tfer--media-convert-role.id
 }
 
 output "aws_iam_role_tfer--transcode-video_id" {
