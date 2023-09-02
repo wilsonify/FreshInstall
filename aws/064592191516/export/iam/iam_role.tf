@@ -140,3 +140,37 @@ POLICY
     app = "video-encoding-pipeline"
   }
 }
+
+resource "aws_iam_role" "tfer--twentyfour-hour-video-pyt-IamRoleCustomResourcesLa-14ZCQM4Y0UVKN" {
+  assume_role_policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+
+  inline_policy {
+    name   = "dev-twentyfour-hour-video-python-custom-resources-lambda"
+    policy = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:PutBucketNotification\",\"s3:GetBucketNotification\"],\"Resource\":\"arn:aws:s3:::064592191516-serverless-video-upload-python\",\"Effect\":\"Allow\"},{\"Action\":[\"lambda:AddPermission\",\"lambda:RemovePermission\"],\"Resource\":\"arn:aws:lambda:us-east-1:064592191516:function:*\",\"Effect\":\"Allow\"}]}"
+  }
+
+  max_session_duration = "3600"
+  name                 = "twentyfour-hour-video-pyt-IamRoleCustomResourcesLa-14ZCQM4Y0UVKN"
+  path                 = "/"
+
+  tags = {
+    STAGE = "dev"
+  }
+
+  tags_all = {
+    STAGE = "dev"
+  }
+}

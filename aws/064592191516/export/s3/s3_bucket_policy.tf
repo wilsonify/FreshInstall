@@ -8,7 +8,7 @@ resource "aws_s3_bucket_policy" "tfer--twentyfour-hour-video-de-serverlessdeploy
   policy = "{\"Statement\":[{\"Action\":\"s3:*\",\"Condition\":{\"Bool\":{\"aws:SecureTransport\":\"false\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":[\"arn:aws:s3:::twentyfour-hour-video-de-serverlessdeploymentbuck-rhspwz38q1iv/*\",\"arn:aws:s3:::twentyfour-hour-video-de-serverlessdeploymentbuck-rhspwz38q1iv\"]}],\"Version\":\"2008-10-17\"}"
 }
 
-resource "aws_s3_bucket_policy" "tfer--twentyfour-hour-video-py-serverlessdeploymentbuck-109stxt1w7iw0" {
-  bucket = "twentyfour-hour-video-py-serverlessdeploymentbuck-109stxt1w7iw0"
-  policy = "{\"Statement\":[{\"Action\":\"s3:*\",\"Condition\":{\"Bool\":{\"aws:SecureTransport\":\"false\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":[\"arn:aws:s3:::twentyfour-hour-video-py-serverlessdeploymentbuck-109stxt1w7iw0/*\",\"arn:aws:s3:::twentyfour-hour-video-py-serverlessdeploymentbuck-109stxt1w7iw0\"]}],\"Version\":\"2008-10-17\"}"
+resource "aws_s3_bucket_policy" "tfer--twentyfour-hour-video-py-serverlessdeploymentbuck-ssbx8kjplk1k" {
+  bucket = "twentyfour-hour-video-py-serverlessdeploymentbuck-ssbx8kjplk1k"
+  policy = "{\"Statement\":[{\"Action\":\"s3:*\",\"Condition\":{\"Bool\":{\"aws:SecureTransport\":\"false\"}},\"Effect\":\"Deny\",\"Principal\":\"*\",\"Resource\":[\"arn:aws:s3:::twentyfour-hour-video-py-serverlessdeploymentbuck-ssbx8kjplk1k/*\",\"arn:aws:s3:::twentyfour-hour-video-py-serverlessdeploymentbuck-ssbx8kjplk1k\"]}],\"Version\":\"2008-10-17\"}"
 }

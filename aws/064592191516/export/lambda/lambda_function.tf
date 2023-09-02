@@ -59,6 +59,32 @@ resource "aws_lambda_function" "tfer--twentyfour-hour-video-dev-transcode-video"
   }
 }
 
+resource "aws_lambda_function" "tfer--twentyfour-hour-video-python-dev-custom-resource-existing-s3" {
+  architectures                  = ["x86_64"]
+  function_name                  = "twentyfour-hour-video-python-dev-custom-resource-existing-s3"
+  handler                        = "s3/handler.handler"
+  memory_size                    = "1024"
+  package_type                   = "Zip"
+  reserved_concurrent_executions = "-1"
+  role                           = "arn:aws:iam::064592191516:role/twentyfour-hour-video-pyt-IamRoleCustomResourcesLa-14ZCQM4Y0UVKN"
+  runtime                        = "nodejs16.x"
+  source_code_hash               = "eg6CnTQoX8hAylWdAcnMxFSwIFntmpfCIzWLkAznm8Q="
+
+  tags = {
+    STAGE = "dev"
+  }
+
+  tags_all = {
+    STAGE = "dev"
+  }
+
+  timeout = "180"
+
+  tracing_config {
+    mode = "PassThrough"
+  }
+}
+
 resource "aws_lambda_function" "tfer--twentyfour-hour-video-python-dev-transcode-video" {
   architectures = ["x86_64"]
 
@@ -70,14 +96,18 @@ resource "aws_lambda_function" "tfer--twentyfour-hour-video-python-dev-transcode
     }
   }
 
-  function_name                  = "twentyfour-hour-video-python-dev-transcode-video"
-  handler                        = "transcode_video_python/__main__.lambda_handler"
+  function_name = "twentyfour-hour-video-python-dev-transcode-video"
+
+  image_config {
+    command = ["transcode_video_python/__main__.lambda_handler"]
+  }
+
+  image_uri                      = "064592191516.dkr.ecr.us-east-1.amazonaws.com/transcode_video_python@sha256:34e2a1603ba3bceb7f0e51ccdef6d5a1c90c4d68af2bc3bf6af4491a13e8d688"
   memory_size                    = "1024"
-  package_type                   = "Zip"
+  package_type                   = "Image"
   reserved_concurrent_executions = "-1"
   role                           = "arn:aws:iam::064592191516:role/transcode-video"
-  runtime                        = "python3.9"
-  source_code_hash               = "Ifhv6XrI72wYqltYT1pZLg/y7XINGNiRTH/yQ1xQy9I="
+  source_code_hash               = "34e2a1603ba3bceb7f0e51ccdef6d5a1c90c4d68af2bc3bf6af4491a13e8d688"
 
   tags = {
     STAGE = "dev"
