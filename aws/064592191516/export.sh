@@ -14,7 +14,6 @@ terraformer import aws --profile=064592191516 --resources=budgets
 terraformer import aws --profile=064592191516 --resources=sg
 terraformer import aws --profile=064592191516 --resources=iam
 terraformer import aws --profile=064592191516 --resources=s3
-
 terraformer import aws --profile=064592191516 --resources=api_gateway
 terraformer import aws --profile=064592191516 --resources=transit_gateway
 terraformer import aws --profile=064592191516 --resources=vpn_gateway

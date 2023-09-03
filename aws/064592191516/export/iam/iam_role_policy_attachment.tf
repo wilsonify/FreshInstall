@@ -27,3 +27,13 @@ resource "aws_iam_role_policy_attachment" "tfer--transcode-video_AWSLambdaExecut
   policy_arn = "arn:aws:iam::aws:policy/AWSLambdaExecute"
   role       = "transcode-video"
 }
+
+resource "aws_iam_role_policy_attachment" "tfer--transcode-video_LambdaCloudWatchLogsPolicy" {
+  policy_arn = "arn:aws:iam::064592191516:policy/LambdaCloudWatchLogsPolicy"
+  role       = "transcode-video"
+}
+
+resource "aws_iam_role_policy_attachment" "tfer--twentyfour-hour-video-python-IamRoleCustomResources_custom-resources-lambda-policy" {
+  policy_arn = "arn:aws:iam::064592191516:policy/custom-resources-lambda-policy"
+  role       = "twentyfour-hour-video-python-IamRoleCustomResources"
+}

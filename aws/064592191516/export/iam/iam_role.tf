@@ -119,7 +119,8 @@ resource "aws_iam_role" "tfer--transcode-video" {
       "Effect": "Allow",
       "Principal": {
         "Service": "lambda.amazonaws.com"
-      }
+      },
+      "Sid": ""
     }
   ],
   "Version": "2012-10-17"
@@ -127,7 +128,7 @@ resource "aws_iam_role" "tfer--transcode-video" {
 POLICY
 
   description          = "Allows Lambda functions to call AWS video transcode services on your behalf."
-  managed_policy_arns  = ["arn:aws:iam::aws:policy/AWSElementalMediaConvertFullAccess", "arn:aws:iam::aws:policy/AWSLambdaExecute"]
+  managed_policy_arns  = ["arn:aws:iam::064592191516:policy/LambdaCloudWatchLogsPolicy", "arn:aws:iam::aws:policy/AWSElementalMediaConvertFullAccess", "arn:aws:iam::aws:policy/AWSLambdaExecute"]
   max_session_duration = "3600"
   name                 = "transcode-video"
   path                 = "/"
@@ -141,7 +142,7 @@ POLICY
   }
 }
 
-resource "aws_iam_role" "tfer--twentyfour-hour-video-pyt-IamRoleCustomResourcesLa-14ZCQM4Y0UVKN" {
+resource "aws_iam_role" "tfer--twentyfour-hour-video-python-IamRoleCustomResources" {
   assume_role_policy = <<POLICY
 {
   "Statement": [
@@ -150,20 +151,18 @@ resource "aws_iam_role" "tfer--twentyfour-hour-video-pyt-IamRoleCustomResourcesL
       "Effect": "Allow",
       "Principal": {
         "Service": "lambda.amazonaws.com"
-      }
+      },
+      "Sid": ""
     }
   ],
   "Version": "2012-10-17"
 }
 POLICY
 
-  inline_policy {
-    name   = "dev-twentyfour-hour-video-python-custom-resources-lambda"
-    policy = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"s3:PutBucketNotification\",\"s3:GetBucketNotification\"],\"Resource\":\"arn:aws:s3:::064592191516-serverless-video-upload-python\",\"Effect\":\"Allow\"},{\"Action\":[\"lambda:AddPermission\",\"lambda:RemovePermission\"],\"Resource\":\"arn:aws:lambda:us-east-1:064592191516:function:*\",\"Effect\":\"Allow\"}]}"
-  }
-
+  description          = "Allows Lambda functions to call AWS video transcode services on your behalf."
+  managed_policy_arns  = ["arn:aws:iam::064592191516:policy/custom-resources-lambda-policy"]
   max_session_duration = "3600"
-  name                 = "twentyfour-hour-video-pyt-IamRoleCustomResourcesLa-14ZCQM4Y0UVKN"
+  name                 = "twentyfour-hour-video-python-IamRoleCustomResources"
   path                 = "/"
 
   tags = {
