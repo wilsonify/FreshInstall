@@ -1,3 +1,6 @@
-output "aws_s3_bucket_tfer--064592191516-books_id" {
-  value = aws_s3_bucket.tfer--064592191516-books.id
+output "aws_s3_bucket_books" {
+  value = aws_s3_bucket.books.bucket
+}
+output "aws_s3_bucket_books_arn" {
+  value = aws_s3_bucket.books.arn
 }

@@ -1,22 +1,3 @@
-provider "aws" {}
-
-terraform {
-  required_version = ">1.5.5"
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.76.1"
-    }
-  }
-}
-
-# Define a variable for the AWS account number
-variable "aws_account_number" {
-  description = "AWS Account Number"
-  type        = string
-  default     = "064592191516"
-}
-
 resource "aws_s3_bucket" "books" {
   arn                 = "arn:aws:s3:::${var.aws_account_number}-books"
   bucket              = "${var.aws_account_number}-books"
@@ -58,6 +39,3 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "book_sse_config" 
   }
 }
 
-output "aws_s3_bucket_books_arn" {
-  value = aws_s3_bucket.books.arn
-}
