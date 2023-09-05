@@ -1,0 +1,37 @@
+{
+  "Id": "__default_policy_ID",
+  "Statement": [
+    {
+      "Action": "SQS:*",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::064592191516:root"
+      },
+      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-fail",
+      "Sid": "__owner_statement"
+    },
+    {
+      "Action": "SQS:SendMessage",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::064592191516:role/twentyfour-hour-video-python-IamRoleCustomResources"
+      },
+      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-fail",
+      "Sid": "__sender_statement"
+    },
+    {
+      "Action": [
+        "SQS:ChangeMessageVisibility",
+        "SQS:DeleteMessage",
+        "SQS:ReceiveMessage"
+      ],
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::064592191516:role/twentyfour-hour-video-python-IamRoleCustomResources"
+      },
+      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-fail",
+      "Sid": "__receiver_statement"
+    }
+  ],
+  "Version": "2012-10-17"
+}

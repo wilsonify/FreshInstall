@@ -7,47 +7,7 @@ resource "aws_sqs_queue" "tfer--serverless-video-transcode-sqs-fail" {
   max_message_size                  = "262144"
   message_retention_seconds         = "345600"
   name                              = "serverless-video-transcode-sqs-fail"
-
-  policy = <<POLICY
-{
-  "Id": "__default_policy_ID",
-  "Statement": [
-    {
-      "Action": "SQS:*",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::064592191516:root"
-      },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-fail",
-      "Sid": "__owner_statement"
-    },
-    {
-      "Action": "SQS:SendMessage",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::064592191516:role/twentyfour-hour-video-python-IamRoleCustomResources"
-      },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-fail",
-      "Sid": "__sender_statement"
-    },
-    {
-      "Action": [
-        "SQS:ChangeMessageVisibility",
-        "SQS:DeleteMessage",
-        "SQS:ReceiveMessage"
-      ],
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::064592191516:role/twentyfour-hour-video-python-IamRoleCustomResources"
-      },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-fail",
-      "Sid": "__receiver_statement"
-    }
-  ],
-  "Version": "2012-10-17"
-}
-POLICY
-
+  policy = data.aws_iam_policy_document.serverless-video-transcode-sqs-fail-policy-doc.json
   receive_wait_time_seconds  = "0"
   redrive_allow_policy       = "{\"redrivePermission\":\"byQueue\",\"sourceQueueArns\":[\"arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-done\",\"arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-try\"]}"
   sqs_managed_sse_enabled    = "false"
