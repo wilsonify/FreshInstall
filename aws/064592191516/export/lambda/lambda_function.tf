@@ -1,29 +1,3 @@
-resource "aws_lambda_function" "tfer--hello-world-dev-hello" {
-  architectures                  = ["x86_64"]
-  function_name                  = "hello-world-dev-hello"
-  handler                        = "handler.hello"
-  memory_size                    = "1024"
-  package_type                   = "Zip"
-  reserved_concurrent_executions = "-1"
-  role                           = "arn:aws:iam::064592191516:role/hello-world-dev-us-east-1-lambdaRole"
-  runtime                        = "nodejs18.x"
-  source_code_hash               = "eFxg46Ci66caKp3lQN7q04Dbx/E+MG38qq+1RZv8Ld8="
-
-  tags = {
-    STAGE = "dev"
-  }
-
-  tags_all = {
-    STAGE = "dev"
-  }
-
-  timeout = "6"
-
-  tracing_config {
-    mode = "PassThrough"
-  }
-}
-
 resource "aws_lambda_function" "tfer--twentyfour-hour-video-python-transcode-video" {
   architectures = ["x86_64"]
 
@@ -41,12 +15,12 @@ resource "aws_lambda_function" "tfer--twentyfour-hour-video-python-transcode-vid
     command = ["transcode_video_python/__main__.lambda_handler"]
   }
 
-  image_uri                      = "064592191516.dkr.ecr.us-east-1.amazonaws.com/transcode_video_python:latest"
+  image_uri                      = "064592191516.dkr.ecr.us-east-1.amazonaws.com/transcode_video_python@sha256:678ee8b39e57380f9051d0e6ed2ee31c1c4981f7e123639ca3e2210ba54fa8db"
   memory_size                    = "1024"
   package_type                   = "Image"
   reserved_concurrent_executions = "-1"
   role                           = "arn:aws:iam::064592191516:role/transcode-video"
-  source_code_hash               = "a2314b2c846fa4f3bb29b3f64cfd1c7f32c391a67ab05be4de86cfb1d056e0ba"
+  source_code_hash               = "678ee8b39e57380f9051d0e6ed2ee31c1c4981f7e123639ca3e2210ba54fa8db"
 
   tags = {
     STAGE = "dev"

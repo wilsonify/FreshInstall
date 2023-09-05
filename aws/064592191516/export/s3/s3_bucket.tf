@@ -73,6 +73,31 @@ resource "aws_s3_bucket" "tfer--064592191516-mov" {
   }
 }
 
+resource "aws_s3_bucket" "tfer--064592191516-pokemon" {
+  arn                 = "arn:aws:s3:::064592191516-pokemon"
+  bucket              = "064592191516-pokemon"
+  force_destroy       = "false"
+  hosted_zone_id      = "Z3AQBSTGFYJSTF"
+  object_lock_enabled = "false"
+  request_payer       = "BucketOwner"
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        kms_master_key_id = "arn:aws:kms:us-east-1:064592191516:alias/aws/s3"
+        sse_algorithm     = "aws:kms"
+      }
+
+      bucket_key_enabled = "true"
+    }
+  }
+
+  versioning {
+    enabled    = "false"
+    mfa_delete = "false"
+  }
+}
+
 resource "aws_s3_bucket" "tfer--064592191516-serverless-video-transcode" {
   arn                 = "arn:aws:s3:::064592191516-serverless-video-transcode"
   bucket              = "064592191516-serverless-video-transcode"
@@ -179,31 +204,6 @@ resource "aws_s3_bucket" "tfer--064592191516-terraform-state" {
   force_destroy       = "false"
   hosted_zone_id      = "Z3AQBSTGFYJSTF"
   object_lock_enabled = "false"
-  request_payer       = "BucketOwner"
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        kms_master_key_id = "arn:aws:kms:us-east-1:064592191516:alias/aws/s3"
-        sse_algorithm     = "aws:kms"
-      }
-
-      bucket_key_enabled = "true"
-    }
-  }
-
-  versioning {
-    enabled    = "false"
-    mfa_delete = "false"
-  }
-}
-
-resource "aws_s3_bucket" "tfer--hello-world-dev-serverlessdeploymentbucket-120sd55s2qo3u" {
-  arn                 = "arn:aws:s3:::hello-world-dev-serverlessdeploymentbucket-120sd55s2qo3u"
-  bucket              = "hello-world-dev-serverlessdeploymentbucket-120sd55s2qo3u"
-  force_destroy       = "false"
-  hosted_zone_id      = "Z3AQBSTGFYJSTF"
-  object_lock_enabled = "false"
 
   policy = <<POLICY
 {
@@ -218,12 +218,25 @@ resource "aws_s3_bucket" "tfer--hello-world-dev-serverlessdeploymentbucket-120sd
       "Effect": "Deny",
       "Principal": "*",
       "Resource": [
-        "arn:aws:s3:::hello-world-dev-serverlessdeploymentbucket-120sd55s2qo3u/*",
-        "arn:aws:s3:::hello-world-dev-serverlessdeploymentbucket-120sd55s2qo3u"
-      ]
+        "arn:aws:s3:::064592191516-terraform-state",
+        "arn:aws:s3:::064592191516-terraform-state/*"
+      ],
+      "Sid": "EnforcedTLS"
+    },
+    {
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::064592191516:root"
+      },
+      "Resource": [
+        "arn:aws:s3:::064592191516-terraform-state",
+        "arn:aws:s3:::064592191516-terraform-state/*"
+      ],
+      "Sid": "RootAccess"
     }
   ],
-  "Version": "2008-10-17"
+  "Version": "2012-10-17"
 }
 POLICY
 
@@ -232,23 +245,16 @@ POLICY
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
+        kms_master_key_id = "arn:aws:kms:us-east-1:064592191516:alias/aws/s3"
+        sse_algorithm     = "aws:kms"
       }
 
-      bucket_key_enabled = "false"
+      bucket_key_enabled = "true"
     }
   }
 
-  tags = {
-    STAGE = "dev"
-  }
-
-  tags_all = {
-    STAGE = "dev"
-  }
-
   versioning {
-    enabled    = "false"
+    enabled    = "true"
     mfa_delete = "false"
   }
 }
