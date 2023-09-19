@@ -91,3 +91,4 @@ terraformer import aws --profile=064592191516 --resources=wafv2_cloudfront
 terraformer import aws --profile=064592191516 --resources=wafv2_regional
 terraformer import aws --profile=064592191516 --resources=workspaces
 terraformer import aws --profile=064592191516 --resources=xray
+find . -type f -name "terraform.tfstate" -exec rm {} \;
