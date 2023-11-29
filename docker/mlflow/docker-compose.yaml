@@ -10,3 +10,8 @@ services:
     volumes:
       - /home/thom/.aws/credentials:/root/.aws/credentials
     entrypoint: mlflow server --host 0.0.0.0 --default-artifact-root s3://064592191516-mlflow/artifacts
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 2GB
