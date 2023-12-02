@@ -1,15 +1,36 @@
-version: "3"
+version: "3.7"
+x-environment: &shared_environment
+  - POSTGRES_DB=mlflow-db
+  - POSTGRES_USER=mlflow-user
+  - POSTGRES_PASSWORD=mlflow-pass
 
 services:
+  postgresql:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    network_mode: "host"
+    environment: *shared_environment
+    volumes:
+      - /opt/postgresql/datapg_vol:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   mlflow:
-    image: larribas/mlflow:latest
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    image: custom-mlflow:v2.0.1
     network_mode: "host"
     restart: unless-stopped
+    environment: *shared_environment
     ports:
       - 5000:5000
     volumes:
       - /home/thom/.aws/credentials:/root/.aws/credentials
-    entrypoint: mlflow server --host 0.0.0.0 --default-artifact-root s3://064592191516-mlflow/artifacts
+    entrypoint: mlflow server --host 0.0.0.0 --default-artifact-root s3://064592191516-mlflow/artifacts --backend-store-uri postgresql://mlflow-user:mlflow-pass@localhost:5432/mlflow-db
     deploy:
       resources:
         limits:
