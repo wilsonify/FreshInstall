@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=IntelliJ IDEA
+Icon=/opt/idea/2023.3/bin/idea.png
+Type=Application
+Exec=idea
+Actions=new-window;
+Comment=Powerful and customizable IDE for JVM-based development
+Terminal=false
+Categories=Development;IDE;
+StartupWMClass=jetbrains-idea

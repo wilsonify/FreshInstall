@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=PyCharm
+Exec=pycharm
+Icon=/usr/share/icons/pycharm/512px-PyCharm_Icon.svg.png
+Type=Application
+Actions=new-window;
+
+[Desktop Action new-window]
+Name=New Window
+Exec=pycharm
