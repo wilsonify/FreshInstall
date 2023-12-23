@@ -1,0 +1,16 @@
+version: "2.1"
+services:
+  calibre-web:
+    image: ghcr.io/linuxserver/calibre-web:0.6.21
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    volumes:
+      - /opt/calibre-web/data:/config
+      - /opt/calibre-web/library:/books
+    ports:
+      - 8083:8083
+    restart: unless-stopped
