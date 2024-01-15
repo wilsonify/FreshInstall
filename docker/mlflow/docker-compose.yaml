@@ -3,6 +3,7 @@ x-environment: &shared_environment
   - POSTGRES_DB=mlflow-db
   - POSTGRES_USER=mlflow-user
   - POSTGRES_PASSWORD=mlflow-pass
+  - AWS_DEFAULT_PROFILE=064592191516
 
 services:
   postgresql:
