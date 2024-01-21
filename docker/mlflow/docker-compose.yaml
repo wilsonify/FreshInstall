@@ -23,7 +23,7 @@ services:
     depends_on:
       postgresql:
         condition: service_healthy
-    image: custom-mlflow:v2.0.1
+    image: 064592191516.dkr.ecr.us-east-1.amazonaws.com/mlflow:2.9.2
     network_mode: "host"
     restart: unless-stopped
     environment: *shared_environment
@@ -32,6 +32,11 @@ services:
     volumes:
       - /home/thom/.aws/credentials:/root/.aws/credentials
     entrypoint: mlflow server --host 0.0.0.0 --default-artifact-root s3://064592191516-mlflow/artifacts --backend-store-uri postgresql://mlflow-user:mlflow-pass@localhost:5432/mlflow-db
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:5000/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     deploy:
       resources:
         limits:
