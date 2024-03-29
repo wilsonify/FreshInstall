@@ -1,3 +1,11 @@
+output "aws_iam_access_key_tfer--AKIAQ6CP6UAOC7WKBT6I_id" {
+  value = "${aws_iam_access_key.tfer--AKIAQ6CP6UAOC7WKBT6I.id}"
+}
+
+output "aws_iam_access_key_tfer--AKIAQ6CP6UAOHJAS3JEW_id" {
+  value = "${aws_iam_access_key.tfer--AKIAQ6CP6UAOHJAS3JEW.id}"
+}
+
 output "aws_iam_group_policy_attachment_tfer--Admin_AdministratorAccess_id" {
   value = "${aws_iam_group_policy_attachment.tfer--Admin_AdministratorAccess.id}"
 }

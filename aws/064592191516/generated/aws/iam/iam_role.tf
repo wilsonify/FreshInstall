@@ -452,16 +452,16 @@ resource "aws_iam_role" "tfer--AmazonSageMakerServiceCatalogProductsUseRole" {
       "Effect": "Allow",
       "Principal": {
         "Service": [
-          "cloudformation.amazonaws.com",
-          "codepipeline.amazonaws.com",
-          "glue.amazonaws.com",
-          "firehose.amazonaws.com",
-          "states.amazonaws.com",
-          "apigateway.amazonaws.com",
           "events.amazonaws.com",
           "sagemaker.amazonaws.com",
-          "lambda.amazonaws.com",
-          "codebuild.amazonaws.com"
+          "states.amazonaws.com",
+          "firehose.amazonaws.com",
+          "codebuild.amazonaws.com",
+          "codepipeline.amazonaws.com",
+          "cloudformation.amazonaws.com",
+          "apigateway.amazonaws.com",
+          "glue.amazonaws.com",
+          "lambda.amazonaws.com"
         ]
       }
     }
