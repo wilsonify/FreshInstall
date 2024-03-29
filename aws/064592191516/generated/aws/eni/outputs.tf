@@ -1,7 +1,3 @@
-output "aws_network_interface_tfer--eni-00048b34c2c671358_id" {
-  value = "${aws_network_interface.tfer--eni-00048b34c2c671358.id}"
-}
-
 output "aws_network_interface_tfer--eni-01717045e59d3965c_id" {
   value = "${aws_network_interface.tfer--eni-01717045e59d3965c.id}"
 }
@@ -20,6 +16,10 @@ output "aws_network_interface_tfer--eni-06f01e0f687297a5e_id" {
 
 output "aws_network_interface_tfer--eni-0a9de076283d4e046_id" {
   value = "${aws_network_interface.tfer--eni-0a9de076283d4e046.id}"
+}
+
+output "aws_network_interface_tfer--eni-0ed60f1013b3c9adf_id" {
+  value = "${aws_network_interface.tfer--eni-0ed60f1013b3c9adf.id}"
 }
 
 output "aws_network_interface_tfer--eni-0f1a316aeade11687_id" {

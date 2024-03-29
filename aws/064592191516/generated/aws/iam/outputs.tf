@@ -6,6 +6,34 @@ output "aws_iam_group_tfer--Admin_id" {
   value = "${aws_iam_group.tfer--Admin.id}"
 }
 
+output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-2d65ee2c-a014-46ec-95c9-4ee77c65cf68_id" {
+  value = "${aws_iam_policy.tfer--AWSLambdaBasicExecutionRole-2d65ee2c-a014-46ec-95c9-4ee77c65cf68.id}"
+}
+
+output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-3e18e52f-6449-43ce-968d-548a669808fd_id" {
+  value = "${aws_iam_policy.tfer--AWSLambdaBasicExecutionRole-3e18e52f-6449-43ce-968d-548a669808fd.id}"
+}
+
+output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-4b3a8738-5bd2-4352-be0a-80ae1660c94d_id" {
+  value = "${aws_iam_policy.tfer--AWSLambdaBasicExecutionRole-4b3a8738-5bd2-4352-be0a-80ae1660c94d.id}"
+}
+
+output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-4bb6991d-97b8-42fb-a195-06375e892f81_id" {
+  value = "${aws_iam_policy.tfer--AWSLambdaBasicExecutionRole-4bb6991d-97b8-42fb-a195-06375e892f81.id}"
+}
+
+output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-6b591753-05ef-4dbc-91b0-b703957eb94c_id" {
+  value = "${aws_iam_policy.tfer--AWSLambdaBasicExecutionRole-6b591753-05ef-4dbc-91b0-b703957eb94c.id}"
+}
+
+output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-8f6a3e23-2347-4ee7-8328-8857c7a44b7d_id" {
+  value = "${aws_iam_policy.tfer--AWSLambdaBasicExecutionRole-8f6a3e23-2347-4ee7-8328-8857c7a44b7d.id}"
+}
+
+output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-dd9f6f39-6e6b-44f4-8ef2-a120239e1c56_id" {
+  value = "${aws_iam_policy.tfer--AWSLambdaBasicExecutionRole-dd9f6f39-6e6b-44f4-8ef2-a120239e1c56.id}"
+}
+
 output "aws_iam_policy_tfer--AmazonSageMaker-ExecutionPolicy-20230916T105234_id" {
   value = "${aws_iam_policy.tfer--AmazonSageMaker-ExecutionPolicy-20230916T105234.id}"
 }
@@ -18,12 +46,20 @@ output "aws_iam_policy_tfer--LambdaCloudWatchLogsPolicy_id" {
   value = "${aws_iam_policy.tfer--LambdaCloudWatchLogsPolicy.id}"
 }
 
+output "aws_iam_policy_tfer--LambdaInvokePolicy_id" {
+  value = "${aws_iam_policy.tfer--LambdaInvokePolicy.id}"
+}
+
 output "aws_iam_policy_tfer--LambdaInvokeScopedAccessPolicy-c2da024e-757a-45ba-ba07-5f2e54493fdd_id" {
   value = "${aws_iam_policy.tfer--LambdaInvokeScopedAccessPolicy-c2da024e-757a-45ba-ba07-5f2e54493fdd.id}"
 }
 
 output "aws_iam_policy_tfer--S3ListBucketScopedAccessPerBucketPolicy-80b6ba5c-189e-4a51-8e06-bcd981c7cdf4_id" {
   value = "${aws_iam_policy.tfer--S3ListBucketScopedAccessPerBucketPolicy-80b6ba5c-189e-4a51-8e06-bcd981c7cdf4.id}"
+}
+
+output "aws_iam_policy_tfer--STSReadPolicy_id" {
+  value = "${aws_iam_policy.tfer--STSReadPolicy.id}"
 }
 
 output "aws_iam_policy_tfer--StepFunctionsStartExecutionManagementScopedAccessPolicy-03cdcf15-3121-48e4-ba91-a84d2c0ebe62_id" {
@@ -38,8 +74,32 @@ output "aws_iam_policy_tfer--custom-resources-lambda-policy_id" {
   value = "${aws_iam_policy.tfer--custom-resources-lambda-policy.id}"
 }
 
+output "aws_iam_policy_tfer--s3-read-write-kaggle-policy_id" {
+  value = "${aws_iam_policy.tfer--s3-read-write-kaggle-policy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--AWSReservedSSO_AdministratorAccess_32aaa8ad59c1e0bf_AdministratorAccess_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--AWSReservedSSO_AdministratorAccess_32aaa8ad59c1e0bf_AdministratorAccess.id}"
+}
+
 output "aws_iam_role_policy_attachment_tfer--AWSServiceRoleForAmazonSageMakerNotebooks_AmazonSageMakerNotebooksServiceRolePolicy_id" {
   value = "${aws_iam_role_policy_attachment.tfer--AWSServiceRoleForAmazonSageMakerNotebooks_AmazonSageMakerNotebooksServiceRolePolicy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--AWSServiceRoleForApplicationAutoScaling_ECSService_AWSApplicationAutoscalingECSServicePolicy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--AWSServiceRoleForApplicationAutoScaling_ECSService_AWSApplicationAutoscalingECSServicePolicy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--AWSServiceRoleForECS_AmazonECSServiceRolePolicy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--AWSServiceRoleForECS_AmazonECSServiceRolePolicy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--AWSServiceRoleForOrganizations_AWSOrganizationsServiceTrustPolicy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--AWSServiceRoleForOrganizations_AWSOrganizationsServiceTrustPolicy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--AWSServiceRoleForSSO_AWSSSOServiceRolePolicy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--AWSServiceRoleForSSO_AWSSSOServiceRolePolicy.id}"
 }
 
 output "aws_iam_role_policy_attachment_tfer--AWSServiceRoleForSupport_AWSSupportServiceRolePolicy_id" {
@@ -118,6 +178,30 @@ output "aws_iam_role_policy_attachment_tfer--AmazonSagemakerCanvasForecastRole-2
   value = "${aws_iam_role_policy_attachment.tfer--AmazonSagemakerCanvasForecastRole-20230916T105232_AmazonSageMakerCanvasForecastAccess.id}"
 }
 
+output "aws_iam_role_policy_attachment_tfer--GitHubAction-AssumeRoleWithAction_LambdaInvokePolicy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--GitHubAction-AssumeRoleWithAction_LambdaInvokePolicy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--GitHubAction-AssumeRoleWithAction_STSReadPolicy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--GitHubAction-AssumeRoleWithAction_STSReadPolicy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--HelloECSTaskExecutionRole_AmazonEC2ContainerServiceRole_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--HelloECSTaskExecutionRole_AmazonEC2ContainerServiceRole.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--LambdaInvokeRole_LambdaInvokePolicy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--LambdaInvokeRole_LambdaInvokePolicy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--MLFlowECSTaskExecutionRole_AmazonECSTaskExecutionRolePolicy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--MLFlowECSTaskExecutionRole_AmazonECSTaskExecutionRolePolicy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--MLFlowECSTaskExecutionRole_AmazonS3FullAccess_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--MLFlowECSTaskExecutionRole_AmazonS3FullAccess.id}"
+}
+
 output "aws_iam_role_policy_attachment_tfer--StepFunctions-MyStateMachine-w9dekhf9k-role-p2qhxfjbm_LambdaInvokeScopedAccessPolicy-c2da024e-757a-45ba-ba07-5f2e54493fdd_id" {
   value = "${aws_iam_role_policy_attachment.tfer--StepFunctions-MyStateMachine-w9dekhf9k-role-p2qhxfjbm_LambdaInvokeScopedAccessPolicy-c2da024e-757a-45ba-ba07-5f2e54493fdd.id}"
 }
@@ -134,12 +218,68 @@ output "aws_iam_role_policy_attachment_tfer--StepFunctions-MyStateMachine-w9dekh
   value = "${aws_iam_role_policy_attachment.tfer--StepFunctions-MyStateMachine-w9dekhf9k-role-p2qhxfjbm_XRayAccessPolicy-169f2389-3183-4b01-be7f-2234ce0879ae.id}"
 }
 
+output "aws_iam_role_policy_attachment_tfer--ecsTaskExecutionRole_AmazonECSTaskExecutionRolePolicy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--ecsTaskExecutionRole_AmazonECSTaskExecutionRolePolicy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--ecsTaskExecutionRole_s3-read-write-kaggle-policy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--ecsTaskExecutionRole_s3-read-write-kaggle-policy.id}"
+}
+
 output "aws_iam_role_policy_attachment_tfer--media-convert-role_AmazonAPIGatewayInvokeFullAccess_id" {
   value = "${aws_iam_role_policy_attachment.tfer--media-convert-role_AmazonAPIGatewayInvokeFullAccess.id}"
 }
 
 output "aws_iam_role_policy_attachment_tfer--media-convert-role_AmazonS3FullAccess_id" {
   value = "${aws_iam_role_policy_attachment.tfer--media-convert-role_AmazonS3FullAccess.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--mlflow-tf-s01-create-training-dataset-role-760da69c_AWSLambdaBasicExecutionRole-6b591753-05ef-4dbc-91b0-b703957eb94c_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--mlflow-tf-s01-create-training-dataset-role-760da69c_AWSLambdaBasicExecutionRole-6b591753-05ef-4dbc-91b0-b703957eb94c.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--mlflow-tf-s01-create-training-dataset-role-prmds7c1_AWSLambdaBasicExecutionRole-dd9f6f39-6e6b-44f4-8ef2-a120239e1c56_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--mlflow-tf-s01-create-training-dataset-role-prmds7c1_AWSLambdaBasicExecutionRole-dd9f6f39-6e6b-44f4-8ef2-a120239e1c56.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--mlflow-tf-s02-preprocessing-role-e0quy6vk_AWSLambdaBasicExecutionRole-2d65ee2c-a014-46ec-95c9-4ee77c65cf68_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--mlflow-tf-s02-preprocessing-role-e0quy6vk_AWSLambdaBasicExecutionRole-2d65ee2c-a014-46ec-95c9-4ee77c65cf68.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--mlflow-tf-s02-preprocessing-role-e0quy6vk_s3-read-write-kaggle-policy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--mlflow-tf-s02-preprocessing-role-e0quy6vk_s3-read-write-kaggle-policy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--mlflow-tf-s03-train-role-5hkjz400_AWSLambdaBasicExecutionRole-4b3a8738-5bd2-4352-be0a-80ae1660c94d_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--mlflow-tf-s03-train-role-5hkjz400_AWSLambdaBasicExecutionRole-4b3a8738-5bd2-4352-be0a-80ae1660c94d.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--mlflow-tf-s03-train-role-5hkjz400_s3-read-write-kaggle-policy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--mlflow-tf-s03-train-role-5hkjz400_s3-read-write-kaggle-policy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--s01-wine-scrape-lambda-role-budx8fug_AWSLambdaBasicExecutionRole-3e18e52f-6449-43ce-968d-548a669808fd_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--s01-wine-scrape-lambda-role-budx8fug_AWSLambdaBasicExecutionRole-3e18e52f-6449-43ce-968d-548a669808fd.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--s01-wine-scrape-lambda-role-budx8fug_AmazonSQSFullAccess_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--s01-wine-scrape-lambda-role-budx8fug_AmazonSQSFullAccess.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--s01-wine-scrape-lambda-role-budx8fug_s3-read-write-kaggle-policy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--s01-wine-scrape-lambda-role-budx8fug_s3-read-write-kaggle-policy.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--terratest-docker-build-role-8rvj0bed_AWSLambdaBasicExecutionRole-8f6a3e23-2347-4ee7-8328-8857c7a44b7d_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--terratest-docker-build-role-8rvj0bed_AWSLambdaBasicExecutionRole-8f6a3e23-2347-4ee7-8328-8857c7a44b7d.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--thom-cloudshell-s3-role_AWSCloudShellFullAccess_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--thom-cloudshell-s3-role_AWSCloudShellFullAccess.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--thom-cloudshell-s3-role_AmazonS3FullAccess_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--thom-cloudshell-s3-role_AmazonS3FullAccess.id}"
 }
 
 output "aws_iam_role_policy_attachment_tfer--transcode-video_AWSElementalMediaConvertFullAccess_id" {
@@ -158,12 +298,36 @@ output "aws_iam_role_policy_attachment_tfer--transcode-video_custom-resources-la
   value = "${aws_iam_role_policy_attachment.tfer--transcode-video_custom-resources-lambda-policy.id}"
 }
 
+output "aws_iam_role_policy_attachment_tfer--tt-db-role-sd8q9lrf_AWSLambdaBasicExecutionRole-4bb6991d-97b8-42fb-a195-06375e892f81_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--tt-db-role-sd8q9lrf_AWSLambdaBasicExecutionRole-4bb6991d-97b8-42fb-a195-06375e892f81.id}"
+}
+
 output "aws_iam_role_policy_attachment_tfer--twentyfour-hour-video-python-IamRoleCustomResources_custom-resources-lambda-policy_id" {
   value = "${aws_iam_role_policy_attachment.tfer--twentyfour-hour-video-python-IamRoleCustomResources_custom-resources-lambda-policy.id}"
 }
 
+output "aws_iam_role_tfer--AWSReservedSSO_AdministratorAccess_32aaa8ad59c1e0bf_id" {
+  value = "${aws_iam_role.tfer--AWSReservedSSO_AdministratorAccess_32aaa8ad59c1e0bf.id}"
+}
+
 output "aws_iam_role_tfer--AWSServiceRoleForAmazonSageMakerNotebooks_id" {
   value = "${aws_iam_role.tfer--AWSServiceRoleForAmazonSageMakerNotebooks.id}"
+}
+
+output "aws_iam_role_tfer--AWSServiceRoleForApplicationAutoScaling_ECSService_id" {
+  value = "${aws_iam_role.tfer--AWSServiceRoleForApplicationAutoScaling_ECSService.id}"
+}
+
+output "aws_iam_role_tfer--AWSServiceRoleForECS_id" {
+  value = "${aws_iam_role.tfer--AWSServiceRoleForECS.id}"
+}
+
+output "aws_iam_role_tfer--AWSServiceRoleForOrganizations_id" {
+  value = "${aws_iam_role.tfer--AWSServiceRoleForOrganizations.id}"
+}
+
+output "aws_iam_role_tfer--AWSServiceRoleForSSO_id" {
+  value = "${aws_iam_role.tfer--AWSServiceRoleForSSO.id}"
 }
 
 output "aws_iam_role_tfer--AWSServiceRoleForSupport_id" {
@@ -226,16 +390,68 @@ output "aws_iam_role_tfer--AmazonSagemakerCanvasForecastRole-20230916T105232_id"
   value = "${aws_iam_role.tfer--AmazonSagemakerCanvasForecastRole-20230916T105232.id}"
 }
 
+output "aws_iam_role_tfer--GitHubAction-AssumeRoleWithAction_id" {
+  value = "${aws_iam_role.tfer--GitHubAction-AssumeRoleWithAction.id}"
+}
+
+output "aws_iam_role_tfer--HelloECSTaskExecutionRole_id" {
+  value = "${aws_iam_role.tfer--HelloECSTaskExecutionRole.id}"
+}
+
+output "aws_iam_role_tfer--LambdaInvokeRole_id" {
+  value = "${aws_iam_role.tfer--LambdaInvokeRole.id}"
+}
+
+output "aws_iam_role_tfer--MLFlowECSTaskExecutionRole_id" {
+  value = "${aws_iam_role.tfer--MLFlowECSTaskExecutionRole.id}"
+}
+
 output "aws_iam_role_tfer--StepFunctions-MyStateMachine-w9dekhf9k-role-p2qhxfjbm_id" {
   value = "${aws_iam_role.tfer--StepFunctions-MyStateMachine-w9dekhf9k-role-p2qhxfjbm.id}"
+}
+
+output "aws_iam_role_tfer--ecsTaskExecutionRole_id" {
+  value = "${aws_iam_role.tfer--ecsTaskExecutionRole.id}"
 }
 
 output "aws_iam_role_tfer--media-convert-role_id" {
   value = "${aws_iam_role.tfer--media-convert-role.id}"
 }
 
+output "aws_iam_role_tfer--mlflow-tf-s01-create-training-dataset-role-760da69c_id" {
+  value = "${aws_iam_role.tfer--mlflow-tf-s01-create-training-dataset-role-760da69c.id}"
+}
+
+output "aws_iam_role_tfer--mlflow-tf-s01-create-training-dataset-role-prmds7c1_id" {
+  value = "${aws_iam_role.tfer--mlflow-tf-s01-create-training-dataset-role-prmds7c1.id}"
+}
+
+output "aws_iam_role_tfer--mlflow-tf-s02-preprocessing-role-e0quy6vk_id" {
+  value = "${aws_iam_role.tfer--mlflow-tf-s02-preprocessing-role-e0quy6vk.id}"
+}
+
+output "aws_iam_role_tfer--mlflow-tf-s03-train-role-5hkjz400_id" {
+  value = "${aws_iam_role.tfer--mlflow-tf-s03-train-role-5hkjz400.id}"
+}
+
+output "aws_iam_role_tfer--s01-wine-scrape-lambda-role-budx8fug_id" {
+  value = "${aws_iam_role.tfer--s01-wine-scrape-lambda-role-budx8fug.id}"
+}
+
+output "aws_iam_role_tfer--terratest-docker-build-role-8rvj0bed_id" {
+  value = "${aws_iam_role.tfer--terratest-docker-build-role-8rvj0bed.id}"
+}
+
+output "aws_iam_role_tfer--thom-cloudshell-s3-role_id" {
+  value = "${aws_iam_role.tfer--thom-cloudshell-s3-role.id}"
+}
+
 output "aws_iam_role_tfer--transcode-video_id" {
   value = "${aws_iam_role.tfer--transcode-video.id}"
+}
+
+output "aws_iam_role_tfer--tt-db-role-sd8q9lrf_id" {
+  value = "${aws_iam_role.tfer--tt-db-role-sd8q9lrf.id}"
 }
 
 output "aws_iam_role_tfer--twentyfour-hour-video-python-IamRoleCustomResources_id" {
@@ -244,6 +460,10 @@ output "aws_iam_role_tfer--twentyfour-hour-video-python-IamRoleCustomResources_i
 
 output "aws_iam_user_group_membership_tfer--thom-002F-Admin_id" {
   value = "${aws_iam_user_group_membership.tfer--thom-002F-Admin.id}"
+}
+
+output "aws_iam_user_policy_attachment_tfer--thom_AWSBillingReadOnlyAccess_id" {
+  value = "${aws_iam_user_policy_attachment.tfer--thom_AWSBillingReadOnlyAccess.id}"
 }
 
 output "aws_iam_user_policy_attachment_tfer--thom_AWSBudgetsActionsWithAWSResourceControlAccess_id" {
@@ -256,6 +476,10 @@ output "aws_iam_user_policy_attachment_tfer--thom_AWSBudgetsActions_RolePolicyFo
 
 output "aws_iam_user_policy_attachment_tfer--thom_AWSBudgetsReadOnlyAccess_id" {
   value = "${aws_iam_user_policy_attachment.tfer--thom_AWSBudgetsReadOnlyAccess.id}"
+}
+
+output "aws_iam_user_policy_attachment_tfer--thom_AWSCloudShellFullAccess_id" {
+  value = "${aws_iam_user_policy_attachment.tfer--thom_AWSCloudShellFullAccess.id}"
 }
 
 output "aws_iam_user_policy_attachment_tfer--thom_AWSCostAndUsageReportAutomationPolicy_id" {

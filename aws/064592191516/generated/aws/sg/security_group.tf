@@ -1,3 +1,27 @@
+resource "aws_security_group" "tfer--HelloWorldApp_sg-05c578533e83e242b" {
+  description = "Allow Public TCP over http port 80"
+
+  egress {
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = "80"
+    protocol    = "tcp"
+    self        = "false"
+    to_port     = "80"
+  }
+
+  ingress {
+    cidr_blocks = ["75.97.216.5/32"]
+    description = "self"
+    from_port   = "80"
+    protocol    = "tcp"
+    self        = "false"
+    to_port     = "80"
+  }
+
+  name   = "HelloWorldApp"
+  vpc_id = "vpc-0827c472"
+}
+
 resource "aws_security_group" "tfer--default_sg-b21a8cf9" {
   description = "default VPC security group"
 

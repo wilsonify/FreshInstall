@@ -1,3 +1,8 @@
+resource "aws_iam_user_policy_attachment" "tfer--thom_AWSBillingReadOnlyAccess" {
+  policy_arn = "arn:aws:iam::aws:policy/AWSBillingReadOnlyAccess"
+  user       = "thom"
+}
+
 resource "aws_iam_user_policy_attachment" "tfer--thom_AWSBudgetsActionsWithAWSResourceControlAccess" {
   policy_arn = "arn:aws:iam::aws:policy/AWSBudgetsActionsWithAWSResourceControlAccess"
   user       = "thom"
@@ -10,6 +15,11 @@ resource "aws_iam_user_policy_attachment" "tfer--thom_AWSBudgetsActions_RolePoli
 
 resource "aws_iam_user_policy_attachment" "tfer--thom_AWSBudgetsReadOnlyAccess" {
   policy_arn = "arn:aws:iam::aws:policy/AWSBudgetsReadOnlyAccess"
+  user       = "thom"
+}
+
+resource "aws_iam_user_policy_attachment" "tfer--thom_AWSCloudShellFullAccess" {
+  policy_arn = "arn:aws:iam::aws:policy/AWSCloudShellFullAccess"
   user       = "thom"
 }
 

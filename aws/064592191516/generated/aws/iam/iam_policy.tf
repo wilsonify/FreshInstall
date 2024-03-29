@@ -1,3 +1,199 @@
+resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-2d65ee2c-a014-46ec-95c9-4ee77c65cf68" {
+  name = "AWSLambdaBasicExecutionRole-2d65ee2c-a014-46ec-95c9-4ee77c65cf68"
+  path = "/service-role/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "logs:CreateLogGroup",
+      "Effect": "Allow",
+      "Resource": "arn:aws:logs:us-east-1:064592191516:*"
+    },
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:logs:us-east-1:064592191516:log-group:/aws/lambda/mlflow-tf-s02-preprocessing:*"
+      ]
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
+resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-3e18e52f-6449-43ce-968d-548a669808fd" {
+  name = "AWSLambdaBasicExecutionRole-3e18e52f-6449-43ce-968d-548a669808fd"
+  path = "/service-role/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "logs:CreateLogGroup",
+      "Effect": "Allow",
+      "Resource": "arn:aws:logs:us-east-1:064592191516:*"
+    },
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:logs:us-east-1:064592191516:log-group:/aws/lambda/s01-wine-scrape-lambda:*"
+      ]
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
+resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-4b3a8738-5bd2-4352-be0a-80ae1660c94d" {
+  name = "AWSLambdaBasicExecutionRole-4b3a8738-5bd2-4352-be0a-80ae1660c94d"
+  path = "/service-role/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "logs:CreateLogGroup",
+      "Effect": "Allow",
+      "Resource": "arn:aws:logs:us-east-1:064592191516:*"
+    },
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:logs:us-east-1:064592191516:log-group:/aws/lambda/mlflow-tf-s03-train:*"
+      ]
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
+resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-4bb6991d-97b8-42fb-a195-06375e892f81" {
+  name = "AWSLambdaBasicExecutionRole-4bb6991d-97b8-42fb-a195-06375e892f81"
+  path = "/service-role/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "logs:CreateLogGroup",
+      "Effect": "Allow",
+      "Resource": "arn:aws:logs:us-east-1:064592191516:*"
+    },
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:logs:us-east-1:064592191516:log-group:/aws/lambda/tt-db:*"
+      ]
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
+resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-6b591753-05ef-4dbc-91b0-b703957eb94c" {
+  name = "AWSLambdaBasicExecutionRole-6b591753-05ef-4dbc-91b0-b703957eb94c"
+  path = "/service-role/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "logs:CreateLogGroup",
+      "Effect": "Allow",
+      "Resource": "arn:aws:logs:us-east-1:064592191516:*"
+    },
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:logs:us-east-1:064592191516:log-group:/aws/lambda/mlflow-tf-s01-create-training-dataset:*"
+      ]
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
+resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-8f6a3e23-2347-4ee7-8328-8857c7a44b7d" {
+  name = "AWSLambdaBasicExecutionRole-8f6a3e23-2347-4ee7-8328-8857c7a44b7d"
+  path = "/service-role/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "logs:CreateLogGroup",
+      "Effect": "Allow",
+      "Resource": "arn:aws:logs:us-east-1:064592191516:*"
+    },
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:logs:us-east-1:064592191516:log-group:/aws/lambda/terratest-docker-build:*"
+      ]
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
+resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-dd9f6f39-6e6b-44f4-8ef2-a120239e1c56" {
+  name = "AWSLambdaBasicExecutionRole-dd9f6f39-6e6b-44f4-8ef2-a120239e1c56"
+  path = "/service-role/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "logs:CreateLogGroup",
+      "Effect": "Allow",
+      "Resource": "arn:aws:logs:us-east-1:064592191516:*"
+    },
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:logs:us-east-1:064592191516:log-group:/aws/lambda/mlflow-tf-s01-create-training-dataset:*"
+      ]
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
 resource "aws_iam_policy" "tfer--AmazonSageMaker-ExecutionPolicy-20230916T105234" {
   name = "AmazonSageMaker-ExecutionPolicy-20230916T105234"
   path = "/service-role/"
@@ -319,6 +515,25 @@ resource "aws_iam_policy" "tfer--LambdaCloudWatchLogsPolicy" {
 POLICY
 }
 
+resource "aws_iam_policy" "tfer--LambdaInvokePolicy" {
+  name = "LambdaInvokePolicy"
+  path = "/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "lambda:InvokeFunction",
+      "Effect": "Allow",
+      "Resource": "arn:aws:lambda:us-east-1:064592191516:function:*",
+      "Sid": "VisualEditor0"
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
 resource "aws_iam_policy" "tfer--LambdaInvokeScopedAccessPolicy-c2da024e-757a-45ba-ba07-5f2e54493fdd" {
   description = "Allow AWS Step Functions to invoke Lambda functions on your behalf"
   name        = "LambdaInvokeScopedAccessPolicy-c2da024e-757a-45ba-ba07-5f2e54493fdd"
@@ -374,6 +589,40 @@ resource "aws_iam_policy" "tfer--S3ListBucketScopedAccessPerBucketPolicy-80b6ba5
       "Resource": [
         "arn:aws:s3:::064592191516-serverless-video-upload-python"
       ]
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
+resource "aws_iam_policy" "tfer--STSReadPolicy" {
+  name = "STSReadPolicy"
+  path = "/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": [
+        "sts:GetSessionToken",
+        "sts:GetFederationToken",
+        "sts:GetAccessKeyInfo",
+        "sts:GetCallerIdentity",
+        "sts:GetServiceBearerToken"
+      ],
+      "Effect": "Allow",
+      "Resource": "*",
+      "Sid": "VisualEditor0"
+    },
+    {
+      "Action": [
+        "sts:AssumeRole",
+        "sts:AssumeRoleWithWebIdentity"
+      ],
+      "Effect": "Allow",
+      "Resource": "*",
+      "Sid": "Statement1"
     }
   ],
   "Version": "2012-10-17"
@@ -478,6 +727,32 @@ resource "aws_iam_policy" "tfer--custom-resources-lambda-policy" {
       "Effect": "Allow",
       "Resource": "arn:aws:lambda:us-east-1:064592191516:function/*",
       "Sid": ""
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
+resource "aws_iam_policy" "tfer--s3-read-write-kaggle-policy" {
+  name = "s3-read-write-kaggle-policy"
+  path = "/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "s3:ListBucket",
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::064592191516-kaggle"
+    },
+    {
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::064592191516-kaggle/*"
     }
   ],
   "Version": "2012-10-17"

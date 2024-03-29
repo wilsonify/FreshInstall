@@ -1,3 +1,7 @@
+output "aws_security_group_tfer--HelloWorldApp_sg-05c578533e83e242b_id" {
+  value = "${aws_security_group.tfer--HelloWorldApp_sg-05c578533e83e242b.id}"
+}
+
 output "aws_security_group_tfer--default_sg-b21a8cf9_id" {
   value = "${aws_security_group.tfer--default_sg-b21a8cf9.id}"
 }
