@@ -7,6 +7,7 @@ This script does the following:
 """
 import glob
 import os
+from os.path import abspath, dirname
 
 
 def read_terraform_configuration(f):
@@ -75,7 +76,8 @@ def create_separate_files(resource_blocks, dest):
 
 
 def main():
-    for f in glob.glob("/home/thom/repos/FreshInstall/aws/064592191516/extract/**/*.tf", recursive=True):
+    path_to_here = abspath(dirname(__file__))
+    for f in glob.glob(f"{path_to_here}/extract/**/*.tf", recursive=True):
         f_head, f_tail = os.path.split(f)
         destination = f_head.replace("extract", "expand")
         content = read_terraform_configuration(f)

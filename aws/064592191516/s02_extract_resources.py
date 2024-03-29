@@ -10,6 +10,7 @@ After running this script, you'll have separate .tf files for each resource bloc
 """
 import glob
 import os
+from os.path import dirname, abspath
 
 
 def read_terraform_configuration(f):
@@ -66,7 +67,8 @@ def create_separate_files(resource_blocks, dest):
 
 
 def main():
-    for f in glob.glob("/home/thom/repos/FreshInstall/aws/064592191516/export/**/*.tf", recursive=True):
+    path_to_here = abspath(dirname(__file__))
+    for f in glob.glob(f"{path_to_here}/export/**/*.tf", recursive=True):
         f_head, f_tail = os.path.split(f)
         destination = f_head.replace("export", "extract")
         content = read_terraform_configuration(f)
