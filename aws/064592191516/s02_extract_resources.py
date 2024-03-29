@@ -5,7 +5,8 @@ This script does the following:
     Splits the configuration into individual resource blocks using a regular expression that matches two newline characters followed by a closing curly brace \n\n.
     Creates a separate .tf file for each resource block, naming them as "resource_1.tf," "resource_2.tf," and so on.
 
-Make sure to replace "terraform.tf" with the actual name of your Terraform configuration file. After running this script, you'll have separate .tf files for each resource block from your original Terraform configuration.
+Make sure to replace "terraform.tf" with the actual name of your Terraform configuration file.
+After running this script, you'll have separate .tf files for each resource block from your original Terraform configuration.
 """
 import glob
 import os
