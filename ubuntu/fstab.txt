@@ -1,0 +1,28 @@
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda3 during installation
+UUID=8e38205a-72e7-4654-80dd-a74c7e0f7252 /               ext4    errors=remount-ro 0       1
+# /boot/efi was on /dev/sda2 during installation
+UUID=3C28-C159  /boot/efi       vfat    umask=0077      0       1
+/swapfile                                 none            swap    sw              0       0
+/dev/loop10 /mnt/loop10 auto nosuid,nodev,nofail,x-gvfs-show,noauto 0 0
+/dev/loop11 /mnt/loop11 auto nosuid,nodev,nofail,x-gvfs-show,noauto 0 0
+/dev/loop2 /mnt/loop2 auto nosuid,nodev,nofail,x-gvfs-show,noauto 0 0
+/dev/loop6 /mnt/loop6 auto nosuid,nodev,nofail,x-gvfs-show,noauto 0 0
+/dev/loop8 /mnt/loop8 auto nosuid,nodev,nofail,x-gvfs-show,noauto 0 0
+/dev/disk/by-uuid/04d3359a-0bc5-4f14-bfc8-50cd69511158 /mnt/SSD2 auto nosuid,nodev,nofail,x-gvfs-show 0 0
+/dev/disk/by-uuid/c8c20bab-7445-45b1-b260-86f1a92c7b20 /mnt/SSD1 auto nosuid,nodev,nofail,x-gvfs-show 0 0
+goofys#064592191516-backups /mnt/064592191516-backups fuse _netdev,allow_other,--file-mode=0666,--dir-mode=0777 0 0
+goofys#064592191516-books /mnt/064592191516-books fuse _netdev,allow_other,--file-mode=0666,--dir-mode=0777 0 0
+goofys#064592191516-mov /mnt/064592191516-mov fuse _netdev,allow_other,--file-mode=0666,--dir-mode=0777 0 0
+goofys#064592191516-kaggle /mnt/064592191516-kaggle fuse _netdev,allow_other,--file-mode=0666,--dir-mode=0777 0 0
+goofys#064592191516-models /mnt/064592191516-models fuse _netdev,allow_other,--file-mode=0666,--dir-mode=0777 0 0
+goofys#064592191516-mlflow /mnt/064592191516-mlflow fuse _netdev,allow_other,--file-mode=0666,--dir-mode=0777 0 0
+goofys#064592191516-docs /mnt/064592191516-docs fuse _netdev,allow_other,--file-mode=0666,--dir-mode=0777 0 0
+goofys#064592191516-pics /mnt/064592191516-pics fuse _netdev,allow_other,--file-mode=0666,--dir-mode=0777 0 0
+goofys#064592191516-audio /mnt/064592191516-audio fuse _netdev,allow_other,--file-mode=0666,--dir-mode=0777 0 0
