@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=PyCharm
-Exec=pycharm
-Icon=/opt/pycharm-community/2023.2.1/bin/pycharm.png
+Name=vscode
+Exec=code
+Icon=/opt/vscode/v1.84.0/resources/app/resources/linux/code.png
 Type=Application
 Actions=new-window;
 
 [Desktop Action new-window]
 Name=New Window
-Exec=pycharm
+Exec=code

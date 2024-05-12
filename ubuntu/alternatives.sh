@@ -1,30 +1,5 @@
 #!/bin/bash
 
-handle_error() {
-  local message="$1"
-  echo "handle errors"
-  echo "Error: $message" >&2
-  exit 1
-}
-
-remove_alternatives() {
-  local name="$1"
-  echo "remove existing alternatives for $name"
-  if ! sudo update-alternatives --remove-all "$name"; then
-    handle_error "Failed to remove existing alternatives for $name"
-  fi
-}
-
-install_alternatives() {
-  local name="$1"
-  local target="$2"
-  local priority="$3"
-  echo "install new alternative for $name"
-  if ! sudo update-alternatives --install "/usr/bin/$name" "$name" "$target" "$priority"; then
-    handle_error "Failed to install alternative for $name"
-  fi
-}
-
 main() {
   # List of commands to update alternatives
   local commands=(
@@ -49,8 +24,8 @@ main() {
   # Loop through each command and update alternatives
   for command in "${commands[@]}"; do
     read -r name target priority <<<"$command"
-    remove_alternatives "$name"
-    install_alternatives "$name" "$target" "$priority"
+    sudo update-alternatives --remove-all "$name"
+    sudo update-alternatives --install "/usr/bin/$name" "$name" "$target" "$priority"
   done
   echo "All alternatives updated successfully."
 }
