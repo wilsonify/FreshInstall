@@ -1,0 +1,11 @@
+[Unit]
+Description=TiMidity++ MIDI sequencer service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/timidity -iA 
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
