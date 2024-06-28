@@ -1,0 +1,30 @@
+---
+- name: Install PyCharm on Linux Mint using alternatives
+  hosts: localhost
+
+  tasks:
+    - name: "Download pycharm-community"
+      ansible.builtin.download:
+        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+
+    - name: unzip
+      ansible.builtin.extract:
+        file: pycharm-community-2024.1.4.tar.gz
+        dir: /opt/pycharm/2024.1.4
+
+    - name: Set executable permissions on pycharm.sh
+      ansible.builtin.file:
+        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
+        mode: u+x
+
+    - name: Register PyCharm with alternatives
+      ansible.builtin.alternatives:
+        name: pycharm
+        link: /usr/local/bin/pycharm
+        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
+        priority: 100
+
+    - name: Install PyCharm desktop entry
+      ansible.builtin.copy:
+        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
+        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
