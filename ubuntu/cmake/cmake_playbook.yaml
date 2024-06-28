@@ -3,28 +3,85 @@
   hosts: localhost
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+  - name: "Uninstall old cmake"
+      sudo apt remove cmake
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+  - name: "download the latest bash script from cmake.org"
+    ansible.builtin.download:
+      url: https://github.com/Kitware/CMake/releases/download/v3.16.9/cmake-3.16.9-linux-x86_64.tar.gz
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+  - name: "Copy to /opt"
+    ansible.builtin.copy:
+      src: cmake-3.16.9-linux-x86_64.tar.gz
+      dest: /opt/cmake/v3.16.9
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+  - name: "Make the script executable"
+    ansible.builtin.file:
+      path: "/opt/cmake-3.16.9-linux-x86_64.sh"
+      mode: u+x
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+  - name: "Change to desired installation directory"
+    ansible.builtin.command:
+      run: sudo mkdir -p /opt/cmake/v3.16.9
+
+  - name: "run installation"
+    ansible.builtin.command:
+      run: sudo bash /opt/cmake-$VERSION-linux-x86_64.sh --prefix=/opt/cmake/v3.16.9 --skip-license
+
+  - name: "erase exiting update-alternatives setup"
+    ansible.builtin.command:
+      run: |
+        sudo update-alternatives --remove-all cmake
+        sudo update-alternatives --remove-all ctest
+        sudo update-alternatives --remove-all cpack
+
+  - name: "Install Alternatives"
+    ansible.builtin.alternatives:
+      name: cmake
+      link: /usr/bin/cmake
+      path: "/opt/cmake/cmake-3.24/bin/cmake"
+      priority: 50
+
+    ansible.builtin.alternatives:
+        name: cmake
+        link: /usr/bin/cmake
+        path: "/opt/cmake/cmake-3.16/bin/cmake"
+        priority: 40
+
+    ansible.builtin.alternatives:
+        name: cmake
+        link: /usr/bin/cmake
+        path: "/opt/cmake/cmake-3.26/bin/cmake"
+        priority: 60
+
+    ansible.builtin.alternatives:
+        name: ctest
+        link: /usr/bin/ctest
+        path: "/opt/cmake/cmake-3.24/bin/ctest"
+        priority: 50
+
+    ansible.builtin.alternatives:
+        name: ctest
+        link: /usr/bin/ctest
+        path: "/opt/cmake/cmake-3.26/bin/ctest"
+        priority: 60
+
+    ansible.builtin.alternatives:
+        name: cpack
+        link: /usr/bin/cpack
+        path: "/opt/cmake/cmake-3.24/bin/cpack"
+        priority: 50
+
+    ansible.builtin.alternatives:
+        name: cpack
+        link: /usr/bin/cpack
+        path: "/opt/cmake/cmake-3.26/bin/cpack"
+        priority: 60
+
+
+  - name: # Configure Alternatives
+      # configuring the default commands for gcc, g++. It's easy to switch interactively:
+      sudo update-alternatives --config cmake
+
+  - name: #Test your results with:
+      cmake --version
