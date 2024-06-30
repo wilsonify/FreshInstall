@@ -1,30 +1,28 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install goofys using Ansible
   hosts: localhost
+  become: yes
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Download goofys binary
+      get_url:
+        url: "https://github.com/kahing/goofys/releases/download/v0.24.0/goofys"
+        dest: "/usr/local/bin/goofys"
+        mode: '0755'  # Ensure executable permissions
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Set owner and group for goofys binary
+      file:
+        path: "/usr/local/bin/goofys"
+        owner: root
+        group: root
+        mode: '0755'
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Verify goofys installation
+      stat:
+        path: "/usr/local/bin/goofys"
+      register: goofys_installed
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
-
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Print goofys version if installed
+      debug:
+        msg: "goofys installed successfully."
+      when: goofys_installed.stat.exists

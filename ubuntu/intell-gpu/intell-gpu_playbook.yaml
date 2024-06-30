@@ -1,30 +1,92 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install Intel GPU Packages and ZLUDA on Ubuntu
   hosts: localhost
+  become: yes
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Add Intel graphics repository key
+      apt_key:
+        url: https://repositories.intel.com/graphics/intel-graphics.key
+        state: present
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Add Intel graphics repository
+      apt_repository:
+        repo: 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main'
+        state: present
+        update_cache: yes
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Install prerequisite packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - gpg-agent
+        - wget
+        - unzip
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Install run-time packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - intel-opencl-icd
+        - intel-level-zero-gpu
+        - level-zero
+        - intel-media-va-driver-non-free
+        - libmfx1
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Install developer packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - libigc-dev
+        - intel-igc-cm
+        - libigdfcl-dev
+        - libigfxcmrt-dev
+        - level-zero-dev
+        - ocl-icd-opencl-dev
+
+    - name: Configure GPU access permissions
+      shell: |
+        sudo gpasswd -a {{ ansible_user }} render
+        newgrp render
+      args:
+        executable: /bin/bash
+
+    - name: Download ZLUDA
+      get_url:
+        url: https://github.com/vosen/ZLUDA/releases/download/v2/zluda-2-linux.zip
+        dest: /tmp/zluda-2-linux.zip
+
+    - name: Unzip ZLUDA
+      unarchive:
+        src: /tmp/zluda-2-linux.zip
+        dest: /usr/local/cuda/bin
+        remote_src: yes
+        creates: /usr/local/cuda/bin/zluda-2-linux
+
+    - name: Create symbolic links for ZLUDA
+      file:
+        src: /usr/local/cuda/bin/libnvcuda.so
+        dest: /usr/local/cuda/bin/libcuda.so
+        state: link
+        force: yes
+
+    - name: Create symbolic link for libcuda.so.1
+      file:
+        src: /usr/local/cuda/bin/libcuda.so
+        dest: /usr/local/cuda/bin/libcuda.so.1
+        state: link
+        force: yes
+
+    - name: Add ZLUDA to PATH and LD_LIBRARY_PATH
+      lineinfile:
+        path: "{{ item }}"
+        line: "{{ item == '/etc/environment' ? 'PATH=$PATH:/usr/local/cuda/bin' : 'export PATH=$PATH:/usr/local/cuda/bin' }}"
+        insertafter: EOF
+      loop:
+        - /etc/environment
+        - $HOME/.bashrc  # or any other shell configuration file you prefer
+      vars:
+        ansible_become: yes

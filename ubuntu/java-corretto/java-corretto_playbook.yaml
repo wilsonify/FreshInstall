@@ -1,30 +1,25 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install Amazon Corretto 11 on Debian-based Linux
   hosts: localhost
+  become: yes  # This allows Ansible to execute commands with sudo
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Import Corretto public key
+      ansible.builtin.apt_key:
+        url: https://apt.corretto.aws/corretto.key
+        state: present
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Add Corretto repository
+      ansible.builtin.apt_repository:
+        repo: 'deb https://apt.corretto.aws stable main'
+        state: present
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
-
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Install Amazon Corretto 11 JDK
+      ansible.builtin.apt:
+        name: java-11-amazon-corretto-jdk
+        state: present
+        update_cache: yes

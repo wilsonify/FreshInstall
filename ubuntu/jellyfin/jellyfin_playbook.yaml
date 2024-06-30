@@ -1,30 +1,37 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install Jellyfin Media Server
   hosts: localhost
+  become: yes  # This allows Ansible to execute commands with sudo
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Install apt-transport-https package
+      ansible.builtin.apt:
+        name: apt-transport-https
+        state: present
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Add Jellyfin repository key
+      ansible.builtin.apt_key:
+        url: https://repo.jellyfin.org/jellyfin_team.gpg.key
+        state: present
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Add Jellyfin repository to sources.list
+      ansible.builtin.lineinfile:
+        path: /etc/apt/sources.list.d/jellyfin.list
+        line: "deb [arch={{ ansible_architecture }}] https://repo.jellyfin.org/{{ ansible_distribution | lower }} {{ ansible_codename }} main"
+        create: yes
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Install Jellyfin
+      ansible.builtin.apt:
+        name: jellyfin
+        state: present
+        update_cache: yes
+
+    - name: Enable Jellyfin service
+      ansible.builtin.service:
+        name: jellyfin
+        enabled: yes
+        state: started

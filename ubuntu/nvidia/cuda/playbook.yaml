@@ -1,30 +1,38 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install CUDA 11.2.0 Toolkit using Ansible
   hosts: localhost
+  become: yes  # Ensure Ansible executes commands with sudo
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Download CUDA installer
+      get_url:
+        url: https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda_11.2.0_460.27.04_linux.run
+        dest: /tmp/cuda_11.2.0_460.27.04_linux.run
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Set executable permissions on CUDA installer
+      file:
+        path: /tmp/cuda_11.2.0_460.27.04_linux.run
+        mode: +x
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Install CUDA Toolkit
+      shell: /tmp/cuda_11.2.0_460.27.04_linux.run --toolkit --silent
+      args:
+        executable: /bin/bash
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Add CUDA binaries to PATH
+      lineinfile:
+        dest: ~/.bashrc  # Adjust this path if needed (e.g., /home/user/.bashrc)
+        line: 'export PATH=$PATH:/usr/local/cuda/bin'
+        insertafter: EOF
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Add CUDA library path to LD_LIBRARY_PATH
+      lineinfile:
+        dest: ~/.bashrc  # Adjust this path if needed (e.g., /home/user/.bashrc)
+        line: 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64'
+        insertafter: EOF
+
+    - name: Source .bashrc to apply changes immediately
+      shell: source ~/.bashrc
+      args:
+        executable: /bin/bash
+        creates: ~/.bashrc  # Ensures it runs only once per playbook execution

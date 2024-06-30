@@ -1,30 +1,48 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install Julia
   hosts: localhost
+  become: yes  # This allows Ansible to execute commands with sudo
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Download Julia archive
+      ansible.builtin.get_url:
+        url: https://julialang-s3.julialang.org/bin/linux/x64/1.7/julia-1.7.2-linux-x86_64.tar.gz
+        dest: /tmp/julia-1.7.2-linux-x86_64.tar.gz
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Extract Julia archive
+      ansible.builtin.unarchive:
+        src: /tmp/julia-1.7.2-linux-x86_64.tar.gz
+        dest: /opt
+        creates: /opt/julia-1.7.2  # Skip extraction if already exists
+        remote_src: yes
 
-    - name: Set executable permissions on pycharm.sh
+    - name: Create symbolic link to julia executable
       ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+        src: /opt/julia-1.7.2/bin/julia
+        dest: /usr/local/bin/julia
+        state: link
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Add Julia executable to system PATH
+      ansible.builtin.lineinfile:
+        path: /etc/profile.d/julia.sh
+        line: 'export PATH="/usr/local/bin:$PATH"'
+        create: yes
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Set permissions for Julia executable
+      ansible.builtin.file:
+        path: /usr/local/bin/julia
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Reload shell configuration
+      ansible.builtin.shell: source /etc/profile
+
+    - name: Verify Julia installation
+      ansible.builtin.command: julia --version
+      register: julia_version_output
+
+    - name: Print Julia version
+      ansible.builtin.debug:
+        msg: "Installed Julia version is {{ julia_version_output.stdout }}"
+

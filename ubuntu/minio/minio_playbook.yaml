@@ -1,30 +1,45 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install and Configure MinIO
   hosts: localhost
+  become: yes  # Ensure Ansible executes commands with sudo
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Download MinIO server
+      get_url:
+        url: "https://dl.min.io/server/minio/release/linux-amd64/minio"
+        dest: "/usr/local/bin/minio"
+        mode: "0755"
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Download MinIO client (mc)
+      get_url:
+        url: "https://dl.min.io/client/mc/release/linux-amd64/mc"
+        dest: "/usr/local/bin/mc"
+        mode: "0755"
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Download MinIO systemd service file
+      get_url:
+        url: "https://raw.githubusercontent.com/minio/minio-service/master/linux-systemd/minio.service"
+        dest: "/etc/systemd/system/minio.service"
+        mode: "0644"
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Configure MinIO environment variables
+      blockinfile:
+        path: "{{ ansible_env.HOME }}/.bashrc"
+        block: |
+          export MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE
+          export MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Configure MinIO client
+      command: >
+        mc config host add --quiet --api s3v4 minioblobstore
+        http://localhost:9000 {{ lookup('env', 'MINIO_ACCESS_KEY') }}
+        {{ lookup('env', 'MINIO_SECRET_KEY') }}
+      environment:
+        HOME: "{{ ansible_env.HOME }}"
+
+    - name: Start MinIO server
+      systemd:
+        name: minio
+        state: started
+        enabled: yes

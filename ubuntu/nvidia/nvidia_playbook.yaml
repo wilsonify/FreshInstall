@@ -1,30 +1,34 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
-  hosts: localhost
-
+- name: Install NVIDIA Container Toolkit
+  hosts: all
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Setup NVIDIA Container Toolkit repository GPG key
+      shell: |
+        distribution=$(. /etc/os-release; echo $ID$VERSION_ID)
+        curl -s -L https://nvidia.github.io/libnvidia-container/gpgkey | sudo apt-key add -
+      register: setup_gpg_key
+      changed_when: setup_gpg_key.stdout != ""
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Setup NVIDIA Container Toolkit repository
+      shell: |
+        distribution=$(. /etc/os-release; echo $ID$VERSION_ID)
+        curl -s -L "https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list" | sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+      register: setup_repository
+      changed_when: setup_repository.stdout != ""
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Update apt cache
+      apt:
+        update_cache: yes
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Install NVIDIA Container Toolkit
+      apt:
+        name: nvidia-container-toolkit
+        state: present
+      register: install_toolkit
+      changed_when: install_toolkit.changed
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Print installation status
+      debug:
+        msg: "NVIDIA Container Toolkit installation {{ 'succeeded' if install_toolkit.changed else 'skipped' }}"
+

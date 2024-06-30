@@ -1,30 +1,57 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install LibreOffice
   hosts: localhost
+  become: yes  # Ensure Ansible executes commands with sudo
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Remove older LibreOffice packages
+      ansible.builtin.package:
+        name: libreoffice*  # Remove any package starting with 'libreoffice'
+        state: absent
+      ignore_errors: yes  # Ignore errors if no packages are found
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Autoremove unused packages
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - libreoffice*
+      when: ansible_pkg_mgr == 'apt'  # Only run on systems using apt
+      ignore_errors: yes  # Ignore errors if no packages are found
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Purge residual LibreOffice configurations
+      ansible.builtin.command:
+        cmd: sudo dpkg -P "$(dpkg -l | grep libreoffice | awk '{print $2}')"
+      when: ansible_pkg_mgr == 'apt'  # Only run on systems using apt
+      ignore_errors: yes  # Ignore errors if no packages are found
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Clean up with autoremove
+      ansible.builtin.package:
+        name: ""
+        state: absent
+      when: ansible_pkg_mgr == 'apt'  # Only run on systems using apt
+      args:
+        autoclean: yes
+        autoremove: yes
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+
+    - name: Extract LibreOffice archive
+      ansible.builtin.unarchive:
+        src: /path/to/LibreOffice_7.4.2_Linux_x86-64_deb.tar.gz  # Update with your actual path
+        dest: /tmp  # Extract to a temporary directory
+        remote_src: yes
+
+    - name: Install LibreOffice dependencies
+      ansible.builtin.package:
+        name: libobasis7.4-base
+        state: present  # Ensure the dependency is installed
+
+    - name: Change directory to DEBS folder
+      ansible.builtin.command:
+        cmd: cd /tmp/LibreOffice_7.4.2.3_Linux_x86-64_deb/DEBS
+
+    - name: Install LibreOffice packages
+      ansible.builtin.command:
+        cmd: sudo dpkg -i *.deb
+      args:
+        chdir: /tmp/LibreOffice_7.4.2.3_Linux_x86-64_deb/DEBS

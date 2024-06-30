@@ -1,30 +1,31 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install Insomnia
   hosts: localhost
+  become: yes
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
-
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
-
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
-
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
-
-    - name: Install PyCharm desktop entry
+    - name: Add Insomnia repository to sources
       ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+        content: "deb https://dl.bintray.com/getinsomnia/Insomnia /"
+        dest: "/etc/apt/sources.list.d/insomnia.list"
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Add Insomnia public key
+      ansible.builtin.get_url:
+        url: "https://insomnia.rest/keys/debian-public.key.asc"
+        dest: "/tmp/insomnia-public-key.asc"
+
+    - name: Import Insomnia public key
+      ansible.builtin.shell: "sudo apt-key add /tmp/insomnia-public-key.asc"
+
+    - name: Update apt repositories
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Insomnia
+      ansible.builtin.apt:
+        name: insomnia
+        state: present
+        update_cache: yes

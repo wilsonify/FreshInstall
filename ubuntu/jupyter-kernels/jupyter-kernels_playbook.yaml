@@ -1,30 +1,30 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install Jupyter IRKernel for R
   hosts: localhost
+  become: yes  # Ensure Ansible executes commands with sudo
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Install R and required packages
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - r-base
+        - libzmq3-dev  # Required for Jupyter
+        - libcurl4-openssl-dev  # Required for IRkernel installation in R
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Install IRkernel using R
+      ansible.builtin.command: R -e 'install.packages("IRkernel")'
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Make IRkernel available to Jupyter
+      ansible.builtin.command: R -e 'IRkernel::installspec(user = FALSE)'
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Install Jupyter labextension for text shortcuts
+      ansible.builtin.command: jupyter labextension install @techrah/text-shortcuts
+      args:
+        creates: /home/{{ ansible_user }}/.local/share/jupyter/labextensions/@techrah/text-shortcuts
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Restart Jupyter for changes to take effect
+      ansible.builtin.systemd:
+        name: jupyter
+        state: restarted

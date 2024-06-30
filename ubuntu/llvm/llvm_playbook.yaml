@@ -1,30 +1,89 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install LLVM Toolchain
   hosts: localhost
+  become: yes  # Ensure Ansible executes commands with sudo
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Check for required tools
+      assert:
+        that:
+          - 'lsb_release' in ansible_playbook_python
+          - 'wget' in ansible_playbook_python
+          - 'add-apt-repository' in ansible_playbook_python
+        msg: |
+          You are missing some tools this script requires: lsb_release, wget, add-apt-repository
+          (hint: apt install lsb-release wget software-properties-common)
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Set LLVM version (default: 11)
+      set_fact:
+        llvm_version: "{{ ansible_play_batch | first | default(11) }}"
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Define LLVM version patterns
+      set_fact:
+        llvm_version_patterns:
+          9: "-9"
+          10: "-10"
+          11: "-11"
+          12: ""
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Validate LLVM version
+      fail:
+        msg: "This script does not support LLVM version {{ llvm_version }}"
+      when: llvm_version not in llvm_version_patterns
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Determine distribution and version
+      set_fact:
+        distro: "{{ ansible_distribution }}"
+        version: "{{ ansible_distribution_version }}"
+        dist_version: "{{ distro }}_{{ version | regex_replace('\\.', '') | regex_replace('[- ]', '_') }}"
+
+    - name: Define repository name based on distribution version
+      set_fact:
+        repo_name: >-
+          {%- set llvm_version_string = llvm_version_patterns[llvm_version] -%}
+          {%- if dist_version.startswith('Debian_9') -%}
+          deb http://apt.llvm.org/stretch/  llvm-toolchain-stretch{{ llvm_version_string }} main
+          {%- elif dist_version.startswith('Debian_10') -%}
+          deb http://apt.llvm.org/buster/   llvm-toolchain-buster{{ llvm_version_string }}  main
+          {%- elif dist_version == 'Debian_unstable' or dist_version == 'Debian_testing' -%}
+          deb http://apt.llvm.org/unstable/ llvm-toolchain{{ llvm_version_string }}         main
+          {%- elif dist_version.startswith('Ubuntu_16') -%}
+          deb http://apt.llvm.org/xenial/   llvm-toolchain-xenial{{ llvm_version_string }}  main
+          {%- elif dist_version.startswith('Ubuntu_18.04') -%}
+          deb http://apt.llvm.org/bionic/   llvm-toolchain-bionic{{ llvm_version_string }}  main
+          {%- elif dist_version.startswith('Ubuntu_18.10') -%}
+          deb http://apt.llvm.org/cosmic/   llvm-toolchain-cosmic{{ llvm_version_string }}  main
+          {%- elif dist_version.startswith('Ubuntu_19.04') -%}
+          deb http://apt.llvm.org/disco/    llvm-toolchain-disco{{ llvm_version_string }}   main
+          {%- elif dist_version.startswith('Ubuntu_19.10') -%}
+          deb http://apt.llvm.org/eoan/     llvm-toolchain-eoan{{ llvm_version_string }}    main
+          {%- elif dist_version.startswith('Ubuntu_20.04') -%}
+          deb http://apt.llvm.org/focal/    llvm-toolchain-focal{{ llvm_version_string }}   main
+          {%- else -%}
+          echo "Distribution '{{ distro }}' in version '{{ version }}' is not supported by this script ({{ dist_version }})."
+          exit 2
+          {%- endif -%}
+
+    - name: Import LLVM repository key
+      apt_key:
+        url: https://apt.llvm.org/llvm-snapshot.gpg.key
+        state: present
+
+    - name: Add LLVM repository
+      apt_repository:
+        repo: "{{ repo_name }}"
+        state: present
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install LLVM packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - "clang-{{ llvm_version }}"
+        - "lldb-{{ llvm_version }}"
+        - "lld-{{ llvm_version }}"
+        - "clangd-{{ llvm_version }}"

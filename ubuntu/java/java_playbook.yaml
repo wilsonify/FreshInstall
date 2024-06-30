@@ -1,30 +1,28 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install OpenJDK 8 and configure JAVA_HOME
   hosts: localhost
+  become: yes  # This allows Ansible to execute commands with sudo
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Install OpenJDK 8
+      apt:
+        name: openjdk-8-jdk
+        state: present
+      environment:
+        DEBIAN_FRONTEND: noninteractive
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Set JAVA_HOME in /etc/environment
+      lineinfile:
+        path: /etc/environment
+        line: 'JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"'
+        state: present
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Export JAVA_HOME for current session
+      ansible.builtin.export:
+        variable: JAVA_HOME
+        value: /usr/lib/jvm/java-8-openjdk-amd64
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
-
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Run R CMD javareconf
+      command: sudo R CMD javareconf
+      environment:
+        JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64

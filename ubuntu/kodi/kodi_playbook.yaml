@@ -1,30 +1,54 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install Kodi and PVR addons
   hosts: localhost
+  become: yes  # Ensure Ansible executes commands with sudo
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Install software-properties-common
+      ansible.builtin.package:
+        name: software-properties-common
+        state: present
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Add Kodi PPA repository
+      ansible.builtin.apt_repository:
+        repo: ppa:team-xbmc/ppa
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Install Kodi
+      ansible.builtin.package:
+        name: kodi
+        state: present
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Install Kodi PVR and audio decoder addons
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - kodi-pvr-argustv
+        - kodi-pvr-demo
+        - kodi-pvr-dvbviewer
+        - kodi-pvr-iptvsimple
+        - kodi-pvr-mediaportal-tvserver
+        - kodi-pvr-mythtv
+        - kodi-pvr-nextpvr
+        - kodi-pvr-njoy
+        - kodi-pvr-hts
+        - kodi-pvr-vdr-vnsi
+        - kodi-pvr-vuplus
+        - kodi-pvr-dvblink
+        - kodi-pvr-filmon
+        - kodi-pvr-hdhomerun
+        - kodi-pvr-pctv
+        - kodi-pvr-stalker
+        - kodi-pvr-vbox
+        - kodi-pvr-wmc
+        - kodi-audiodecoder-modplug
+        - kodi-audiodecoder-nosefart
+        - kodi-audiodecoder-sidplay
+        - kodi-audiodecoder-snesapu
+        - kodi-audiodecoder-stsound
+        - kodi-audiodecoder-timidity
+        - kodi-audiodecoder-vgmstream
