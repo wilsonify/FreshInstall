@@ -1,30 +1,34 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install Deno
   hosts: localhost
+  become: yes
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Install Deno using install.sh script
+      ansible.builtin.shell: |
+        curl -fsSL https://deno.land/x/install/install.sh | sh -s v1.7.5
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
-
-    - name: Set executable permissions on pycharm.sh
+    - name: Create directory for Deno binaries
       ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+        path: /opt/deno
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Move Deno binaries to /opt/deno
+      ansible.builtin.command:
+        cmd: sudo mv ~/.deno/* /opt/deno
+        args:
+          creates: /opt/deno/bin/deno
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Create symlink for Deno executable
+      ansible.builtin.file:
+        src: /opt/deno/bin/deno
+        dest: /usr/bin/deno
+        state: link
+        owner: root
+        group: root
+
+    - name: Verify Deno installation
+      ansible.builtin.command: deno --version
