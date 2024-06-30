@@ -1,30 +1,27 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Export GPG key from deprecated keyring and update APT source
   hosts: localhost
-
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: List existing keys
+      command: apt-key list
+      register: apt_key_list
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Extract last 8 characters of the desired GPG key
+      set_fact:
+        gpg_key_last8: "{{ apt_key_list.stdout | regex_search('\\s([A-Z0-9]{8})\\s', '\\1') }}"
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Export GPG key to /usr/share/keyrings
+      ansible.builtin.command: "sudo apt-key export {{ gpg_key_last8 }} | sudo gpg --dearmour -o /usr/share/keyrings/{{ gpg_key_last8 }}.gpg"
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Update APT source file
+      ansible.builtin.lineinfile:
+        path: /etc/apt/sources.list.d/microsoft.list  # Update with your actual file path
+        line: "deb [arch=amd64 signed-by=/usr/share/keyrings/{{ gpg_key_last8 }}.gpg] https://packages.microsoft.com/repos/edge/ stable main"
+        create: yes
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Update APT
+      ansible.builtin.command: sudo apt update
+
+    - name: Remove original signature
+      ansible.builtin.command: sudo apt-key del {{ gpg_key_last8 }}
