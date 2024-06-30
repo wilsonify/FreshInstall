@@ -1,28 +1,33 @@
 ---
-- name: Install ceph
+- name: Install Ceph
   hosts: localhost
 
   tasks:
-    - name: "download gpg key"
-      ansible.builtin.command:
-        run: wget -q -O- 'https://download.ceph.com/keys/release.asc' | sudo apt-key add -
+    - name: Download and add the Ceph GPG key
+      apt_key:
+        url: https://download.ceph.com/keys/release.asc
+        state: present
 
-    - name: "add key to sources list"
-      ansible.builtin.command:
-        run: echo deb https://download.ceph.com/debian-{ceph-stable-release}/ $(lsb_release -sc) main | sudo tee /etc/apt/sources.list.d/ceph.list
+    - name: Add Ceph repository to sources list
+      apt_repository:
+        repo: "deb https://download.ceph.com/debian-{ceph-stable-release}/ $(lsb_release -sc) main"
+        state: present
 
-    - name:
-      ansible.builtin.command:
-        run: sudo apt update
+    - name: Update apt cache
+      apt:
+        update_cache: yes
 
-    - name:
-      ansible.builtin.command:
-        run: sudo apt install ceph-deploy
+    - name: Install ceph-deploy
+      apt:
+        name: ceph-deploy
+        state: present
 
-    - name:
-      ansible.builtin.command:
-        run: sudo apt install ntpsec
+    - name: Install ntpsec
+      apt:
+        name: ntpsec
+        state: present
 
-    - name:
-      ansible.builtin.command:
-        run: sudo apt install openssh-server
+    - name: Install openssh-server
+      apt:
+        name: openssh-server
+        state: present
