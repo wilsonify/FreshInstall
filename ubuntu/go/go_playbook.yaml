@@ -1,30 +1,60 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install and configure Go
   hosts: localhost
+  become: yes
+  vars:
+    go_version: "1.19.4"  # Adjust the Go version as needed
+    go_tar_file: "go{{ go_version }}.linux-amd64.tar.gz"
+    go_download_url: "https://golang.org/dl/{{ go_tar_file }}"
+    go_install_dir: "/usr/local"
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Download Go
+      get_url:
+        url: "{{ go_download_url }}"
+        dest: "/tmp/{{ go_tar_file }}"
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Remove any previous Go installation
+      become: yes
+      file:
+        path: "/usr/local/go"
+        state: absent
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Extract Go archive
+      become: yes
+      unarchive:
+        src: "/tmp/{{ go_tar_file }}"
+        dest: "{{ go_install_dir }}"
+        remote_src: yes
+        creates: "{{ go_install_dir }}/go"
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Add Go binary to system PATH
+      lineinfile:
+        path: "{{ item }}"
+        line: "export PATH=$PATH:/usr/local/go/bin"
+      with_items:
+        - /etc/profile
+        - $HOME/.profile
+      # Reload profile to apply changes immediately
+      shell: ". {{ item }}"
+      with_items:
+        - /etc/profile
+        - $HOME/.profile
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Install Go as an alternative
+      become: yes
+      alternatives:
+        name: go
+        path: /usr/local/go/bin/go
+        priority: 10
+
+    - name: Verify Go installation
+      command: go version
+      register: go_version_output
+      changed_when: false
+      failed_when: false
+
+    - name: Print Go version
+      debug:
+        msg: "Go version: {{ go_version_output.stdout }}"
+
