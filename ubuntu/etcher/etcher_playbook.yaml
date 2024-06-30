@@ -1,30 +1,44 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install Balena Etcher
   hosts: localhost
-
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Create directory for Balena Etcher
+      file:
+        path: /opt/etcher/v1.19.21/bin
+        state: directory
+        mode: '0755'
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Download Balena Etcher
+      get_url:
+        url: https://github.com/balena-io/etcher/releases/download/v1.19.21/balenaEtcher-linux-x64-1.19.21.zip
+        dest: /tmp/balenaEtcher-linux-x64-1.19.21.zip
+        mode: '0644'
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Unzip Balena Etcher
+      ansible.builtin.unarchive:
+        src: /tmp/balenaEtcher-linux-x64-1.19.21.zip
+        dest: /opt/etcher/v1.19.21/bin
+        remote_src: yes
+        creates: /opt/etcher/v1.19.21/bin/balenaEtcher
 
-    - name: Register PyCharm with alternatives
+    - name: Set up alternatives for Balena Etcher
       ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
+        name: etcher
+        link: /usr/local/bin/etcher
+        path: /opt/etcher/v1.19.21/bin/balenaEtcher
         priority: 100
+        state: present
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Verify Balena Etcher installation
+      command: etcher --version
+      register: etcher_version_output
+
+    - name: Display Balena Etcher version
+      debug:
+        msg: "Balena Etcher version is {{ etcher_version_output.stdout }}"
+
+    - name: Clean up downloaded zip file
+      file:
+        path: /tmp/balenaEtcher-linux-x64-1.19.21.zip
+        state: absent
