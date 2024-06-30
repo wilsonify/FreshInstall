@@ -1,87 +1,68 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install CMake
   hosts: localhost
+  become: yes
+
+  vars:
+    cmake_version: "3.16.9"
 
   tasks:
-  - name: "Uninstall old cmake"
-      sudo apt remove cmake
+    - name: Uninstall old cmake
+      apt:
+        name: cmake
+        state: absent
 
-  - name: "download the latest bash script from cmake.org"
-    ansible.builtin.download:
-      url: https://github.com/Kitware/CMake/releases/download/v3.16.9/cmake-3.16.9-linux-x86_64.tar.gz
+    - name: Download the latest CMake tarball
+      get_url:
+        url: "https://github.com/Kitware/CMake/releases/download/v{{ cmake_version }}/cmake-{{ cmake_version }}-linux-x86_64.tar.gz"
+        dest: "/tmp/cmake-{{ cmake_version }}-linux-x86_64.tar.gz"
 
-  - name: "Copy to /opt"
-    ansible.builtin.copy:
-      src: cmake-3.16.9-linux-x86_64.tar.gz
-      dest: /opt/cmake/v3.16.9
+    - name: Create installation directory
+      file:
+        path: "/opt/cmake/v{{ cmake_version }}"
+        state: directory
 
-  - name: "Make the script executable"
-    ansible.builtin.file:
-      path: "/opt/cmake-3.16.9-linux-x86_64.sh"
-      mode: u+x
+    - name: Extract CMake tarball
+      unarchive:
+        src: "/tmp/cmake-{{ cmake_version }}-linux-x86_64.tar.gz"
+        dest: "/opt/cmake/v{{ cmake_version }}"
+        remote_src: yes
 
-  - name: "Change to desired installation directory"
-    ansible.builtin.command:
-      run: sudo mkdir -p /opt/cmake/v3.16.9
+    - name: Erase existing update-alternatives setup for cmake
+      command: update-alternatives --remove-all cmake
+      ignore_errors: yes
 
-  - name: "run installation"
-    ansible.builtin.command:
-      run: sudo bash /opt/cmake-$VERSION-linux-x86_64.sh --prefix=/opt/cmake/v3.16.9 --skip-license
+    - name: Erase existing update-alternatives setup for ctest
+      command: update-alternatives --remove-all ctest
+      ignore_errors: yes
 
-  - name: "erase exiting update-alternatives setup"
-    ansible.builtin.command:
-      run: |
-        sudo update-alternatives --remove-all cmake
-        sudo update-alternatives --remove-all ctest
-        sudo update-alternatives --remove-all cpack
+    - name: Erase existing update-alternatives setup for cpack
+      command: update-alternatives --remove-all cpack
+      ignore_errors: yes
 
-  - name: "Install Alternatives"
-    ansible.builtin.alternatives:
-      name: cmake
-      link: /usr/bin/cmake
-      path: "/opt/cmake/cmake-3.24/bin/cmake"
-      priority: 50
-
-    ansible.builtin.alternatives:
+    - name: Install cmake alternative (priority 60)
+      alternatives:
         name: cmake
         link: /usr/bin/cmake
-        path: "/opt/cmake/cmake-3.16/bin/cmake"
-        priority: 40
-
-    ansible.builtin.alternatives:
-        name: cmake
-        link: /usr/bin/cmake
-        path: "/opt/cmake/cmake-3.26/bin/cmake"
+        path: "/opt/cmake/v{{ cmake_version }}/bin/cmake"
         priority: 60
 
-    ansible.builtin.alternatives:
+    - name: Install ctest alternative (priority 60)
+      alternatives:
         name: ctest
         link: /usr/bin/ctest
-        path: "/opt/cmake/cmake-3.24/bin/ctest"
-        priority: 50
-
-    ansible.builtin.alternatives:
-        name: ctest
-        link: /usr/bin/ctest
-        path: "/opt/cmake/cmake-3.26/bin/ctest"
+        path: "/opt/cmake/v{{ cmake_version }}/bin/ctest"
         priority: 60
 
-    ansible.builtin.alternatives:
+    - name: Install cpack alternative (priority 60)
+      alternatives:
         name: cpack
         link: /usr/bin/cpack
-        path: "/opt/cmake/cmake-3.24/bin/cpack"
-        priority: 50
-
-    ansible.builtin.alternatives:
-        name: cpack
-        link: /usr/bin/cpack
-        path: "/opt/cmake/cmake-3.26/bin/cpack"
+        path: "/opt/cmake/v{{ cmake_version }}/bin/cpack"
         priority: 60
 
+    - name: Configure cmake alternatives
+      command: update-alternatives --config cmake
 
-  - name: # Configure Alternatives
-      # configuring the default commands for gcc, g++. It's easy to switch interactively:
-      sudo update-alternatives --config cmake
-
-  - name: #Test your results with:
-      cmake --version
+    - name: Test cmake version
+      command: cmake --version
