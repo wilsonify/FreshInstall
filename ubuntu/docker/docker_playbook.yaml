@@ -1,30 +1,75 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install Docker and Docker Compose
   hosts: localhost
+  become: yes
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Install prerequisites
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Add Docker's GPG key
+      shell: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker.gpg
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable"
+        state: present
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Update APT repositories
+      apt:
+        update_cache: yes
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Install Docker Community Edition
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+        state: present
+
+    - name: Install Docker Compose
+      block:
+        - name: Create directory for Docker Compose
+          file:
+            path: /opt/docker-compose/v2.27.1
+            state: directory
+            mode: '0755'
+
+        - name: Download Docker Compose
+          get_url:
+            url: "https://github.com/docker/compose/releases/download/v2.27.1/docker-compose-linux-x86_64"
+            dest: "/opt/docker-compose/v2.27.1/docker-compose"
+            mode: '0755'
+
+        - name: Set Docker Compose alternative
+          alternatives:
+            name: docker-compose
+            path: "/opt/docker-compose/v2.27.1/docker-compose"
+            priority: 100
+
+    - name: Check Docker service status
+      command: systemctl is-active docker
+      register: docker_status
+
+    - name: Add current user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+      when: docker_status.stdout == "active"
+
+    - name: Test Docker installation with hello-world container
+      command: docker run hello-world
+
+    - name: Notify user to log out for permissions to take effect
+      debug:
+        msg: "Logout for permissions to take effect"
