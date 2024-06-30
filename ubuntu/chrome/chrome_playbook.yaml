@@ -1,14 +1,24 @@
 ---
 - name: Install Chrome
   hosts: localhost
+  become: yes
 
   tasks:
-    - name:
-      ansible.builtin.command:
-        run: sudo apt-key adv --fetch-keys https://dl-ssl.google.com/linux/linux_signing_key.pub
-    - name:
-      ansible.builtin.command:
-        run: sudo apt-add-repository 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main'
-    - name:
-      ansible.builtin.command:
-        run: sudo apt-get install google-chrome-stable
+    - name: Add Google's signing key
+      apt_key:
+        url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+        state: present
+
+    - name: Add Google Chrome repository
+      apt_repository:
+        repo: 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main'
+        state: present
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Google Chrome
+      apt:
+        name: google-chrome-stable
+        state: present
