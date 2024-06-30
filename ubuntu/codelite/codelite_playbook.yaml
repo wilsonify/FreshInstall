@@ -1,30 +1,34 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install CodeLite on Ubuntu
   hosts: localhost
+  become: yes
+
+  vars:
+    codelite_repo_url: "https://repos.codelite.org/ubuntu/"
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Gather facts
+      ansible.builtin.setup:
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Get Ubuntu version
+      set_fact:
+        ubuntu_version: "{{ ansible_distribution_release }}"
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Add CodeLite public key
+      apt_key:
+        url: http://repos.codelite.org/CodeLite.asc
+        state: present
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Add CodeLite repository
+      apt_repository:
+        repo: "deb {{ codelite_repo_url }} {{ ubuntu_version }} universe"
+        state: present
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install CodeLite
+      apt:
+        name: codelite
+        state: present
