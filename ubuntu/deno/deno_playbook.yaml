@@ -22,13 +22,12 @@
         args:
           creates: /opt/deno/bin/deno
 
-    - name: Create symlink for Deno executable
-      ansible.builtin.file:
-        src: /opt/deno/bin/deno
-        dest: /usr/bin/deno
-        state: link
-        owner: root
-        group: root
+    - name: Set Deno alternatives
+      ansible.builtin.alternatives:
+        name: deno
+        link: /usr/bin/deno
+        path: /opt/deno/bin/deno
+        priority: 50
 
     - name: Verify Deno installation
       ansible.builtin.command: deno --version
