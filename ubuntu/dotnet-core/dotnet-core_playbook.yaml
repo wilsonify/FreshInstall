@@ -1,30 +1,37 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install .NET SDK and ASP.NET Core Runtime on Ubuntu
   hosts: localhost
-
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Download Microsoft packages repository configuration
+      get_url:
+        url: https://packages.microsoft.com/config/ubuntu/19.10/packages-microsoft-prod.deb
+        dest: /tmp/packages-microsoft-prod.deb
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Install Microsoft packages repository configuration
+      apt:
+        deb: /tmp/packages-microsoft-prod.deb
+        state: present
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Update APT package index
+      apt:
+        update_cache: yes
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Install apt-transport-https
+      apt:
+        name: apt-transport-https
+        state: present
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Update APT package index (again)
+      apt:
+        update_cache: yes
+
+    - name: Install .NET SDK 3.1
+      apt:
+        name: dotnet-sdk-3.1
+        state: present
+
+    - name: Install ASP.NET Core Runtime 3.1
+      apt:
+        name: aspnetcore-runtime-3.1
+        state: present
