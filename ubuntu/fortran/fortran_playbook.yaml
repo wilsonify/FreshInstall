@@ -1,30 +1,20 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install MPI and OpenCoarrays compilers on Ubuntu
   hosts: localhost
-
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Install MPI dependencies
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - libopenmpi-dev
+        - openmpi-bin
+        - gfortran
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 12
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
-
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
-
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
-
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Install OpenCoarrays compiler
+      ansible.builtin.package:
+        name: open-coarrays-bin
+        state: present
+      when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version | int >= 17
