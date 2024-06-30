@@ -1,30 +1,77 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install and configure GCC and G++ alternatives
   hosts: localhost
-
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Download GCC 8 packages
+      get_url:
+        url: "http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/{{ item }}"
+        dest: "/tmp/{{ item }}"
+      loop:
+        - gcc-8-base_8.4.0-3ubuntu2_amd64.deb
+        - libmpx2_8.4.0-3ubuntu2_amd64.deb
+        - lib32mpx2_8.4.0-3ubuntu2_amd64.deb
+        - libgcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - gcc-8_8.4.0-3ubuntu2_amd64.deb
+        - g++-8-multilib_8.4.0-3ubuntu2_amd64.deb
+        - g++-8_8.4.0-3ubuntu2_amd64.deb
+        - libstdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - gcc-8-multilib_8.4.0-3ubuntu2_amd64.deb
+        - lib32stdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - libx32stdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - cpp-8_8.4.0-3ubuntu2_amd64.deb
+        - libx32gcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - lib32gcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - libisl22_0.22.1-1_amd64.deb
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Install GCC 8 packages
+      apt:
+        deb: "/tmp/{{ item }}"
+      loop:
+        - gcc-8-base_8.4.0-3ubuntu2_amd64.deb
+        - libmpx2_8.4.0-3ubuntu2_amd64.deb
+        - lib32mpx2_8.4.0-3ubuntu2_amd64.deb
+        - libisl22_0.22.1-1_amd64.deb
+        - lib32gcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - libx32gcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - libstdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - gcc-8-multilib_8.4.0-3ubuntu2_amd64.deb
+        - lib32stdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - libx32stdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - cpp-8_8.4.0-3ubuntu2_amd64.deb
+        - libgcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - gcc-8_8.4.0-3ubuntu2_amd64.deb
+        - g++-8_8.4.0-3ubuntu2_amd64.deb
+        - g++-8-multilib_8.4.0-3ubuntu2_amd64.deb
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Install GCC versions 9, 10, and 11
+      apt:
+        name:
+          - gcc-9
+          - g++-9
+          - gcc-10
+          - g++-10
+          - gcc-11
+          - g++-11
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Remove existing GCC and G++ alternatives
+      shell: |
+        update-alternatives --remove-all gcc
+        update-alternatives --remove-all g++
+      ignore_errors: yes  # Ignore errors if no alternatives are found initially
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Set up GCC and G++ alternatives
+      shell: |
+        update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 40
+        update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 50
+        update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 60
+        update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 70
+        update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 40
+        update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 50
+        update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 60
+        update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 70
+
+    - name: Configure default GCC and G++
+      shell: |
+        update-alternatives --config gcc <<< '3'
+        update-alternatives --config g++ <<< '3'
