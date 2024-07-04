@@ -5,9 +5,10 @@
 
   vars:
     node_versions:
-      - { version: "14.21.3", path: "/opt/node/v14.21.3", priority: 80 }
+      - { version: "18.20.3", path: "/opt/node/v18.20.3", priority: 80 }
       - { version: "16.20.2", path: "/opt/node/v16.20.2", priority: 90 }
-      - { version: "18.20.3", path: "/opt/node/v18.20.3", priority: 100 }
+      - { version: "14.21.3", path: "/opt/node/v14.21.3", priority: 100 }
+
 
   tasks:
     - name: Remove existing alternatives
