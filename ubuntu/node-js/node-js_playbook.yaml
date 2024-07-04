@@ -15,7 +15,7 @@
         update-alternatives --remove-all node || true
         update-alternatives --remove-all npm || true
         update-alternatives --remove-all npx || true
-        update-alternatives --remove-all corepack || true
+        update-alternatives --remove-all corepack || true      
 
     - name: Ensure directories exist
       file:
@@ -24,41 +24,63 @@
         owner: root
         group: root
         mode: '0755'
-      loop: "{{ node_versions }}"
+      with_items: "{{ node_versions }}"
       loop_control:
         loop_var: item
 
-    - name: Download Node.js
+    - name: Download
       get_url:
         url: "https://nodejs.org/dist/v{{ item.version }}/node-v{{ item.version }}-linux-x64.tar.xz"
         dest: "/tmp/node-v{{ item.version }}-linux-x64.tar.xz"
-      loop: "{{ node_versions }}"
+      with_items: "{{ node_versions }}"
       loop_control:
         loop_var: item
 
-    - name: Extract Node.js
+    - name: Extract
       unarchive:
         src: "/tmp/node-v{{ item.version }}-linux-x64.tar.xz"
         dest: "{{ item.path }}"
         copy: no
         creates: "{{ item.path }}/node-v{{ item.version }}-linux-x64/bin"
-      loop: "{{ node_versions }}"
+      with_items: "{{ node_versions }}"
       loop_control:
         loop_var: item
 
-    - name: Set up update-alternatives for node, npm, npx, and corepack
-      block:
-        - name: Set up alternatives for node, npm, npx, corepack
-          alternatives:
-            name: "{{ item.name }}"
-            link: "/usr/bin/{{ item.name }}"
-            path: "{{ item.path }}/node-v{{ item.version }}-linux-x64/bin/{{ item.name }}"
-            priority: "{{ item.priority }}"
-          loop:
-            - { name: node, priority: "{{ item.priority }}" }
-            - { name: npm, priority: "{{ item.priority }}" }
-            - { name: npx, priority: "{{ item.priority }}" }
-            - { name: corepack, priority: "{{ item.priority }}" }
-      loop: "{{ node_versions }}"
+    - name: Set up update-alternatives for node
+      alternatives:
+        name: node
+        link: /usr/bin/node
+        path: "{{item.path}}/node-v{{item.version}}-linux-x64/bin/node"
+        priority: "{{ item.priority }}"
+      with_items: "{{ node_versions }}"
+      loop_control:
+        loop_var: item
+    - name: Set up update-alternatives for npm
+      alternatives:
+        name: npm
+        link: /usr/bin/npm
+        path: "{{ item.path }}/node-v{{ item.version }}-linux-x64/bin/npm"
+        priority: "{{ item.priority }}"
+      with_items: "{{ node_versions }}"
+      loop_control:
+        loop_var: item
+
+    - name: Set up update-alternatives for npx
+      alternatives:
+        name: npx
+        link: /usr/bin/npx
+        path: "{{ item.path }}/node-v{{ item.version }}-linux-x64/bin/npx"
+        priority: "{{ item.priority }}"
+      with_items: "{{ node_versions }}"
+      loop_control:
+        loop_var: item
+
+    - name: Set up update-alternatives for corepack
+      alternatives:
+        name: corepack
+        link: /usr/bin/corepack
+        path: "{{ item.path }}/node-v{{ item.version }}-linux-x64/bin/corepack"
+        priority: "{{ item.priority }}"
+      with_items: "{{ node_versions }}"
       loop_control:
         loop_var: item
