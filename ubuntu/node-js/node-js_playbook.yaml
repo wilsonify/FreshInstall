@@ -5,9 +5,9 @@
 
   vars:
     node_versions:
-      - { version: "14.17.6", path: "/opt/node/v14.17.6", priority: 100 }
-      - { version: "15.14.0", path: "/opt/node/v15.14.0", priority: 90 }
-      - { version: "16.9.1", path: "/opt/node/v16.9.1", priority: 80 }
+      - { version: "14.21.3", path: "/opt/node/v14.21.3", priority: 100 }
+      - { version: "16.20.2", path: "/opt/node/v16.20.2", priority: 90 }
+      - { version: "18.20.3", path: "/opt/node/v18.20.3", priority: 80 }
 
   tasks:
     - name: Ensure directories exist
@@ -21,38 +21,28 @@
       loop_control:
         loop_var: item
 
-    - name: Download and extract Node.js versions
-      block:
-        - name: Download Node.js {{ item.version }}
-          get_url:
-            url: "https://nodejs.org/dist/v{{ item.version }}/node-v{{ item.version }}-linux-x64.tar.xz"
-            dest: "/tmp/node-v{{ item.version }}-linux-x64.tar.xz"
-          with_items: "{{ node_versions }}"
-          loop_control:
-            loop_var: item
+    - name: Download
+      get_url:
+        url: "https://nodejs.org/dist/v{{ item.version }}/node-v{{ item.version }}-linux-x64.tar.xz"
+        dest: "/tmp/node-v{{ item.version }}-linux-x64.tar.xz"
+      with_items: "{{ node_versions }}"
+      loop_control:
+        loop_var: item
 
-        - name: Extract Node.js {{ item.version }}
-          unarchive:
-            src: "/tmp/node-v{{ item.version }}-linux-x64.tar.xz"
-            dest: "{{ item.path }}"
-            copy: no
-            creates: "{{ item.path }}/node-v{{ item.version }}-linux-x64"
-          with_items: "{{ node_versions }}"
-          loop_control:
-            loop_var: item
+    - name: Extract
+      unarchive:
+        src: "/tmp/node-v{{ item.version }}-linux-x64.tar.xz"
+        dest: "{{ item.path }}"
+        copy: no
+        creates: "{{ item.path }}/node-v{{ item.version }}-linux-x64/bin"
+      with_items: "{{ node_versions }}"
+      loop_control:
+        loop_var: item
 
-        - name: Move extracted Node.js {{ item.version }} to target directory
-          command: mv "{{ item.path }}/node-v{{ item.version }}-linux-x64/"* "{{ item.path }}/"
-          args:
-            creates: "{{ item.path }}/node-v{{ item.version }}-linux-x64"
-          with_items: "{{ node_versions }}"
-          loop_control:
-            loop_var: item
-
-    - name: Set up update-alternatives for Node.js
+    - name: Set up update-alternatives for node
       alternatives:
         name: node
-        path: "{{ item.path }}/bin/node"
+        path: "{{ item.path }}/node-v{{ item.version }}-linux-x64/bin/node"
         priority: "{{ item.priority }}"
       with_items: "{{ node_versions }}"
       loop_control:
@@ -61,7 +51,25 @@
     - name: Set up update-alternatives for npm
       alternatives:
         name: npm
-        path: "{{ item.path }}/bin/npm"
+        path: "{{ item.path }}/node-v{{ item.version }}-linux-x64/bin/npm"
+        priority: "{{ item.priority }}"
+      with_items: "{{ node_versions }}"
+      loop_control:
+        loop_var: item
+
+    - name: Set up update-alternatives for npx
+      alternatives:
+        name: npm
+        path: "{{ item.path }}/node-v{{ item.version }}-linux-x64/bin/npx"
+        priority: "{{ item.priority }}"
+      with_items: "{{ node_versions }}"
+      loop_control:
+        loop_var: item
+
+    - name: Set up update-alternatives for corepack
+      alternatives:
+        name: npm
+        path: "{{ item.path }}/node-v{{ item.version }}-linux-x64/bin/corepack"
         priority: "{{ item.priority }}"
       with_items: "{{ node_versions }}"
       loop_control:
