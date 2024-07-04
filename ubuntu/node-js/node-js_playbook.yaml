@@ -9,9 +9,13 @@
         url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
         state: present
 
+    - name: Determine Ubuntu version
+      set_fact:
+        ubuntu_codename: "{{ ansible_distribution_release }}"
+
     - name: Add Node.js LTS repository
       apt_repository:
-        repo: deb https://deb.nodesource.com/node_14.x focal main  # Adjust for your Ubuntu version if necessary
+        repo: deb https://deb.nodesource.com/node_14.x {{ ubuntu_codename }} main
         state: present
 
     - name: Install Node.js, npm, and build-essential
