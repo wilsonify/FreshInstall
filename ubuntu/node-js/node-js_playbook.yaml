@@ -7,6 +7,7 @@
     node_versions:
       - { version: "18.20.3", path: "/opt/node/v18.20.3", priority: 80 }
       - { version: "16.20.2", path: "/opt/node/v16.20.2", priority: 90 }
+      - { version: "15.14.0", path: "/opt/node/v15.14.0", priority: 90 }
       - { version: "14.21.3", path: "/opt/node/v14.21.3", priority: 100 }
 
 
