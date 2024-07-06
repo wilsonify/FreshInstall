@@ -1,30 +1,41 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
-  hosts: localhost
-
+- name: Install TiMidity++ and configure as a service
+  hosts: all
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Install TiMidity++
+      apt:
+        name: timidity
+        state: present
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Create the TiMidity++ systemd service file
+      copy:
+        src: timidity.service
+        dest: /etc/systemd/system/timidity.service
+        mode: '0644'
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Reload systemd to apply changes
+      command: systemctl daemon-reload
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Enable TiMidity++ service
+      systemd:
+        name: timidity
+        enabled: yes
+
+    - name: Start TiMidity++ service
+      systemd:
+        name: timidity
+        state: started
+
+    - name: Verify TiMidity++ service is running
+      command: systemctl status timidity
+      register: timidity_status
+
+    - name: Display TiMidity++ service status
+      debug:
+        msg: "{{ timidity_status.stdout }}"
