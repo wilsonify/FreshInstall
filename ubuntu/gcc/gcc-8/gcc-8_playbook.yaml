@@ -1,30 +1,62 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
-  hosts: localhost
-
+- name: Install GCC 8 from local .deb files
+  hosts: all
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Install GCC 8 base
+      apt:
+        deb: ./gcc-8-base_8.4.0-3ubuntu2_amd64.deb
+        state: present
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Install libmpx2
+      apt:
+        deb: ./libmpx2_8.4.0-3ubuntu2_amd64.deb
+        state: present
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
+    - name: Install lib32mpx2
+      apt:
+        deb: ./lib32mpx2_8.4.0-3ubuntu2_amd64.deb
+        state: present
+
+    - name: Install remaining packages
+      apt:
+        deb: "{{ item }}"
+        state: present
+      with_items:
+        - ./libisl22_0.22.1-1_amd64.deb
+        - ./lib32gcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - ./libx32gcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - ./libstdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - ./gcc-8-multilib_8.4.0-3ubuntu2_amd64.deb
+        - ./lib32stdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - ./libx32stdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - ./cpp-8_8.4.0-3ubuntu2_amd64.deb
+        - ./libgcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+        - ./gcc-8_8.4.0-3ubuntu2_amd64.deb
+        - ./g++-8_8.4.0-3ubuntu2_amd64.deb
+        - ./g++-8-multilib_8.4.0-3ubuntu2_amd64.deb
+
+    - name: Ensure GCC 8 is set as the default GCC version
+      alternatives:
+        name: gcc
+        link: /usr/bin/gcc
+        path: /usr/bin/gcc-8
         priority: 100
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Ensure G++ 8 is set as the default G++ version
+      alternatives:
+        name: g++
+        link: /usr/bin/g++
+        path: /usr/bin/g++-8
+        priority: 100
+
+    - name: Verify GCC installation
+      command: gcc-8 --version
+
+    - name: Verify G++ installation
+      command: g++-8 --version
