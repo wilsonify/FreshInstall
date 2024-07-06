@@ -13,7 +13,7 @@ libc6-dev \
 libffi-dev \
 libgdbm-dev \
 libncursesw5-dev \
-libreadline-gplv2-dev \
+libreadline-dev \
 libsqlite3-dev \
 libssl-dev \
 tk-dev \

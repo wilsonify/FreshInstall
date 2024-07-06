@@ -6,8 +6,8 @@ VERSION36 := "3.6.15"
 VERSION37 := "3.7.13"
 VERSION38 := "3.8.13"
 VERSION39 := "3.9.12"
-VERSION310 := "3.10.4" # NOTE: python3.10 is the system python in ubuntu 22.04
-VERSION311 := "3.11.0b4"
+VERSION310 := "3.10.12"
+VERSION311 := "3.11.4"
 
 all: clean \
 /usr/bin/python3.6 \
@@ -110,14 +110,8 @@ Python-$(VERSION39)/configure: Python-$(VERSION39).tgz
 Python-$(VERSION310).tgz:
 	wget https://www.python.org/ftp/python/$(VERSION310)/Python-$(VERSION310).tgz
 
-Python-$(VERSION310)/configure: Python-$(VERSION310).tgz
-	tar xzf Python-$(VERSION310).tgz
-
 /usr/src/Python-$(VERSION310)/configure: Python-$(VERSION310)/configure
 	sudo mv Python-$(VERSION310) /usr/src
-
-/usr/src/Python-$(VERSION310)/pybuilddir.txt: /usr/src/Python-$(VERSION310)/configure
-	cd /usr/src/Python-$(VERSION310) && sudo ./configure --enable-optimizations
 
 /usr/bin/python3.10: /usr/src/Python-$(VERSION310)/pybuilddir.txt dependencies.txt
 	cd /usr/src/Python-$(VERSION310) && time sudo make -j 8 altinstall
@@ -148,3 +142,9 @@ test:
 
 alternatives: test
 	./alternative-python.sh
+
+ansible-install:
+	ansible-playbook -i ../inventory.ini python39_playbook.yaml
+	ansible-playbook -i ../inventory.ini python310_playbook.yaml
+	ansible-playbook -i ../inventory.ini python311_playbook.yaml
+	ansible-playbook -i ../inventory.ini python312_playbook.yaml

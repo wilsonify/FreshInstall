@@ -10,7 +10,7 @@ build-essential \
 checkinstall
 
 sudo apt-get install \
-libreadline-gplv2-dev \
+libreadline-dev \
 libncursesw5-dev libssl-dev \
 libsqlite3-dev \
 tk-dev \

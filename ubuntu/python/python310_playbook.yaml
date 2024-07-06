@@ -1,0 +1,62 @@
+---
+- name: Install Python 3.10 from source
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Update and upgrade apt packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Install build requirements
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - wget
+        - build-essential
+        - checkinstall
+
+    - name: Install Python dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - libbz2-dev
+        - libc6-dev
+        - libffi-dev
+        - libgdbm-dev
+        - libncursesw5-dev
+        - libreadline-dev
+        - libsqlite3-dev
+        - libssl-dev
+        - tk-dev
+        - zlib1g-dev
+
+    - name: Download Python 3.10.1 source code
+      get_url:
+        url: https://www.python.org/ftp/python/3.10.1/Python-3.10.1.tgz
+        dest: /tmp/Python-3.10.1.tgz
+
+    - name: Extract Python 3.10.1 source code
+      unarchive:
+        src: /tmp/Python-3.10.1.tgz
+        dest: /usr/src/
+        remote_src: yes
+
+    - name: Compile and install Python 3.10.1
+      command: ./configure --enable-optimizations
+      args:
+        chdir: /usr/src/Python-3.10.1/
+      notify:
+        - Make altinstall
+
+  handlers:
+    - name: Make altinstall
+      command: make -j 8 altinstall
+      args:
+        chdir: /usr/src/Python-3.10.1/
+
+    - name: Verify Python 3.10 installation
+      command: python3.10 --version
