@@ -1,0 +1,55 @@
+---
+- name: Install RStudio on Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install prerequisites (software-properties-common and dirmngr)
+      apt:
+        name: "{{ item }}"
+        state: present
+        install_recommends: no
+      with_items:
+        - software-properties-common
+        - dirmngr
+
+    - name: Add signing key for CRAN repository
+      shell: wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+      args:
+        creates: /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+
+    - name: Verify key fingerprint
+      shell: gpg --show-keys /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+
+    - name: Add R 4.0 repository from CRAN
+      apt_repository:
+        repo: "deb https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/"
+        state: present
+        update_cache: yes
+
+    - name: Install R and gdebi-core
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - r-base
+        - gdebi-core
+
+    - name: Download RStudio package
+      get_url:
+        url: "https://s3.amazonaws.com/rstudio-ide-build/desktop/jammy/amd64/rstudio-2022.07.3-582-amd64.deb"
+        dest: /tmp/rstudio.deb
+
+    - name: Install RStudio using gdebi
+      apt:
+        deb: /tmp/rstudio.deb
+        state: present
+
+    - name: Remove downloaded RStudio package
+      file:
+        path: /tmp/rstudio.deb
+        state: absent
