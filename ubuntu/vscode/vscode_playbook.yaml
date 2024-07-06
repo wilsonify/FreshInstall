@@ -1,30 +1,37 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
-  hosts: localhost
-
+- name: Install Visual Studio Code
+  hosts: all
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Download Visual Studio Code
+      get_url:
+        url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+        dest: /tmp/code_latest_amd64.deb
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Install Visual Studio Code
+      apt:
+        deb: /tmp/code_latest_amd64.deb
+        state: present
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Remove the downloaded .deb file
+      file:
+        path: /tmp/code_latest_amd64.deb
+        state: absent
+
+    - name: Verify Visual Studio Code installation
+      command: code --version
+      register: vscode_version
+
+    - name: Display Visual Studio Code version
+      debug:
+        msg: "Installed Visual Studio Code version: {{ vscode_version.stdout }}"
 
     - name: Install PyCharm desktop entry
       ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+        content: "{{ lookup('file', 'com.microsoft.vs.code.desktop') }}"
+        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/vscode.desktop"
