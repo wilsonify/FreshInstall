@@ -1,30 +1,62 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
+- name: Install Python 3.9 from source
   hosts: localhost
+  become: yes
 
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Update and upgrade apt packages
+      apt:
+        update_cache: yes
+        upgrade: dist
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Install build requirements
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - wget
+        - build-essential
+        - checkinstall
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Install Python dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - libbz2-dev
+        - libc6-dev
+        - libffi-dev
+        - libgdbm-dev
+        - libncursesw5-dev
+        - libreadline-gplv2-dev
+        - libsqlite3-dev
+        - libssl-dev
+        - tk-dev
+        - zlib1g-dev
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Download Python 3.9.9 source code
+      get_url:
+        url: https://www.python.org/ftp/python/3.9.9/Python-3.9.9.tgz
+        dest: /tmp/Python-3.9.9.tgz
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Extract Python 3.9.9 source code
+      unarchive:
+        src: /tmp/Python-3.9.9.tgz
+        dest: /usr/src/
+        remote_src: yes
+
+    - name: Compile and install Python 3.9.9
+      command: ./configure --enable-optimizations
+      args:
+        chdir: /usr/src/Python-3.9.9/
+      notify:
+        - Make altinstall
+
+  handlers:
+    - name: Make altinstall
+      command: make -j 8 altinstall
+      args:
+        chdir: /usr/src/Python-3.9.9/
+
+    - name: Verify Python 3.9 installation
+      command: python3.9 --version
