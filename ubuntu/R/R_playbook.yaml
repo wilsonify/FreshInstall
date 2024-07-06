@@ -1,30 +1,42 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
-  hosts: localhost
-
+- name: Install R and required packages on Ubuntu
+  hosts: all
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Get release name
+      shell: lsb_release -sc
+      register: release_name
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Print release name
+      debug:
+        msg: "RELEASE_NAME = {{ release_name.stdout }}"
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Import R repository key
+      apt_key:
+        keyserver: keyserver.ubuntu.com
+        id: E298A3A825C0D65DFD57CBB651716619E084DAB9
+        state: present
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Add R repository
+      apt_repository:
+        repo: "deb https://cloud.r-project.org/bin/linux/ubuntu {{ release_name.stdout }}-cran40/"
+        state: present
+        update_cache: yes
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+
+    - name: Install R and dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - r-base-dev
+        - curl
+        - libcurl4-openssl-dev
+        - libxml2-dev
+        - libssl-dev
+
+    - name: Check R version
+      command: R --version
