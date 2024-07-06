@@ -1,30 +1,48 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
-  hosts: localhost
-
+- name: Reinstall Wi-Fi drivers
+  hosts: all
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Ensure necessary packages are installed
+      apt:
+        name:
+          - build-essential
+          - dkms
+          - git
+        state: present
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Remove existing rtl8812au-dkms package
+      apt:
+        name: rtl8812au-dkms
+        state: absent
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Clone rtl8812au repository
+      git:
+        repo: https://github.com/aircrack-ng/rtl8812au.git
+        dest: /tmp/rtl8812au
+        update: yes
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Change directory to rtl8812au
+      command: chdir=/tmp/rtl8812au pwd
+      register: rtl8812au_path
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Remove existing dkms module
+      make:
+        chdir: "{{ rtl8812au_path.stdout }}"
+        target: dkms_remove
+
+    - name: Install dkms module
+      make:
+        chdir: "{{ rtl8812au_path.stdout }}"
+        target: dkms_install
+
+    - name: Restart NetworkManager service
+      service:
+        name: NetworkManager
+        state: restarted
+
+    - name: Clean up rtl8812au directory
+      file:
+        path: /tmp/rtl8812au
+        state: absent
+        recurse: yes
