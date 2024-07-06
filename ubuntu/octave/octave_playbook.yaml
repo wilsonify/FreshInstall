@@ -1,30 +1,108 @@
 ---
-- name: Install PyCharm on Linux Mint using alternatives
-  hosts: localhost
-
+- name: Install GNU Octave and dependencies
+  hosts: all
+  become: yes
   tasks:
-    - name: "Download pycharm-community"
-      ansible.builtin.download:
-        url: https://download.jetbrains.com/python/pycharm-community-2024.1.4.tar.gz
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
 
-    - name: unzip
-      ansible.builtin.extract:
-        file: pycharm-community-2024.1.4.tar.gz
-        dir: /opt/pycharm/2024.1.4
+    - name: Install dependencies for Octave
+      apt:
+        name:
+          - gcc
+          - g++
+          - gfortran
+          - make
+          - libblas-dev
+          - liblapack-dev
+          - libpcre3-dev
+          - libarpack2-dev
+          - libcurl4-gnutls-dev
+          - epstool
+          - libfftw3-dev
+          - fig2dev
+          - libfltk1.3-dev
+          - libfontconfig1-dev
+          - libfreetype6-dev
+          - libgl2ps-dev
+          - libglpk-dev
+          - libreadline-dev
+          - gnuplot-x11
+          - libgraphicsmagick++1-dev
+          - libhdf5-dev
+          - openjdk-8-jdk
+          - libsndfile1-dev
+          - llvm-dev
+          - texinfo
+          - libgl1-mesa-dev
+          - libosmesa6-dev
+          - pstoedit
+          - portaudio19-dev
+          - libqhull-dev
+          - libqrupdate-dev
+          - libsuitesparse-dev
+          - texlive-latex-extra
+          - libxft-dev
+          - zlib1g-dev
+          - autoconf
+          - automake
+          - bison
+          - flex
+          - gperf
+          - gzip
+          - icoutils
+          - librsvg2-bin
+          - libtool
+          - perl
+          - rsync
+          - tar
+          - qtbase5-dev
+          - qttools5-dev
+          - qttools5-dev-tools
+          - libqscintilla2-qt5-dev
+          - libsundials-dev
+        state: present
 
-    - name: Set executable permissions on pycharm.sh
-      ansible.builtin.file:
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        mode: u+x
+    - name: Install GNU Octave
+      apt:
+        name: octave
+        state: present
 
-    - name: Register PyCharm with alternatives
-      ansible.builtin.alternatives:
-        name: pycharm
-        link: /usr/local/bin/pycharm
-        path: "/opt/pycharm/2024.1.4/bin/pycharm.sh"
-        priority: 100
+    - name: Install additional Octave packages
+      apt:
+        name:
+          - octave-control
+          - octave-image
+          - octave-io
+          - octave-optim
+          - octave-signal
+          - octave-statistics
+        state: present
 
-    - name: Install PyCharm desktop entry
-      ansible.builtin.copy:
-        content: "{{ lookup('file', 'com.jetbrains.pycharm.desktop') }}"
-        dest: "{{ lookup('env', 'HOME') }}/.local/share/applications/pycharm.desktop"
+    - name: Install Octave documentation
+      apt:
+        name:
+          - octave-doc
+          - octave-info
+          - octave-htmldoc
+        state: present
+
+    - name: Install Octave development headers
+      apt:
+        name: liboctave-dev
+        state: present
+
+    - name: Install Octave debugging symbols
+      apt:
+        name: octave-dbg
+        state: present
+
+    - name: Verify Octave installation
+      command: octave --version
+      register: octave_version
+
+    - name: Display Octave version
+      debug:
+        msg: "Installed Octave version: {{ octave_version.stdout }}"
