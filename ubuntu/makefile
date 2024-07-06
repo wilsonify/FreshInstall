@@ -1,6 +1,9 @@
 
 bootstrap:
-    ansible.sh
+	ansible.sh
+
+python-multi:
+	ansible-playbook -i inventory.ini python/all-python-playbook.yaml
 
 node:
 	ansible-playbook -i inventory.ini node-js/node-js_playbook.yaml
