@@ -1,7 +1,8 @@
 ---
 - name: Install RStudio on Ubuntu
-  hosts: all
+  hosts: localhost
   become: yes
+
   tasks:
     - name: Update apt package cache
       apt:

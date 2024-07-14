@@ -55,3 +55,6 @@ terraformer:
 
 vscode:
 	ansible-playbook -i inventory.ini vscode/vscode-playbook.yaml
+
+r-studio:
+	ansible-playbook -i inventory.ini rstudio r-studio/RStudio_playbook.yaml
