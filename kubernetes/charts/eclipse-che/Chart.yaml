@@ -1,0 +1,47 @@
+#
+# Copyright (c) 2019-2024 Red Hat, Inc.
+# This program and the accompanying materials are made
+# available under the terms of the Eclipse Public License 2.0
+# which is available at https://www.eclipse.org/legal/epl-2.0/
+#
+# SPDX-License-Identifier: EPL-2.0
+#
+# Contributors:
+#   Red Hat, Inc. - initial API and implementation
+#
+
+apiVersion: v1
+description: A Helm chart for deploying Eclipse Che on a Kubernetes
+name: eclipse-che
+version: 7.88.0
+annotations:
+  artifacthub.io/license: EPL-2.0
+  artifacthub.io/links: |
+    - name: repository
+      url: https://github.com/eclipse-che/che-operator
+    - name: web-site
+      url: https://www.eclipse.org/che/
+    - name: docs
+      url: https://www.eclipse.org/che/docs
+    - name: support
+      url: https://github.com/eclipse/che
+  artifacthub.io/provider: Eclipse Foundation
+  artifacthub.io/maintainers: |
+    - name: Anatolii Bazko
+      email: abazko@redhat.com
+    - name: Oleksandr Andriienko
+      email: oandriie@redhat.com
+  artifacthub.io/operator: "true"
+  artifacthub.io/operatorCapabilities: Seamless Upgrades
+  artifacthub.io/crdsExamples: "- apiVersion: org.eclipse.che/v2\n  kind: CheCluster\n\
+    \  metadata:\n    name: eclipse-che\n    namespace: eclipse-che\n  spec:\n   \
+    \ components:\n      pluginRegistry:\n        disableInternalRegistry: true\n\
+    \      devfileRegistry:\n        disableInternalRegistry: true\n        externalDevfileRegistries:\n\
+    \          - url: 'https://registry.devfile.io'\n    devEnvironments: {}\n   \
+    \ networking: {}\n    containerRegistry: {}\n    gitServices: {}\n"
+  artifacthub.io/crds: |-
+    - kind: CheCluster
+      version: v2
+      name: checlusters.org.eclipse.che
+      displayName: CheCluster
+      description: The `CheCluster` custom resource allows defining and managing a Che server installation

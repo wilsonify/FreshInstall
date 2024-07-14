@@ -2,6 +2,9 @@
 bootstrap:
 	ansible.sh
 
+chectl:
+	ansible-playbook install_chectl.yml
+
 python-multi:
 	ansible-playbook -i inventory.ini python/all-python-playbook.yaml
 

@@ -1,0 +1,27 @@
+---
+- name: Install chectl management tool
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install prerequisites (curl)
+      package:
+        name: curl
+        state: present
+
+    - name: Download and execute chectl install script
+      shell: bash <(curl -sL https://che-incubator.github.io/chectl/install.sh)
+      args:
+        creates: /usr/local/bin/chectl
+
+    - name: Verify chectl installation
+      command: chectl --version
+      register: chectl_version
+
+    - name: Display chectl version
+      debug:
+        msg: "Installed chectl version: {{ chectl_version.stdout }}"
+
+    - name: Clean up installation script log
+      file:
+        path: chectl-install.log
+        state: absent
