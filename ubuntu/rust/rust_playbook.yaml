@@ -35,13 +35,22 @@
         create: yes
         state: present
 
-    - name: Ensure .profile is loaded
+    - name: Update environment for current session
       shell: |
-        if [ -f "{{ ansible_env.HOME }}/.profile" ]; then
-          . "{{ ansible_env.HOME }}/.profile";
-        fi
+        export PATH="$HOME/.cargo/bin:$PATH"
+        rustc --version
+        cargo --version
+      register: rust_versions
       args:
         executable: /bin/bash
+
+    - name: Print rustc version
+      debug:
+        msg: "rustc version: {{ rust_versions.stdout_lines[0] }}"
+
+    - name: Print cargo version
+      debug:
+        msg: "cargo version: {{ rust_versions.stdout_lines[1] }}"
 
     - name: Clean up installation script
       file:
