@@ -1,19 +1,17 @@
 ---
 - name: Install Rust
   hosts: all
-  become: yes
+  become: no  # Ensure that tasks are run as a non-root user
   tasks:
     - name: Install required packages
-      apt:
-        name:
-          - curl
+      package:
+        name: curl
         state: present
       when: ansible_os_family == "Debian"
 
     - name: Install required packages
-      yum:
-        name:
-          - curl
+      package:
+        name: curl
         state: present
       when: ansible_os_family == "RedHat"
 
@@ -27,17 +25,20 @@
       command: /tmp/rustup-init.sh -y
       args:
         chdir: /tmp
+      environment:
+        CARGO_HOME: "{{ ansible_env.HOME }}/.cargo"
+        RUSTUP_HOME: "{{ ansible_env.HOME }}/.rustup"
 
-    - name: Add cargo and rustc to PATH
+    - name: Ensure .cargo/bin is in PATH
       lineinfile:
-        path: "{{ ansible_env.HOME }}/.profile"
+        path: "{{ ansible_env.HOME }}/.bashrc"
         line: 'export PATH="$HOME/.cargo/bin:$PATH"'
         create: yes
         state: present
 
-    - name: Update environment for current session
+    - name: Source .bashrc and verify installations
       shell: |
-        export PATH="$HOME/.cargo/bin:$PATH"
+        source "{{ ansible_env.HOME }}/.bashrc"
         rustc --version
         cargo --version
       register: rust_versions
