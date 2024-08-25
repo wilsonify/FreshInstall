@@ -1,0 +1,153 @@
+Count,ID,Name,Description,Clone URL
+1,276946661,akka-react-no-monocle,"Proof of concept, react and akka to manage single page application",https://github.com/wilsonify/akka-react-no-monocle.git
+2,698532337,Amazon-Fargate-Quick-Start-Guide,Amazon Fargate Quick Start Guide,https://github.com/wilsonify/Amazon-Fargate-Quick-Start-Guide.git
+3,695863121,amazon-sagemaker-mlflow-fargate,Managing your machine learning lifecycle with MLflow and Amazon SageMaker,https://github.com/wilsonify/amazon-sagemaker-mlflow-fargate.git
+4,254892065,ansible-up-and-running,"Code samples from the book ""Ansible: Up and Running""",https://github.com/wilsonify/ansible-up-and-running.git
+5,146357904,AppliedRegression,Fall 2018 Applied Regression,https://github.com/wilsonify/AppliedRegression.git
+6,237847026,asyncio-examples,"Based on ""Using Asyncio in Python""",https://github.com/wilsonify/asyncio-examples.git
+7,538238240,automated-deep-learning-using-neural-network-intelligence,Source Code for 'Automated Deep Learning Using Neural Network Intelligence' by Ivan Gridin,https://github.com/wilsonify/automated-deep-learning-using-neural-network-intelligence.git
+8,577070148,base-cpp-data-science,port of joelgrus/data-science-from-scratch to c++,https://github.com/wilsonify/base-cpp-data-science.git
+9,220657274,base-python-data-science,based on https://github.com/joelgrus/data-science-from-scratch,https://github.com/wilsonify/base-python-data-science.git
+10,239358158,bayesian-analysis-with-python,Bayesian Analysis with Python (Second Edition),https://github.com/wilsonify/bayesian-analysis-with-python.git
+11,382670862,bayesloop,Probabilistic programming framework that facilitates objective model selection for time-varying parameter models. ,https://github.com/wilsonify/bayesloop.git
+12,403065203,Beginning-Robotics-with-Raspberry-Pi-and-Arduino,source code,https://github.com/wilsonify/Beginning-Robotics-with-Raspberry-Pi-and-Arduino.git
+13,423266117,blackhat-python3,"Source code for the book ""Black Hat Python"" by Justin Seitz. The code has been fully converted to Python 3, reformatted to comply with PEP8 standards and refactored to eliminate dependency issues involving the implementation of deprecated libraries.",https://github.com/wilsonify/blackhat-python3.git
+14,342872202,Build-Supercomputers-with-Raspberry-Pi-3,Code repository for Build Supercomputers with Raspberry Pi 3 by Packt,https://github.com/wilsonify/Build-Supercomputers-with-Raspberry-Pi-3.git
+15,354063416,c-consumer,use conan and cmake to build simple amqp consumer,https://github.com/wilsonify/c-consumer.git
+16,333435439,cashcash-desktop,The accounting app for visual people,https://github.com/wilsonify/cashcash-desktop.git
+17,338595456,cassandra-definitive-guide,"Sample microservice implementation based on reservation data model from Cassandra: The Definitive Guide, 2nd/3rd Ed",https://github.com/wilsonify/cassandra-definitive-guide.git
+18,338595058,cassandra-guide,"Source code for Cassandra: The Definitive Guide, 2nd Ed",https://github.com/wilsonify/cassandra-guide.git
+19,378693019,cec-benchmark-2013-python,"for testing metaheuristic algorithm which is specific for continuous search spaces like Particle Swarm optimizations, Differential evolutions, etc, one can be sure about the performances of algorithm bt testing them in this benchmark. benchmark has been defined by IEEE World Congress on Computational Intelligence in C++. then developers implemented them in MATLAB and R. Now I have implemented them in Python as these language getting hit between data scientists a lot. I hope you find it useful.",https://github.com/wilsonify/cec-benchmark-2013-python.git
+20,786158325,chaos-engineering,site reliability through controlled disruption,https://github.com/wilsonify/chaos-engineering.git
+21,305361745,ChemometricsWithR,"R package accompanying the second edition of ""Chemometrics with R"", Springer",https://github.com/wilsonify/ChemometricsWithR.git
+22,378727223,cmake-examples,solutions to common build system issues,https://github.com/wilsonify/cmake-examples.git
+23,570708629,container-curmudgeon,Based on the book Cracking Containers with Docker and Kubernetes,https://github.com/wilsonify/container-curmudgeon.git
+24,448408408,cuda-samples,Based on standard nvidia samples for CUDA Toolkit ,https://github.com/wilsonify/cuda-samples.git
+25,287947548,cython-examples,Code examples from the book.,https://github.com/wilsonify/cython-examples.git
+26,319143551,d3-in-action,Examples for D3.js in Action 2nd Edition (D3v4),https://github.com/wilsonify/d3-in-action.git
+27,430203050,data-pipelines-with-apache-airflow,Code for Data Pipelines with Apache Airflow,https://github.com/wilsonify/data-pipelines-with-apache-airflow.git
+28,440955251,data-structures-and-information-retrieval-in-python,Data Structures and Information Retrieval in Python,https://github.com/wilsonify/data-structures-and-information-retrieval-in-python.git
+29,342893793,data-visualization,"based on Data visualisation with R: 100 examples by Rahlf, Thomas",https://github.com/wilsonify/data-visualization.git
+30,319044478,Dataproofer,A proofreader for your data,https://github.com/wilsonify/Dataproofer.git
+31,466750103,decisionmaking,Preview of the textbook Algorithms for Decision Making,https://github.com/wilsonify/decisionmaking.git
+32,207128775,deep_throat,speech synthesis program,https://github.com/wilsonify/deep_throat.git
+33,546020847,definitive-guide-to-aws-application-integration,Source Code for 'The Definitive Guide to AWS Application Integration' by Jyothi Prasad Buddha and Reshma Beesetty,https://github.com/wilsonify/definitive-guide-to-aws-application-integration.git
+34,540820441,Deno-Web-Development,"Deno Web Development, published by Packt",https://github.com/wilsonify/Deno-Web-Development.git
+35,166231980,design-of-experiments,2019 Spring Design of Experiments. This repository contains several useful examples of statistical design and analysis of experiments primarily using R.,https://github.com/wilsonify/design-of-experiments.git
+36,189790812,design-patterns-python,example implementations of various design patterns,https://github.com/wilsonify/design-patterns-python.git
+37,606528366,doepy,Design of Experiment Generator. Read the docs at: https://doepy.readthedocs.io/en/latest/,https://github.com/wilsonify/doepy.git
+38,251112177,dotnetcoreinaction,Companion code from .NET Core in Action by Manning Publishing,https://github.com/wilsonify/dotnetcoreinaction.git
+39,358433886,dowhy,"DoWhy is a Python library for causal inference that supports explicit modeling and testing of causal assumptions. DoWhy is based on a unified language for causal inference, combining causal graphical models and potential outcomes frameworks. ",https://github.com/wilsonify/dowhy.git
+40,188614451,euler,organize and test project euler problem solutions in python,https://github.com/wilsonify/euler.git
+41,204207567,eulerconsumer,,https://github.com/wilsonify/eulerconsumer.git
+42,525754835,FinancialTheoryWithPython,Jupyter Notebooks and code for the book Financial Theory with Python (O'Reilly) by Yves Hilpisch.,https://github.com/wilsonify/FinancialTheoryWithPython.git
+43,294990686,FocusRing,Geometry of Consumable Focus Rings Used in Plasma Etching of Thin Silicon-Oxides,https://github.com/wilsonify/FocusRing.git
+44,382886026,fortran-machine,Finally a Fortran MVC web platform,https://github.com/wilsonify/fortran-machine.git
+45,253325705,foundations-for-analytics-with-python,,https://github.com/wilsonify/foundations-for-analytics-with-python.git
+46,147225996,FreshInstall,scripts to run on a fresh install of ubuntu,https://github.com/wilsonify/FreshInstall.git
+47,363357721,fwrap,"Wrap Fortran 90/95 in C, Cython and Python",https://github.com/wilsonify/fwrap.git
+48,427957792,Gooey,Turn (almost) any Python command line program into a full GUI application with one line,https://github.com/wilsonify/Gooey.git
+49,435285569,googletest-examples,googltest examples,https://github.com/wilsonify/googletest-examples.git
+50,182555642,grpc-with-python,,https://github.com/wilsonify/grpc-with-python.git
+51,266658274,Hands-on-Data-Visualization-with-Bokeh,"Hands-On Data Visualization with Bokeh, published by Packt",https://github.com/wilsonify/Hands-on-Data-Visualization-with-Bokeh.git
+52,564768553,Hands-On-Enterprise-Application-Development,"Hands-On Enterprise Application Development with Python, published by Packt",https://github.com/wilsonify/Hands-On-Enterprise-Application-Development.git
+53,277182920,Hands-On-GPU-Programming-with-Python-and-CUDA,"Hands-On GPU Programming with Python and CUDA, published by Packt",https://github.com/wilsonify/Hands-On-GPU-Programming-with-Python-and-CUDA.git
+54,569917236,Hands-On-MQTT-Programming-with-Python,"Hands-On MQTT Programming with Python, published by Packt",https://github.com/wilsonify/Hands-On-MQTT-Programming-with-Python.git
+55,781429487,Hands-On-Python-for-DevOps,Hands-on Python for DevOps,https://github.com/wilsonify/Hands-On-Python-for-DevOps.git
+56,365800611,Hands-On-Quantum-Information-Processing-with-Python,"Hands-On Quantum Information Processing with Python, published by Packt",https://github.com/wilsonify/Hands-On-Quantum-Information-Processing-with-Python.git
+57,266661296,Hands-On-Reactive-Programming-with-Python,"Hands-On-Reactive-Programming-with-Python, published by Packt",https://github.com/wilsonify/Hands-On-Reactive-Programming-with-Python.git
+58,477378531,Hands-On-Simulation-Modeling-with-Python," Hands-On Simulation Modeling with Python, published by Packt",https://github.com/wilsonify/Hands-On-Simulation-Modeling-with-Python.git
+59,325058608,hugo-in-action,,https://github.com/wilsonify/hugo-in-action.git
+60,397897725,Interactive-Dashboards-and-Data-Apps-with-Plotly-and-Dash,"Interactive Dashboards and Data Apps with Plotly and Dash, published by Packt",https://github.com/wilsonify/Interactive-Dashboards-and-Data-Apps-with-Plotly-and-Dash.git
+61,332530450,interactive-data-editor,A Software to interactively edit data in a graphical manner,https://github.com/wilsonify/interactive-data-editor.git
+62,343211982,intuitive-understanding-of-kalman-filtering,"Intuitive Understanding of Kalman Filtering with MATLAB. Barreto A., Adjouadi M., Ortega F., and O-larnnithipong N.",https://github.com/wilsonify/intuitive-understanding-of-kalman-filtering.git
+63,650577263,jensberg047.github.io,,https://github.com/wilsonify/jensberg047.github.io.git
+64,533013233,joy-of-javascript,The Uncommon Joy Of JavaScript,https://github.com/wilsonify/joy-of-javascript.git
+65,735433374,julia-intellij,:computer: Julia Plugin for IntelliJ IDEA,https://github.com/wilsonify/julia-intellij.git
+66,266339019,k8s-pattern-examples,"Examples for ""Kubernetes Patterns - Reusable Elements for Designing Cloud-Native Applications"" ",https://github.com/wilsonify/k8s-pattern-examples.git
+67,229436788,kubeflow-examples,A repository to host extended examples and tutorials,https://github.com/wilsonify/kubeflow-examples.git
+68,494046567,learn-go-with-tests,Learn Go with test-driven development,https://github.com/wilsonify/learn-go-with-tests.git
+69,499496877,Learn-Qt-5,"Learn Qt 5, published by Packt",https://github.com/wilsonify/Learn-Qt-5.git
+70,492224522,learning-devops,"Learning DevOps – Second Edition, published by Packt",https://github.com/wilsonify/learning-devops.git
+71,746055638,learning-github-actions,Code repository for the O'Reilly book Learning GitHub Actions,https://github.com/wilsonify/learning-github-actions.git
+72,87123820,lyrics,use neural networks to generate song lyrics,https://github.com/wilsonify/lyrics.git
+73,694511355,Machine-Learning-Engineering-on-AWS,"Machine Learning Engineering on AWS, published by Packt",https://github.com/wilsonify/Machine-Learning-Engineering-on-AWS.git
+74,266648780,Mastering-Python-Networking-Third-Edition,"Mastering Python Networking Third Edition, published by Packt",https://github.com/wilsonify/Mastering-Python-Networking-Third-Edition.git
+75,446108878,mlpack-examples,Pre-built mlpack models,https://github.com/wilsonify/mlpack-examples.git
+76,562499166,ModelicaByExample,"Based on the book ""Introduction to Physical Modeling with Modelica""",https://github.com/wilsonify/ModelicaByExample.git
+77,707598301,modelicagym,Modelica models integration with Open AI Gym,https://github.com/wilsonify/modelicagym.git
+78,451103998,modern-c,,https://github.com/wilsonify/modern-c.git
+79,665306775,modern-deep-learning-tabular-data,Source Code for 'Modern Deep Learning for Tabular Data' by Andre Ye and Ziang Wang,https://github.com/wilsonify/modern-deep-learning-tabular-data.git
+80,546634687,modern-fortran,A parallel framework for deep learning in fortran,https://github.com/wilsonify/modern-fortran.git
+81,291275547,modern-full-stack-development,Source code for 'Modern Full-Stack Development' by Frank Zammetti,https://github.com/wilsonify/modern-full-stack-development.git
+82,372587608,modern-pyqt,Source Code for 'Modern PyQt' by Joshua Willman,https://github.com/wilsonify/modern-pyqt.git
+83,313118722,ModernOptimization,based on Modern Optimization by Paulo Cortez,https://github.com/wilsonify/ModernOptimization.git
+84,299048994,ModSimPy,Text and supporting code for Modeling and Simulation in Python,https://github.com/wilsonify/ModSimPy.git
+85,272222948,music21-tools,Demonstrations for music21,https://github.com/wilsonify/music21-tools.git
+86,364805090,nanofort,Fortran bindings for the nanomsg sockets library,https://github.com/wilsonify/nanofort.git
+87,812353873,nemo-git-integration,use git commands from nemo file explorer,https://github.com/wilsonify/nemo-git-integration.git
+88,333433491,Network-Assembler,Network Assembler is a simple way to create neural networks in Keras,https://github.com/wilsonify/Network-Assembler.git
+89,397257486,nim-in-action-code,Nim in Action code samples,https://github.com/wilsonify/nim-in-action-code.git
+90,364088228,norma-fortran,,https://github.com/wilsonify/norma-fortran.git
+91,382941279,ontologies-with-python,Source Code for 'Ontologies with Python' by Lamy Jean-Baptiste,https://github.com/wilsonify/ontologies-with-python.git
+92,166882297,Opti3D,model the cost and strength of 3d printable objects. Use genetic algorithms to remove material selecting for strongest and cheapest.,https://github.com/wilsonify/Opti3D.git
+93,254961950,Pandas-Cookbook-Second-Edition,"Pandas Cookbook Second Edition, published by Packt",https://github.com/wilsonify/Pandas-Cookbook-Second-Edition.git
+94,431895826,PhysicalModelingInMatlab,Text and code for Physical Modeling in MATLAB,https://github.com/wilsonify/PhysicalModelingInMatlab.git
+95,287735891,pistache-example,,https://github.com/wilsonify/pistache-example.git
+96,669899900,pokemon-generator,,https://github.com/wilsonify/pokemon-generator.git
+97,251127428,practical-data-science-with-r,"Code, Data, and Examples for Practical Data Science with R 2nd edition  (Nina Zumel and John Mount) https://github.com/WinVector/PDSwR2",https://github.com/wilsonify/practical-data-science-with-r.git
+98,358970537,practical-jamstack,Source Code for 'Practical JAMstack' by Frank Zammetti,https://github.com/wilsonify/practical-jamstack.git
+99,345140375,Probabilistic-Programming-and-Bayesian-Methods-for-Hackers,"aka ""Bayesian Methods for Hackers"": An introduction to Bayesian methods + probabilistic programming with a computation/understanding-first, mathematics-second point of view. All in pure Python ;)  ",https://github.com/wilsonify/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers.git
+100,139015603,Probabilities-and-Statistics,,https://github.com/wilsonify/Probabilities-and-Statistics.git
+101,253286841,programming-rust-examples,Complete code for the larger example programs from the book.,https://github.com/wilsonify/programming-rust-examples.git
+102,586307288,projects-eclectic,"a repository of several small, unrelated projects",https://github.com/wilsonify/projects-eclectic.git
+103,314792487,pycaret,"An open-source, low-code machine learning library in Python",https://github.com/wilsonify/pycaret.git
+104,364497719,pyclaw,"PyClaw is a Python-based interface to the algorithms of Clawpack and SharpClaw.  It also contains the PetClaw package, which adds parallelism through PETSc.",https://github.com/wilsonify/pyclaw.git
+105,485687001,pyknit,A set of tools for knitters to create charts and eventually more.,https://github.com/wilsonify/pyknit.git
+106,367881042,pyMetaheuristic,"A python library for: Adaptive Random Search, Ant Lion Optimizer, Artificial Bee Colony Optimization, Bat Algorithm, Cross Entropy Method, Cuckoo Search, Differential Evolution, Dispersive Flies Optimization, Firefly Algorithm, Flower Pollination Algorithm, Genetic Algorithm, Grey Wolf Optmizer, Memetic Algorithm, Moth Flame Optimization, Multiverse Optimizer, Particle Swarm Optimization, Random Search, Salp Swarm Algorithm, Simulated Anealling, Sine Cosine Algorithm, Whale Optimization Algorithm",https://github.com/wilsonify/pyMetaheuristic.git
+107,489801673,python-architecture-book,Example application code for the python architecture book,https://github.com/wilsonify/python-architecture-book.git
+108,507642689,Python-Ethical-Hacking,"Python Ethical Hacking, published by Packt",https://github.com/wilsonify/Python-Ethical-Hacking.git
+109,374369083,python-for-excel,"This is the companion repo of the O'Reilly book ""Python for Excel"".",https://github.com/wilsonify/python-for-excel.git
+110,336131184,python-programming-on-win32,,https://github.com/wilsonify/python-programming-on-win32.git
+111,303190541,PythonDataAnalysisCookbook,"Python Data Analysis Cookbook, published by Packt",https://github.com/wilsonify/PythonDataAnalysisCookbook.git
+112,443606133,PythonOneLiners,This repository collects all interesting Python one-liners. Feel free to submit yours!,https://github.com/wilsonify/PythonOneLiners.git
+113,450826835,pytorch-examples,,https://github.com/wilsonify/pytorch-examples.git
+114,354426871,Quantum-Computing-Solutions,source code,https://github.com/wilsonify/Quantum-Computing-Solutions.git
+115,270344371,rabbit-in-action,Examples and source code from the book RabbitMQ in Action.,https://github.com/wilsonify/rabbit-in-action.git
+116,705260761,react-up-and-running,"Code for the book ""React: Up and Running, second edition""",https://github.com/wilsonify/react-up-and-running.git
+117,453475533,refactoring-legacy-t-sql,"Source code for 'Refactoring Legacy T-SQL for Improved Performance, by Lisa Bohm",https://github.com/wilsonify/refactoring-legacy-t-sql.git
+118,479374060,Reinforcement-Learning-Algorithms-with-Python,"Reinforcement Learning Algorithms with Python, Published by Packt",https://github.com/wilsonify/Reinforcement-Learning-Algorithms-with-Python.git
+119,485064071,reinforcement-learning-an-introduction,Python Implementation of Reinforcement Learning: An Introduction,https://github.com/wilsonify/reinforcement-learning-an-introduction.git
+120,178771548,RelationalDataModel,,https://github.com/wilsonify/RelationalDataModel.git
+121,824146136,renewed-renaissance-storefront,headless ecommerce storefront,https://github.com/wilsonify/renewed-renaissance-storefront.git
+122,559696257,research-writing,based on http://www.stevendkrause.com/tprw/project.html,https://github.com/wilsonify/research-writing.git
+123,581917209,rest-cpp-data-science,,https://github.com/wilsonify/rest-cpp-data-science.git
+124,786159093,rockstar-sre,"site reliability engineering to build reliable, resilient, and efficient systems",https://github.com/wilsonify/rockstar-sre.git
+125,291499346,sampyl,"MCMC samplers for Bayesian estimation in Python, including Metropolis-Hastings, NUTS, and Slice",https://github.com/wilsonify/sampyl.git
+126,655835530,self-hosted-runner,self hosted github action runner,https://github.com/wilsonify/self-hosted-runner.git
+127,680495483,serverless-architectures-aws,The code repository for the Serverless Architectures on AWS book,https://github.com/wilsonify/serverless-architectures-aws.git
+128,284466469,sklearn-onnx,Convert scikit-learn models and pipelines to ONNX,https://github.com/wilsonify/sklearn-onnx.git
+129,745999291,solving-identity-management-in-modern-applications,Solving Identity Management in Modern Applications,https://github.com/wilsonify/solving-identity-management-in-modern-applications.git
+130,264418276,Spark-The-Definitive-Guide,Spark: The Definitive Guide's Code Repository,https://github.com/wilsonify/Spark-The-Definitive-Guide.git
+131,244036470,statistics-with-julia,,https://github.com/wilsonify/statistics-with-julia.git
+132,586385983,STMC,markov-chain-monte-carlo-simulations-and-their-statistical-analysis,https://github.com/wilsonify/STMC.git
+133,342095446,stream-processing-with-flink,Stream Processing with Apache Flink - Scala Examples,https://github.com/wilsonify/stream-processing-with-flink.git
+134,382978228,summit,Optimising chemical reactions using machine learning,https://github.com/wilsonify/summit.git
+135,260986062,survival,survival analysis,https://github.com/wilsonify/survival.git
+136,146359488,Taxes,,https://github.com/wilsonify/Taxes.git
+137,323995002,tensorflow,An Open Source Machine Learning Framework for Everyone,https://github.com/wilsonify/tensorflow.git
+138,222112086,tensorflow-examples,based on https://github.com/Hezi-Resheff/Oreilly-Learning-TensorFlow,https://github.com/wilsonify/tensorflow-examples.git
+139,492239706,terraform-in-action,,https://github.com/wilsonify/terraform-in-action.git
+140,238930208,ThinkBayes2,"Text and code for the forthcoming second edition of Think Bayes, by Allen Downey.",https://github.com/wilsonify/ThinkBayes2.git
+141,268365420,ThinkComplexity2,"Book and code for Think Complexity, 2nd edition",https://github.com/wilsonify/ThinkComplexity2.git
+142,268365465,ThinkDSP,"Think DSP: Digital Signal Processing in Python, by Allen B. Downey.",https://github.com/wilsonify/ThinkDSP.git
+143,268365440,ThinkStats2,"Text and supporting code for Think Stats, 2nd Edition",https://github.com/wilsonify/ThinkStats2.git
+144,244025619,ThoughtfulMachineLearning,,https://github.com/wilsonify/ThoughtfulMachineLearning.git
+145,665306990,time-series-algorithm-recipes,"Source Code for 'Time Series Algorithm Recipes' by Akshay R Kulkarni, Adarsha Shivananda, Anoosh Kulkarni, and V Adithya Krishnan",https://github.com/wilsonify/time-series-algorithm-recipes.git
+146,146666517,TimeSeries,,https://github.com/wilsonify/TimeSeries.git
+147,396497609,visual-studio-essential-training,Visual Studio Essential Training (2019 Revision),https://github.com/wilsonify/visual-studio-essential-training.git
+148,251131862,web-scraping-with-python,Code samples from the book Web Scraping with Python http://shop.oreilly.com/product/0636920034391.do,https://github.com/wilsonify/web-scraping-with-python.git
+149,807843169,WebAssembly-in-Action,"Source code for the book ""WebAssembly in Action"" (https://www.manning.com/books/webassembly-in-action)",https://github.com/wilsonify/WebAssembly-in-Action.git
+150,86106187,wilsonify.github.io,just my thoughts,https://github.com/wilsonify/wilsonify.github.io.git
+151,301157815,wordclock,,https://github.com/wilsonify/wordclock.git
+152,262586715,zmq-guide,Learning and Using ØMQ,https://github.com/wilsonify/zmq-guide.git
