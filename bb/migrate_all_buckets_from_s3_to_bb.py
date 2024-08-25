@@ -28,6 +28,15 @@ def file_exists_in_b2(bucket_name, key):
             raise
 
 
+def get_filesize_in_s3(s3client, bucket_name, key):
+    try:
+        response = s3client.head_object(Bucket=bucket_name, Key=key)
+        return response['ContentLength']
+    except ClientError as e:
+        print(f"Failed to get file size from S3: {e}")
+        return 0
+
+
 def migrate_s3_to_b2(source_bucket, destination_bucket):
     paginator = s3_client_aws.get_paginator('list_objects_v2')
     page_iterator = paginator.paginate(Bucket=source_bucket)
@@ -39,14 +48,16 @@ def migrate_s3_to_b2(source_bucket, destination_bucket):
             print(f"Processing {key}...")
             if file_exists_in_b2(destination_bucket, key):
                 print(f"{key} already exists in {destination_bucket}, skipping...")
-                continue
+                filesize_in_s3 = get_filesize_in_s3(s3_client_aws, source_bucket, key)
+                filesize_in_b2 = get_filesize_in_s3(s3_client_b2, destination_bucket, key)
+                if filesize_in_s3 == filesize_in_b2:
+                    continue
 
-            # Download the object from AWS S3
+            print("Download the object from AWS S3")
             s3_response = s3_client_aws.get_object(Bucket=source_bucket, Key=key)
             file_data = s3_response['Body'].read()
 
-            # Upload the file to Backblaze B2
-
+            print("Upload the file to Backblaze B2")
             s3_client_b2.put_object(Bucket=destination_bucket, Key=key, Body=file_data)
             print(f"{key} has been uploaded to Backblaze B2.")
 
@@ -55,7 +66,6 @@ if __name__ == "__main__":
     migrate_s3_to_b2(source_bucket='064592191516-books', destination_bucket='bb-064592191516-books')
     migrate_s3_to_b2(source_bucket="064592191516-audio", destination_bucket="bb-064592191516-audio")
     migrate_s3_to_b2(source_bucket="064592191516-backups", destination_bucket="bb-064592191516-backups")
-    migrate_s3_to_b2(source_bucket="064592191516-books", destination_bucket="bb-064592191516-books")
     migrate_s3_to_b2(source_bucket="064592191516-docs", destination_bucket="bb-064592191516-docs")
     migrate_s3_to_b2(source_bucket="064592191516-kaggle", destination_bucket="bb-064592191516-kaggle")
     migrate_s3_to_b2(source_bucket="064592191516-ml-engineering", destination_bucket="bb-064592191516-ml-engineering")
@@ -64,6 +74,4 @@ if __name__ == "__main__":
     migrate_s3_to_b2(source_bucket="064592191516-mov", destination_bucket="bb-064592191516-mov")
     migrate_s3_to_b2(source_bucket="064592191516-pics", destination_bucket="bb-064592191516-pics")
     migrate_s3_to_b2(source_bucket="064592191516-pokemon", destination_bucket="bb-064592191516-pokemon")
-    migrate_s3_to_b2(source_bucket="064592191516-serverless-video-upload-python", destination_bucket="bb-064592191516-serverless-video-upload-python")
     migrate_s3_to_b2(source_bucket="064592191516-tele", destination_bucket="bb-064592191516-tele")
-    migrate_s3_to_b2(source_bucket="064592191516-terraform-state", destination_bucket="bb-064592191516-terraform-state")
