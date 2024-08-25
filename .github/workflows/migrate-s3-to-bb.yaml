@@ -1,0 +1,16 @@
+name: Migrate-S3-Buckets-to-Backblaze
+
+on:
+  workflow_dispatch: # Allows you to trigger the workflow manually from the GitHub UI
+
+jobs:
+  migrate:
+    runs-on: "064592191516"
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Run Migration Script
+      working-directory: bb
+      run: python migrate_all_buckets_from_s3_to_bb.py
