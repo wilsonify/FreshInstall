@@ -183,6 +183,31 @@ resource "aws_iam_role_policy_attachment" "tfer--ecsTaskExecutionRole_s3-read-wr
   role       = "ecsTaskExecutionRole"
 }
 
+resource "aws_iam_role_policy_attachment" "tfer--hurricane-s01-create-dataset-role-n73r8j9k_AWSLambdaBasicExecutionRole-5c0a40ad-9cc5-487b-bde8-4abb2bc5143e" {
+  policy_arn = "arn:aws:iam::064592191516:policy/service-role/AWSLambdaBasicExecutionRole-5c0a40ad-9cc5-487b-bde8-4abb2bc5143e"
+  role       = "hurricane-s01-create-dataset-role-n73r8j9k"
+}
+
+resource "aws_iam_role_policy_attachment" "tfer--hurricane-s01-create-dataset-role-n73r8j9k_AWSLambdaSQSQueueDestinationExecutionRole-5d780293-c043-489f-9aa9-f4cc4d850f87" {
+  policy_arn = "arn:aws:iam::064592191516:policy/service-role/AWSLambdaSQSQueueDestinationExecutionRole-5d780293-c043-489f-9aa9-f4cc4d850f87"
+  role       = "hurricane-s01-create-dataset-role-n73r8j9k"
+}
+
+resource "aws_iam_role_policy_attachment" "tfer--hurricane-s01-create-dataset-role-n73r8j9k_AWSLambdaSQSQueueDestinationExecutionRole-77eb785d-8e32-4a4a-bb13-00cdb3a4f374" {
+  policy_arn = "arn:aws:iam::064592191516:policy/service-role/AWSLambdaSQSQueueDestinationExecutionRole-77eb785d-8e32-4a4a-bb13-00cdb3a4f374"
+  role       = "hurricane-s01-create-dataset-role-n73r8j9k"
+}
+
+resource "aws_iam_role_policy_attachment" "tfer--hurricane-s01-create-dataset-role-n73r8j9k_AmazonSQSFullAccess" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
+  role       = "hurricane-s01-create-dataset-role-n73r8j9k"
+}
+
+resource "aws_iam_role_policy_attachment" "tfer--hurricane-s01-create-dataset-role-n73r8j9k_s3-read-write-kaggle-policy" {
+  policy_arn = "arn:aws:iam::064592191516:policy/s3-read-write-kaggle-policy"
+  role       = "hurricane-s01-create-dataset-role-n73r8j9k"
+}
+
 resource "aws_iam_role_policy_attachment" "tfer--media-convert-role_AmazonAPIGatewayInvokeFullAccess" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonAPIGatewayInvokeFullAccess"
   role       = "media-convert-role"
@@ -251,26 +276,6 @@ resource "aws_iam_role_policy_attachment" "tfer--thom-cloudshell-s3-role_AWSClou
 resource "aws_iam_role_policy_attachment" "tfer--thom-cloudshell-s3-role_AmazonS3FullAccess" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
   role       = "thom-cloudshell-s3-role"
-}
-
-resource "aws_iam_role_policy_attachment" "tfer--transcode-video_AWSElementalMediaConvertFullAccess" {
-  policy_arn = "arn:aws:iam::aws:policy/AWSElementalMediaConvertFullAccess"
-  role       = "transcode-video"
-}
-
-resource "aws_iam_role_policy_attachment" "tfer--transcode-video_AWSLambdaExecute" {
-  policy_arn = "arn:aws:iam::aws:policy/AWSLambdaExecute"
-  role       = "transcode-video"
-}
-
-resource "aws_iam_role_policy_attachment" "tfer--transcode-video_LambdaCloudWatchLogsPolicy" {
-  policy_arn = "arn:aws:iam::064592191516:policy/LambdaCloudWatchLogsPolicy"
-  role       = "transcode-video"
-}
-
-resource "aws_iam_role_policy_attachment" "tfer--transcode-video_custom-resources-lambda-policy" {
-  policy_arn = "arn:aws:iam::064592191516:policy/custom-resources-lambda-policy"
-  role       = "transcode-video"
 }
 
 resource "aws_iam_role_policy_attachment" "tfer--tt-db-role-sd8q9lrf_AWSLambdaBasicExecutionRole-4bb6991d-97b8-42fb-a195-06375e892f81" {

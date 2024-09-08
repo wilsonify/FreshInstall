@@ -1,12 +1,11 @@
-resource "aws_sqs_queue" "tfer--serverless-video-transcode-sqs-done" {
+resource "aws_sqs_queue" "tfer--hurricane-done" {
   content_based_deduplication       = "false"
   delay_seconds                     = "0"
   fifo_queue                        = "false"
   kms_data_key_reuse_period_seconds = "300"
-  kms_master_key_id                 = "alias/aws/sqs"
   max_message_size                  = "262144"
   message_retention_seconds         = "345600"
-  name                              = "serverless-video-transcode-sqs-done"
+  name                              = "hurricane-done"
 
   policy = <<POLICY
 {
@@ -18,30 +17,8 @@ resource "aws_sqs_queue" "tfer--serverless-video-transcode-sqs-done" {
       "Principal": {
         "AWS": "arn:aws:iam::064592191516:root"
       },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-done",
+      "Resource": "arn:aws:sqs:us-east-1:064592191516:hurricane-done",
       "Sid": "__owner_statement"
-    },
-    {
-      "Action": "SQS:SendMessage",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::064592191516:role/twentyfour-hour-video-python-IamRoleCustomResources"
-      },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-done",
-      "Sid": "__sender_statement"
-    },
-    {
-      "Action": [
-        "SQS:ChangeMessageVisibility",
-        "SQS:DeleteMessage",
-        "SQS:ReceiveMessage"
-      ],
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::064592191516:role/twentyfour-hour-video-python-IamRoleCustomResources"
-      },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-done",
-      "Sid": "__receiver_statement"
     }
   ],
   "Version": "2012-10-17"
@@ -49,20 +26,18 @@ resource "aws_sqs_queue" "tfer--serverless-video-transcode-sqs-done" {
 POLICY
 
   receive_wait_time_seconds  = "0"
-  redrive_policy             = "{\"deadLetterTargetArn\":\"arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-fail\",\"maxReceiveCount\":10}"
-  sqs_managed_sse_enabled    = "false"
+  sqs_managed_sse_enabled    = "true"
   visibility_timeout_seconds = "30"
 }
 
-resource "aws_sqs_queue" "tfer--serverless-video-transcode-sqs-fail" {
+resource "aws_sqs_queue" "tfer--hurricane-fail" {
   content_based_deduplication       = "false"
   delay_seconds                     = "0"
   fifo_queue                        = "false"
   kms_data_key_reuse_period_seconds = "300"
-  kms_master_key_id                 = "alias/aws/sqs"
   max_message_size                  = "262144"
   message_retention_seconds         = "345600"
-  name                              = "serverless-video-transcode-sqs-fail"
+  name                              = "hurricane-fail"
 
   policy = <<POLICY
 {
@@ -74,30 +49,8 @@ resource "aws_sqs_queue" "tfer--serverless-video-transcode-sqs-fail" {
       "Principal": {
         "AWS": "arn:aws:iam::064592191516:root"
       },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-fail",
+      "Resource": "arn:aws:sqs:us-east-1:064592191516:hurricane-fail",
       "Sid": "__owner_statement"
-    },
-    {
-      "Action": "SQS:SendMessage",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::064592191516:role/twentyfour-hour-video-python-IamRoleCustomResources"
-      },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-fail",
-      "Sid": "__sender_statement"
-    },
-    {
-      "Action": [
-        "SQS:ChangeMessageVisibility",
-        "SQS:DeleteMessage",
-        "SQS:ReceiveMessage"
-      ],
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::064592191516:role/twentyfour-hour-video-python-IamRoleCustomResources"
-      },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-fail",
-      "Sid": "__receiver_statement"
     }
   ],
   "Version": "2012-10-17"
@@ -105,20 +58,19 @@ resource "aws_sqs_queue" "tfer--serverless-video-transcode-sqs-fail" {
 POLICY
 
   receive_wait_time_seconds  = "0"
-  redrive_allow_policy       = "{\"redrivePermission\":\"byQueue\",\"sourceQueueArns\":[\"arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-done\",\"arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-try\"]}"
-  sqs_managed_sse_enabled    = "false"
+  redrive_policy             = "{\"deadLetterTargetArn\":\"arn:aws:sqs:us-east-1:064592191516:hurricane-try\",\"maxReceiveCount\":10}"
+  sqs_managed_sse_enabled    = "true"
   visibility_timeout_seconds = "30"
 }
 
-resource "aws_sqs_queue" "tfer--serverless-video-transcode-sqs-try" {
+resource "aws_sqs_queue" "tfer--hurricane-try" {
   content_based_deduplication       = "false"
   delay_seconds                     = "0"
   fifo_queue                        = "false"
   kms_data_key_reuse_period_seconds = "300"
-  kms_master_key_id                 = "alias/aws/sqs"
   max_message_size                  = "262144"
   message_retention_seconds         = "345600"
-  name                              = "serverless-video-transcode-sqs-try"
+  name                              = "hurricane-try"
 
   policy = <<POLICY
 {
@@ -130,30 +82,8 @@ resource "aws_sqs_queue" "tfer--serverless-video-transcode-sqs-try" {
       "Principal": {
         "AWS": "arn:aws:iam::064592191516:root"
       },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-try",
+      "Resource": "arn:aws:sqs:us-east-1:064592191516:hurricane-try",
       "Sid": "__owner_statement"
-    },
-    {
-      "Action": "SQS:SendMessage",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::064592191516:role/twentyfour-hour-video-python-IamRoleCustomResources"
-      },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-try",
-      "Sid": "__sender_statement"
-    },
-    {
-      "Action": [
-        "SQS:ChangeMessageVisibility",
-        "SQS:DeleteMessage",
-        "SQS:ReceiveMessage"
-      ],
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::064592191516:role/twentyfour-hour-video-python-IamRoleCustomResources"
-      },
-      "Resource": "arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-try",
-      "Sid": "__receiver_statement"
     }
   ],
   "Version": "2012-10-17"
@@ -161,9 +91,8 @@ resource "aws_sqs_queue" "tfer--serverless-video-transcode-sqs-try" {
 POLICY
 
   receive_wait_time_seconds  = "0"
-  redrive_policy             = "{\"deadLetterTargetArn\":\"arn:aws:sqs:us-east-1:064592191516:serverless-video-transcode-sqs-fail\",\"maxReceiveCount\":10}"
-  sqs_managed_sse_enabled    = "false"
-  visibility_timeout_seconds = "30"
+  sqs_managed_sse_enabled    = "true"
+  visibility_timeout_seconds = "200"
 }
 
 resource "aws_sqs_queue" "tfer--wine-sqs-done" {
@@ -226,6 +155,7 @@ resource "aws_sqs_queue" "tfer--wine-sqs-fail" {
 POLICY
 
   receive_wait_time_seconds  = "0"
+  redrive_allow_policy       = "{\"redrivePermission\":\"byQueue\",\"sourceQueueArns\":[\"arn:aws:sqs:us-east-1:064592191516:wine-sqs-try\"]}"
   sqs_managed_sse_enabled    = "true"
   visibility_timeout_seconds = "30"
 }
@@ -258,6 +188,7 @@ resource "aws_sqs_queue" "tfer--wine-sqs-try" {
 POLICY
 
   receive_wait_time_seconds  = "0"
+  redrive_policy             = "{\"deadLetterTargetArn\":\"arn:aws:sqs:us-east-1:064592191516:wine-sqs-fail\",\"maxReceiveCount\":10}"
   sqs_managed_sse_enabled    = "true"
   visibility_timeout_seconds = "30"
 }

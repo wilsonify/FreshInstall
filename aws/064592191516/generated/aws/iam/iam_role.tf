@@ -452,16 +452,16 @@ resource "aws_iam_role" "tfer--AmazonSageMakerServiceCatalogProductsUseRole" {
       "Effect": "Allow",
       "Principal": {
         "Service": [
-          "events.amazonaws.com",
-          "sagemaker.amazonaws.com",
-          "states.amazonaws.com",
-          "firehose.amazonaws.com",
-          "codebuild.amazonaws.com",
-          "codepipeline.amazonaws.com",
-          "cloudformation.amazonaws.com",
-          "apigateway.amazonaws.com",
           "glue.amazonaws.com",
-          "lambda.amazonaws.com"
+          "firehose.amazonaws.com",
+          "cloudformation.amazonaws.com",
+          "sagemaker.amazonaws.com",
+          "apigateway.amazonaws.com",
+          "events.amazonaws.com",
+          "lambda.amazonaws.com",
+          "states.amazonaws.com",
+          "codepipeline.amazonaws.com",
+          "codebuild.amazonaws.com"
         ]
       }
     }
@@ -652,6 +652,28 @@ POLICY
   path                 = "/"
 }
 
+resource "aws_iam_role" "tfer--hurricane-s01-create-dataset-role-n73r8j9k" {
+  assume_role_policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      }
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+
+  managed_policy_arns  = ["arn:aws:iam::064592191516:policy/s3-read-write-kaggle-policy", "arn:aws:iam::064592191516:policy/service-role/AWSLambdaBasicExecutionRole-5c0a40ad-9cc5-487b-bde8-4abb2bc5143e", "arn:aws:iam::064592191516:policy/service-role/AWSLambdaSQSQueueDestinationExecutionRole-5d780293-c043-489f-9aa9-f4cc4d850f87", "arn:aws:iam::064592191516:policy/service-role/AWSLambdaSQSQueueDestinationExecutionRole-77eb785d-8e32-4a4a-bb13-00cdb3a4f374", "arn:aws:iam::aws:policy/AmazonSQSFullAccess"]
+  max_session_duration = "3600"
+  name                 = "hurricane-s01-create-dataset-role-n73r8j9k"
+  path                 = "/service-role/"
+}
+
 resource "aws_iam_role" "tfer--media-convert-role" {
   assume_role_policy = <<POLICY
 {
@@ -838,38 +860,6 @@ POLICY
   max_session_duration = "3600"
   name                 = "thom-cloudshell-s3-role"
   path                 = "/"
-}
-
-resource "aws_iam_role" "tfer--transcode-video" {
-  assume_role_policy = <<POLICY
-{
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Sid": ""
-    }
-  ],
-  "Version": "2012-10-17"
-}
-POLICY
-
-  description          = "Allows Lambda functions to call AWS video transcode services on your behalf."
-  managed_policy_arns  = ["arn:aws:iam::064592191516:policy/LambdaCloudWatchLogsPolicy", "arn:aws:iam::064592191516:policy/custom-resources-lambda-policy", "arn:aws:iam::aws:policy/AWSElementalMediaConvertFullAccess", "arn:aws:iam::aws:policy/AWSLambdaExecute"]
-  max_session_duration = "3600"
-  name                 = "transcode-video"
-  path                 = "/"
-
-  tags = {
-    app = "video-encoding-pipeline"
-  }
-
-  tags_all = {
-    app = "video-encoding-pipeline"
-  }
 }
 
 resource "aws_iam_role" "tfer--tt-db-role-sd8q9lrf" {

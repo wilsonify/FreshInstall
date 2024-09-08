@@ -16,7 +16,7 @@ resource "aws_budgets_budget" "tfer--My-0020-Zero-Spend-0020-Budget" {
     use_blended                = "false"
   }
 
-  limit_amount = "1.0"
+  limit_amount = "16.0"
   limit_unit   = "USD"
   name         = "My Zero-Spend Budget"
 
@@ -24,7 +24,7 @@ resource "aws_budgets_budget" "tfer--My-0020-Zero-Spend-0020-Budget" {
     comparison_operator        = "GREATER_THAN"
     notification_type          = "ACTUAL"
     subscriber_email_addresses = ["tom.andrew.wilson@gmail.com"]
-    threshold                  = "0.01"
+    threshold                  = "15"
     threshold_type             = "ABSOLUTE_VALUE"
   }
 

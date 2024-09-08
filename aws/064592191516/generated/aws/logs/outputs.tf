@@ -1,3 +1,7 @@
+output "aws_cloudwatch_log_group_tfer---002F-aws-002F-lambda-002F-hurricane-s01-create-dataset_id" {
+  value = "${aws_cloudwatch_log_group.tfer---002F-aws-002F-lambda-002F-hurricane-s01-create-dataset.id}"
+}
+
 output "aws_cloudwatch_log_group_tfer---002F-aws-002F-lambda-002F-mlflow-tf-s01-create-training-dataset_id" {
   value = "${aws_cloudwatch_log_group.tfer---002F-aws-002F-lambda-002F-mlflow-tf-s01-create-training-dataset.id}"
 }

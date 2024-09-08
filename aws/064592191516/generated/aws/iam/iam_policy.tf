@@ -110,6 +110,34 @@ resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-4bb6991d-97b8-42fb-
 POLICY
 }
 
+resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-5c0a40ad-9cc5-487b-bde8-4abb2bc5143e" {
+  name = "AWSLambdaBasicExecutionRole-5c0a40ad-9cc5-487b-bde8-4abb2bc5143e"
+  path = "/service-role/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "logs:CreateLogGroup",
+      "Effect": "Allow",
+      "Resource": "arn:aws:logs:us-east-1:064592191516:*"
+    },
+    {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:logs:us-east-1:064592191516:log-group:/aws/lambda/hurricane-s01-create-dataset:*"
+      ]
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
 resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-6b591753-05ef-4dbc-91b0-b703957eb94c" {
   name = "AWSLambdaBasicExecutionRole-6b591753-05ef-4dbc-91b0-b703957eb94c"
   path = "/service-role/"
@@ -187,6 +215,42 @@ resource "aws_iam_policy" "tfer--AWSLambdaBasicExecutionRole-dd9f6f39-6e6b-44f4-
       "Resource": [
         "arn:aws:logs:us-east-1:064592191516:log-group:/aws/lambda/mlflow-tf-s01-create-training-dataset:*"
       ]
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
+resource "aws_iam_policy" "tfer--AWSLambdaSQSQueueDestinationExecutionRole-5d780293-c043-489f-9aa9-f4cc4d850f87" {
+  name = "AWSLambdaSQSQueueDestinationExecutionRole-5d780293-c043-489f-9aa9-f4cc4d850f87"
+  path = "/service-role/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "sqs:SendMessage",
+      "Effect": "Allow",
+      "Resource": "arn:aws:sqs:us-east-1:064592191516:hurricane-fail"
+    }
+  ],
+  "Version": "2012-10-17"
+}
+POLICY
+}
+
+resource "aws_iam_policy" "tfer--AWSLambdaSQSQueueDestinationExecutionRole-77eb785d-8e32-4a4a-bb13-00cdb3a4f374" {
+  name = "AWSLambdaSQSQueueDestinationExecutionRole-77eb785d-8e32-4a4a-bb13-00cdb3a4f374"
+  path = "/service-role/"
+
+  policy = <<POLICY
+{
+  "Statement": [
+    {
+      "Action": "sqs:SendMessage",
+      "Effect": "Allow",
+      "Resource": "arn:aws:sqs:us-east-1:064592191516:hurricane-done"
     }
   ],
   "Version": "2012-10-17"

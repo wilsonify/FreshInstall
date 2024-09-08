@@ -1,7 +1,3 @@
-output "aws_iam_access_key_tfer--AKIAQ6CP6UAOC7WKBT6I_id" {
-  value = "${aws_iam_access_key.tfer--AKIAQ6CP6UAOC7WKBT6I.id}"
-}
-
 output "aws_iam_access_key_tfer--AKIAQ6CP6UAOHJAS3JEW_id" {
   value = "${aws_iam_access_key.tfer--AKIAQ6CP6UAOHJAS3JEW.id}"
 }
@@ -30,6 +26,10 @@ output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-4bb6991d-97b8-42fb-a195
   value = "${aws_iam_policy.tfer--AWSLambdaBasicExecutionRole-4bb6991d-97b8-42fb-a195-06375e892f81.id}"
 }
 
+output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-5c0a40ad-9cc5-487b-bde8-4abb2bc5143e_id" {
+  value = "${aws_iam_policy.tfer--AWSLambdaBasicExecutionRole-5c0a40ad-9cc5-487b-bde8-4abb2bc5143e.id}"
+}
+
 output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-6b591753-05ef-4dbc-91b0-b703957eb94c_id" {
   value = "${aws_iam_policy.tfer--AWSLambdaBasicExecutionRole-6b591753-05ef-4dbc-91b0-b703957eb94c.id}"
 }
@@ -40,6 +40,14 @@ output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-8f6a3e23-2347-4ee7-8328
 
 output "aws_iam_policy_tfer--AWSLambdaBasicExecutionRole-dd9f6f39-6e6b-44f4-8ef2-a120239e1c56_id" {
   value = "${aws_iam_policy.tfer--AWSLambdaBasicExecutionRole-dd9f6f39-6e6b-44f4-8ef2-a120239e1c56.id}"
+}
+
+output "aws_iam_policy_tfer--AWSLambdaSQSQueueDestinationExecutionRole-5d780293-c043-489f-9aa9-f4cc4d850f87_id" {
+  value = "${aws_iam_policy.tfer--AWSLambdaSQSQueueDestinationExecutionRole-5d780293-c043-489f-9aa9-f4cc4d850f87.id}"
+}
+
+output "aws_iam_policy_tfer--AWSLambdaSQSQueueDestinationExecutionRole-77eb785d-8e32-4a4a-bb13-00cdb3a4f374_id" {
+  value = "${aws_iam_policy.tfer--AWSLambdaSQSQueueDestinationExecutionRole-77eb785d-8e32-4a4a-bb13-00cdb3a4f374.id}"
 }
 
 output "aws_iam_policy_tfer--AmazonSageMaker-ExecutionPolicy-20230916T105234_id" {
@@ -234,6 +242,26 @@ output "aws_iam_role_policy_attachment_tfer--ecsTaskExecutionRole_s3-read-write-
   value = "${aws_iam_role_policy_attachment.tfer--ecsTaskExecutionRole_s3-read-write-kaggle-policy.id}"
 }
 
+output "aws_iam_role_policy_attachment_tfer--hurricane-s01-create-dataset-role-n73r8j9k_AWSLambdaBasicExecutionRole-5c0a40ad-9cc5-487b-bde8-4abb2bc5143e_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--hurricane-s01-create-dataset-role-n73r8j9k_AWSLambdaBasicExecutionRole-5c0a40ad-9cc5-487b-bde8-4abb2bc5143e.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--hurricane-s01-create-dataset-role-n73r8j9k_AWSLambdaSQSQueueDestinationExecutionRole-5d780293-c043-489f-9aa9-f4cc4d850f87_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--hurricane-s01-create-dataset-role-n73r8j9k_AWSLambdaSQSQueueDestinationExecutionRole-5d780293-c043-489f-9aa9-f4cc4d850f87.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--hurricane-s01-create-dataset-role-n73r8j9k_AWSLambdaSQSQueueDestinationExecutionRole-77eb785d-8e32-4a4a-bb13-00cdb3a4f374_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--hurricane-s01-create-dataset-role-n73r8j9k_AWSLambdaSQSQueueDestinationExecutionRole-77eb785d-8e32-4a4a-bb13-00cdb3a4f374.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--hurricane-s01-create-dataset-role-n73r8j9k_AmazonSQSFullAccess_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--hurricane-s01-create-dataset-role-n73r8j9k_AmazonSQSFullAccess.id}"
+}
+
+output "aws_iam_role_policy_attachment_tfer--hurricane-s01-create-dataset-role-n73r8j9k_s3-read-write-kaggle-policy_id" {
+  value = "${aws_iam_role_policy_attachment.tfer--hurricane-s01-create-dataset-role-n73r8j9k_s3-read-write-kaggle-policy.id}"
+}
+
 output "aws_iam_role_policy_attachment_tfer--media-convert-role_AmazonAPIGatewayInvokeFullAccess_id" {
   value = "${aws_iam_role_policy_attachment.tfer--media-convert-role_AmazonAPIGatewayInvokeFullAccess.id}"
 }
@@ -288,22 +316,6 @@ output "aws_iam_role_policy_attachment_tfer--thom-cloudshell-s3-role_AWSCloudShe
 
 output "aws_iam_role_policy_attachment_tfer--thom-cloudshell-s3-role_AmazonS3FullAccess_id" {
   value = "${aws_iam_role_policy_attachment.tfer--thom-cloudshell-s3-role_AmazonS3FullAccess.id}"
-}
-
-output "aws_iam_role_policy_attachment_tfer--transcode-video_AWSElementalMediaConvertFullAccess_id" {
-  value = "${aws_iam_role_policy_attachment.tfer--transcode-video_AWSElementalMediaConvertFullAccess.id}"
-}
-
-output "aws_iam_role_policy_attachment_tfer--transcode-video_AWSLambdaExecute_id" {
-  value = "${aws_iam_role_policy_attachment.tfer--transcode-video_AWSLambdaExecute.id}"
-}
-
-output "aws_iam_role_policy_attachment_tfer--transcode-video_LambdaCloudWatchLogsPolicy_id" {
-  value = "${aws_iam_role_policy_attachment.tfer--transcode-video_LambdaCloudWatchLogsPolicy.id}"
-}
-
-output "aws_iam_role_policy_attachment_tfer--transcode-video_custom-resources-lambda-policy_id" {
-  value = "${aws_iam_role_policy_attachment.tfer--transcode-video_custom-resources-lambda-policy.id}"
 }
 
 output "aws_iam_role_policy_attachment_tfer--tt-db-role-sd8q9lrf_AWSLambdaBasicExecutionRole-4bb6991d-97b8-42fb-a195-06375e892f81_id" {
@@ -422,6 +434,10 @@ output "aws_iam_role_tfer--ecsTaskExecutionRole_id" {
   value = "${aws_iam_role.tfer--ecsTaskExecutionRole.id}"
 }
 
+output "aws_iam_role_tfer--hurricane-s01-create-dataset-role-n73r8j9k_id" {
+  value = "${aws_iam_role.tfer--hurricane-s01-create-dataset-role-n73r8j9k.id}"
+}
+
 output "aws_iam_role_tfer--media-convert-role_id" {
   value = "${aws_iam_role.tfer--media-convert-role.id}"
 }
@@ -452,10 +468,6 @@ output "aws_iam_role_tfer--terratest-docker-build-role-8rvj0bed_id" {
 
 output "aws_iam_role_tfer--thom-cloudshell-s3-role_id" {
   value = "${aws_iam_role.tfer--thom-cloudshell-s3-role.id}"
-}
-
-output "aws_iam_role_tfer--transcode-video_id" {
-  value = "${aws_iam_role.tfer--transcode-video.id}"
 }
 
 output "aws_iam_role_tfer--tt-db-role-sd8q9lrf_id" {

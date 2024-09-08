@@ -73,29 +73,6 @@ resource "aws_network_interface" "tfer--eni-0a9de076283d4e046" {
   subnet_id          = "subnet-8513b6ab"
 }
 
-resource "aws_network_interface" "tfer--eni-0ed60f1013b3c9adf" {
-  description        = "[DO NOT DELETE] ENI managed by SageMaker for Studio Domain(d-g7djlrunxivy) - a09d795df1d5926f328cb6564db19ab2"
-  interface_type     = "interface"
-  ipv4_prefix_count  = "0"
-  ipv6_address_count = "0"
-  ipv6_prefix_count  = "0"
-  private_ip         = "172.31.16.211"
-  private_ip_list    = ["172.31.16.211"]
-  private_ips        = ["172.31.16.211"]
-  private_ips_count  = "0"
-  security_groups    = ["sg-094724d968357e874"]
-  source_dest_check  = "true"
-  subnet_id          = "subnet-3fa0ce75"
-
-  tags = {
-    ManagedByAmazonSageMakerResource = "arn:aws:sagemaker:us-east-1:064592191516:node/d-g7djlrunxivy/default-20230916t105232/system-jupyterserverorkernelgateway"
-  }
-
-  tags_all = {
-    ManagedByAmazonSageMakerResource = "arn:aws:sagemaker:us-east-1:064592191516:node/d-g7djlrunxivy/default-20230916t105232/system-jupyterserverorkernelgateway"
-  }
-}
-
 resource "aws_network_interface" "tfer--eni-0f1a316aeade11687" {
   description        = "EFS mount target for fs-0a5da8a67f02347db (fsmt-027c231e43181e653)"
   interface_type     = "efs"

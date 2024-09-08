@@ -1,3 +1,7 @@
+resource "aws_cloudwatch_log_group" "tfer---002F-aws-002F-lambda-002F-hurricane-s01-create-dataset" {
+  name = "/aws/lambda/hurricane-s01-create-dataset"
+}
+
 resource "aws_cloudwatch_log_group" "tfer---002F-aws-002F-lambda-002F-mlflow-tf-s01-create-training-dataset" {
   name = "/aws/lambda/mlflow-tf-s01-create-training-dataset"
 }
