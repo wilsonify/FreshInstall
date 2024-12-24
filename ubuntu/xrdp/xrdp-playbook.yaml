@@ -1,0 +1,62 @@
+---
+- name: Set up XRDP on Debian 12
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update and upgrade apt packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Install XRDP and dependencies
+      apt:
+        name:
+          - xrdp
+          - xfce4
+          - xfce4-terminal
+          - dbus-x11
+          - x11-apps
+        state: present
+
+    - name: Allow "xrdp" user to use polkit (for managing session permissions)
+      copy:
+        dest: /etc/polkit-1/localauthority.conf.d/02-allow-xrdp.conf
+        content: |
+          polkit.addRule(function(action, subject) {
+              if (subject.isInGroup("xrdp")) {
+                  return polkit.Result.YES;
+              }
+          });
+
+    - name: Ensure XRDP is enabled and started
+      systemd:
+        name: xrdp
+        enabled: yes
+        state: started
+
+    - name: Configure XFCE as the default session for XRDP
+      copy:
+        dest: /etc/skel/.xsession
+        content: |
+          startxfce4
+
+    - name: Allow XRDP through the firewall (if UFW is used)
+      ufw:
+        rule: allow
+        port: 3389
+        proto: tcp
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Reboot the server to apply changes (if necessary)
+      reboot:
+        msg: "Rebooting to finalize XRDP setup."
+        connect_timeout: 5
+        reboot_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+      when: reboot_required.stat.exists
+      vars:
+        reboot_required:
+          stat:
+            path: /var/run/reboot-required
