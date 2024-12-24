@@ -14,7 +14,7 @@
           You are missing some tools this script requires: lsb_release, wget, add-apt-repository
           (hint: apt install lsb-release wget software-properties-common)
 
-    - name: Set LLVM version (default: 11)
+    - name: Set LLVM version (default 11)
       set_fact:
         llvm_version: "{{ ansible_play_batch | first | default(11) }}"
 
