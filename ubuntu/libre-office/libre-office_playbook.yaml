@@ -10,7 +10,7 @@
         state: absent
       ignore_errors: yes  # Ignore errors if no packages are found
 
-    - name: Autoremove unused packages
+    - name: Auto remove unused packages
       ansible.builtin.package:
         name: "{{ item }}"
         state: absent
@@ -25,7 +25,7 @@
       when: ansible_pkg_mgr == 'apt'  # Only run on systems using apt
       ignore_errors: yes  # Ignore errors if no packages are found
 
-    - name: Clean up with autoremove
+    - name: Clean up with auto remove
       ansible.builtin.package:
         name: ""
         state: absent
